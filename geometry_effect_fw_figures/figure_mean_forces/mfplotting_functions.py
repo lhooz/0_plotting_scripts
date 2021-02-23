@@ -243,7 +243,7 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
                                             annotation_clip=False)
 
                         axs[i].set_ylabel(y_label[i])
-                        axs[i].set_xlabel(r'$s/c$')
+                        axs[i].set_xlabel('Aspect ratio')
                         axs[i].label_outer()
 
                         axs[i].axhline(y=0,
