@@ -46,7 +46,8 @@ time_series = np.sort(
 
 ufield_gridx = []
 ufield_gridy = []
-sdata = []
+sImgdata = []
+sCtrdata = []
 vdata = []
 wdata = []
 markt = []
@@ -65,21 +66,22 @@ for timei in time_series:
         vorz_data = vor_data[:, [0, 1, 4]]
         uxyfield_data = ufield_data[:, 0:4]
         grid_x, grid_y, grid_vz = grid_vorz(window, resolution, vorz_data)
+        grid_x, grid_y, grid_q = grid_vorz(window, resolution, q_data)
         grid_x, grid_y, grid_ux, grid_uy = grid_ufield(window,
                                                        resolution_vector,
                                                        uxyfield_data)
-        # grid_x, grid_y, grid_q = grid_vorz(window, resolution, q_data)
         #-----write wing centroid history-----
         centroid_ti = [str(timei), str(w_centroid[0]), str(w_centroid[1])]
 
         ufield_gridx.append(grid_x.T)
         ufield_gridy.append(grid_y.T)
-        sdata.append(grid_vz.T)
+        sImgdata.append(grid_vz.T)
+        sCtrdata.append(grid_q.T)
         vdata.append([grid_ux.T, grid_uy.T])
         wdata.append(wgeo_data)
         markt.append(timei)
 # -------------plot all vortices-----------
-field_plot(window, ufield_gridx, ufield_gridy, sdata, vdata, wdata, markt,
-           oimage_file, 'save')
+field_plot(window, ufield_gridx, ufield_gridy, sImgdata, sCtrdata, vdata,
+           wdata, markt, oimage_file, 'save')
 plt.close()
 # ----------------------------------------------

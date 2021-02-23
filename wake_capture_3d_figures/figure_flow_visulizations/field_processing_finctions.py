@@ -119,29 +119,33 @@ def grid_ufield(window, resolution, ufield_array):
     return grid_x, grid_y, grid_ux, grid_uy
 
 
-def single_plot_field(images, axto_plot, window, grid_x, grid_y, sdata, vdata,
-                      wdata, imnorm, levels):
+def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
+                      sCtrdata, vdata, wdata, imnorm, levels):
     """plot one single field data"""
     images.append(
-        axto_plot.imshow(sdata,
+        axto_plot.imshow(sImgdata,
                          cmap='RdBu',
                          norm=imnorm,
-                         aspect='equal',
                          extent=window,
                          origin='lower',
                          interpolation='bicubic'))
-    axto_plot.contour(sdata,
+
+    axto_plot.contour(sCtrdata,
                       levels,
-                      linewidths=0.1,
+                      linewidths=0.2,
                       colors='k',
                       extent=window,
                       origin='lower')
+
     axto_plot.quiver(grid_x,
                      grid_y,
                      vdata[0],
                      vdata[1],
                      scale=25,
-                     width=0.002)
+                     width=0.0015,
+                     headwidth=3.5)
+
+    axto_plot.set_aspect('equal')
 
     nverts = len(wdata)
     codes = np.ones(nverts, int) * path.Path.LINETO
@@ -160,8 +164,9 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sdata, vdata,
     return axto_plot
 
 
-def field_plot(windows, ufield_gridx, ufield_gridy, sfield_data, vfield_data,
-               wgeo_data, markt, oimage_file, mode):
+def field_plot(windows, ufield_gridx, ufield_gridy, sImgfield_data,
+               sCtrfield_data, vfield_data, wgeo_data, markt, oimage_file,
+               mode):
     """plot field data"""
     plt.rcParams.update({
         # "text.usetex": True,
@@ -177,8 +182,8 @@ def field_plot(windows, ufield_gridx, ufield_gridy, sfield_data, vfield_data,
     marksc = [r'$\^t$ = ' + '{0:.2f}'.format(x) for x in markt]
     window = windows
     no_c = len(wgeo_data)
-    imnorm = colors.Normalize(vmin=-100, vmax=100)
-    levels = np.arange(-100.0, 100.0, 15)
+    imnorm = colors.Normalize(vmin=-3.5e2, vmax=3.5e2)
+    levels = np.linspace(1.0e3, 5.0e4, 50)
     zoom_order = 5
 
     images = []
@@ -193,14 +198,16 @@ def field_plot(windows, ufield_gridx, ufield_gridy, sfield_data, vfield_data,
                  width_ratios=[1, 1, 1, 1, 1])
 
     fig, axr1 = plt.subplots(nrows=1, ncols=no_c, gridspec_kw=gs_kw)
-    for grid_x, grid_y, sdatai, vdatai, wdatai, axr1i, marksci in zip(
-            ufield_gridx, ufield_gridy, sfield_data, vfield_data, wgeo_data,
-            axr1, marksc):
+    for grid_x, grid_y, sImgdatai, sCtrdatai, vdatai, wdatai, axr1i, marksci in zip(
+            ufield_gridx, ufield_gridy, sImgfield_data, sCtrfield_data,
+            vfield_data, wgeo_data, axr1, marksc):
 
-        sdatai = zoom(sdatai, zoom_order)
-        sdatai = gaussian_filter(sdatai, sigma=10.0)
-        single_plot_field(images, axr1i, window, grid_x, grid_y, sdatai,
-                          vdatai, wdatai, imnorm, levels)
+        sImgdatai = zoom(sImgdatai, zoom_order)
+        sImgdatai = gaussian_filter(sImgdatai, sigma=6.0)
+        sCtrdatai = zoom(sCtrdatai, zoom_order)
+        sCtrdatai = gaussian_filter(sCtrdatai, sigma=6.0)
+        single_plot_field(images, axr1i, window, grid_x, grid_y, sImgdatai,
+                          sCtrdatai, vdatai, wdatai, imnorm, levels)
 
         axr1i.set_xticklabels([])
         axr1i.set_yticklabels([])
@@ -228,14 +235,15 @@ def field_plot(windows, ufield_gridx, ufield_gridy, sfield_data, vfield_data,
 
         ax_all.append(axr1i)
 
-    cb = fig.colorbar(images[-1],
-                      ax=ax_all,
-                      orientation='horizontal',
-                      fraction=0.1,
-                      shrink=0.2,
-                      pad=0.03)
-    cb.ax.set_xlabel(r'$\omega$')
-    cb.ax.xaxis.set_label_coords(-0.12, 1.5)
+    if len(images) > 0:
+        cb = fig.colorbar(images[-1],
+                          ax=ax_all,
+                          orientation='horizontal',
+                          fraction=0.1,
+                          shrink=0.2,
+                          pad=0.03)
+        cb.ax.set_xlabel(r'$\omega$')
+        cb.ax.xaxis.set_label_coords(-0.12, 1.5)
 
     if mode == 'save':
         plt.savefig(oimage_file)
