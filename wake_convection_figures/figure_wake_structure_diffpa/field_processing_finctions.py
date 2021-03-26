@@ -148,7 +148,7 @@ def grid_ufield(window, resolution, ufield_array):
 
 
 def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
-                      sCtrdata, vdata, wdata, imnorm, levels):
+                      sCtrdata, vdata, wdata, imnorm, levels, quiver_scale):
     """plot one single field data"""
     images.append(
         axto_plot.imshow(sImgdata,
@@ -171,7 +171,7 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
                      vdata[0],
                      vdata[1],
                      units='height',
-                     scale=20,
+                     scale=quiver_scale,
                      width=0.0025,
                      headwidth=3.5)
 
@@ -199,7 +199,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (12, 12),
+        'figure.figsize': (12, 8),
         'lines.linewidth': 0.5,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
@@ -241,9 +241,17 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             sImgdatai = gaussian_filter(sImgdatai, sigma=3.0)
             sCtrdatai = zoom(sCtrdatai, zoom_order)
             sCtrdatai = gaussian_filter(sCtrdatai, sigma=3.0)
+
+            if ci == 0:
+                quiver_scale = 50
+            elif ci == 1:
+                quiver_scale = 35
+            else:
+                quiver_scale = 20
+
             single_plot_field(images, axre, windows[ci], grid_x, grid_y,
                               sImgdatai, sCtrdatai, vdatai, wdatai, imnorm,
-                              levels)
+                              levels, quiver_scale)
 
             axre.set_xticklabels([])
             axre.set_yticklabels([])
@@ -260,8 +268,8 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
                               annotation_clip=False)
 
             if ci == no_c - 1:
-                markx_loc = axre.get_xlim()[1] + 0.17 * (axre.get_xlim()[1] -
-                                                        axre.get_xlim()[0])
+                markx_loc = axre.get_xlim()[1] + 0.12 * (axre.get_xlim()[1] -
+                                                         axre.get_xlim()[0])
                 marky_loc = axre.get_ylim()[0] + 0.5 * (axre.get_ylim()[1] -
                                                         axre.get_ylim()[0])
                 axre.annotate(s=markre[ri],

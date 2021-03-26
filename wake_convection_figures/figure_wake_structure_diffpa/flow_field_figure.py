@@ -24,19 +24,20 @@ resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = [100.0, 1000.0, 10000.0]
+Re = [10000.0]
 stroke = [1.5, 3.0, 6.0]
-pa = [0.0]
+pa = [45.0, 90.0]
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
-markpa = [r'$Re = ' + '{0:.0f}'.format(x) + '$' for x in Re]
+markpa = [r'$\theta = ' + '{0:.0f}'.format(x) + '\degree$' for x in pa]
 marks = [marksc, markpa]
 #-----------------------------------
 cwd = os.getcwd()
 data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_convection_data/4_FIELD_RESULTS')
-oimage_file = os.path.join(cwd, 'wake_structure_pa0.png')
+oimage_file = os.path.join(
+    cwd, 'wake_structure_dpa_Re' + '{0:.0f}'.format(Re[0]) + '.png')
 #-----------------------------------
 fdata_all = []
 wdata_all = []
@@ -45,13 +46,16 @@ for si, window, Urefi, res_vectori in zip(stroke, windows, Uref,
     #------read data for each Re-------------
     fdata_si = []
     wdata_si = []
-    for rei in Re:
-        pf = 0.25
+    for pai in pa:
+        if pai == 45.0:
+            pf = 0.125
+        else:
+            pf = 0.25
 
         case_name_t10 = 'Re' + '{0:.1f}'.format(
-            rei) + '_stroke' + '{0:.1f}'.format(
+            Re[0]) + '_stroke' + '{0:.1f}'.format(
                 si) + '_acf0.25_pf' + '{0:.3g}'.format(
-                    pf) + '_pa' + '{0:.1f}'.format(pa[0])
+                    pf) + '_pa' + '{0:.1f}'.format(pai)
 
         case_dir = os.path.join(data_dir, case_name_t10)
         vorz_folder = os.path.join(case_dir, 'vorz_data')
