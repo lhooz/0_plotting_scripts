@@ -4,7 +4,7 @@ import os
 from tfplotting_functions import cf_plotter, read_cfd_data
 
 #-------------input plot control----------
-pa = 0
+pa = 90
 Re = [100, 1000, 10000]
 stroke = [1.5, 3.0, 6.0]
 at = [0.25]

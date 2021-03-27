@@ -133,7 +133,8 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
             axrow[0].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
             axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-            v_lines = [1.2, 1.4, 1.6, 1.8]
+            # v_lines = [1.2, 1.4, 1.6, 1.8]
+            v_lines = [1.1, 1.2, 1.3, 1.4]
             for line in v_lines:
                 axrow[0].axvline(x=line,
                                  color='k',
