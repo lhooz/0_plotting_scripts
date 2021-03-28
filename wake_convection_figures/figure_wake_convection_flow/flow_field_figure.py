@@ -20,14 +20,14 @@ res_vector_sc15 = [20, 25]
 res_vector_sc30 = [25, 25]
 res_vector_sc60 = [40, 25]
 resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
-time_to_plot = [1.1, 1.2, 1.3, 1.4]  #---time instances to plot--
+time_to_plot = [1.2, 1.6]  #---time instances to plot--
 #--------------------------------------
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = 100.0
+Re = 10000.0
 stroke = [1.5, 3.0, 6.0]
-pa = 90
+pa = 0
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
@@ -37,8 +37,9 @@ marks = [marksc, markt]
 cwd = os.getcwd()
 data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_convection_data/4_FIELD_RESULTS')
-oimage_file = os.path.join(cwd,
-                           'wake_flow_pa' + '{0:.0f}'.format(pa) + '.png')
+oimage_file = os.path.join(
+    cwd, 'wake_flow_pa' + '{0:.0f}'.format(pa) + '_Re' + '{0:.0f}'.format(Re) +
+    '.png')
 #-----------------------------------
 fdata_all = []
 wdata_all = []

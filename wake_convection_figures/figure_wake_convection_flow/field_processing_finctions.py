@@ -199,7 +199,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (12, 16),
+        'figure.figsize': (12, 8),
         'lines.linewidth': 0.5,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
@@ -226,7 +226,10 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
 
     fig, ax = plt.subplots(nrows=no_r, ncols=no_c, gridspec_kw=gs_kw)
     for ci in range(no_c):
-        axci = ax[:, ci]
+        if no_r == 1:
+            axci = [ax[ci]]
+        else:
+            axci = ax[:, ci]
         for ri in range(no_r):
             axre = axci[ri]
             grid_x = field_data[ci][ri][0]
@@ -243,11 +246,11 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             sCtrdatai = gaussian_filter(sCtrdatai, sigma=3.0)
 
             if ci == 0:
-                quiver_scale = 40
+                quiver_scale = 20
             elif ci == 1:
-                quiver_scale = 35
+                quiver_scale = 20
             else:
-                quiver_scale = 30
+                quiver_scale = 20
 
             single_plot_field(images, axre, windows[ci], grid_x, grid_y,
                               sImgdatai, sCtrdatai, vdatai, wdatai, imnorm,

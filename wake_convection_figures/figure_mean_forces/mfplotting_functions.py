@@ -61,53 +61,49 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (14, 8),
+        'figure.figsize': (10, 12),
         'lines.linewidth': 0.5,
         'lines.markersize': 12,
-        'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
+        # 'lines.markerfacecolor': 'white',
+        'figure.dpi': 100,
         'figure.subplot.left': 0.125,
         'figure.subplot.right': 0.9,
         'figure.subplot.top': 0.8,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.1,
+        'figure.subplot.wspace': 0.15,
         'figure.subplot.hspace': 0.1,
     })
-    markers = ['o', 'v', 's']
+    markers = ['s', 'o', '>']
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
     markc = marks
 
-    no_r = 2
-    no_c = len(markc)
+    no_c = 2
+    no_r = len(markc)
     no_legend = len(cf_legends)
     no_x = len(x_array)
     fig, ax = plt.subplots(no_r, no_c)
     fig2, ax2 = plt.subplots(no_r, no_c)
-    fig3, ax3 = plt.subplots(1, no_c)
-    for c in range(no_c):
-        axr1i = ax[0][c]
-        axr2i = ax[1][c]
-        ax2r1i = ax2[0][c]
-        ax2r2i = ax2[1][c]
-        ax3i = ax3[c]
-        axs = [axr1i, axr2i, ax2r1i, ax2r2i, ax3i]
+    for r in range(no_r):
+        axc1i = ax[r][0]
+        axc2i = ax[r][1]
+        ax2c1i = ax2[r][0]
+        ax2c2i = ax2[r][1]
+        axs = [axc1i, axc2i, ax2c1i, ax2c2i]
         for lgd in range(no_legend):
-            data_no = no_x * (no_legend * c + lgd)
+            data_no = no_x * (no_legend * r + lgd)
             # print(data_no)
             mcl = []
             ratiol = []
             mcd = []
             ratiod = []
-            ratio_ld = []
             for xi in range(no_x):
                 mcl.append(cf_array[data_no + xi][1])
                 ratiol.append(cf_array[data_no + xi][2])
                 mcd.append(cf_array[data_no + xi][4])
                 ratiod.append(cf_array[data_no + xi][5])
-                ratio_ld.append(cf_array[data_no + xi][6])
-                datatoplot = [mcl, mcd, ratiol, ratiod, ratio_ld]
+                datatoplot = [mcl, mcd, ratiol, ratiod]
 
             for i in range(len(datatoplot)):
                 axs[i].plot(x_array,
@@ -121,9 +117,9 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
                 if y_range != 'all':
                     axs[i].set_ylim(y_range[i])
 
-                if c == 1 and i in [0, 2, 4]:
+                if r == 0 and i in [0, 2]:
                     axs[i].legend(loc='upper center',
-                                  bbox_to_anchor=(0.5, 1.2),
+                                  bbox_to_anchor=(1.0, 1.25),
                                   ncol=3,
                                   fontsize='small',
                                   frameon=False)
@@ -131,36 +127,37 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
                 if lgd == 0:
                     marky_loc = axs[i].get_ylim()[1] + 0.2 * (
                         axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
-                    markx_loc = axs[i].get_xlim()[1] + 0.2 * (
+                    markx_loc = axs[i].get_xlim()[1] + 0.13 * (
                         axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
                     markymid_loc = axs[i].get_ylim()[0] + 0.5 * (
                         axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
 
-                    if i in [0, 2, 4]:
-                        axs[i].annotate(s=markc[c],
-                                        xy=(6, marky_loc),
+                    if i in [1, 3]:
+                        axs[i].annotate(s=markc[r],
+                                        xy=(markx_loc, markymid_loc),
                                         ha='center',
                                         va='center',
                                         annotation_clip=False)
+                        axs[i].set_yticklabels([])
 
                     axs[i].set_ylabel(y_label[i])
-                    axs[i].set_xlabel(r'$s/c$')
-                    axs[i].label_outer()
+                    if r == no_r - 1:
+                        axs[i].set_xlabel(r'$s/c$')
+                    else:
+                        axs[i].set_xticklabels([])
+                    # axs[i].label_outer()
 
                     axs[i].axhline(y=0,
                                    color='k',
                                    linestyle='-.',
                                    linewidth=0.5)
 
-    fig3.set_size_inches(14, 4)
     title = 'mean force coefficients plot'
     title2 = 'mean force ratio plot'
-    title3 = 'mean l_to_d plot '
     out_image_file = os.path.join(image_out_path, title + '.png')
     out_image_file2 = os.path.join(image_out_path, title2 + '.png')
-    out_image_file3 = os.path.join(image_out_path, title3 + '.png')
-    out_files = [out_image_file, out_image_file2, out_image_file3]
-    figs = [fig, fig2, fig3]
+    out_files = [out_image_file, out_image_file2]
+    figs = [fig, fig2]
 
     for i in range(len(figs)):
         figs[i].savefig(out_files[i])
