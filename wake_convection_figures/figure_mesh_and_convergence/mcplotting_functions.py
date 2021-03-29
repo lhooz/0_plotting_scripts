@@ -8,6 +8,7 @@ import matplotlib.patches as patches
 import matplotlib.path as path
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.interpolate import UnivariateSpline
 
 
 def read_cfd_data(cfd_data_file):
@@ -68,6 +69,8 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     range_cd = show_range[1]
 
     fig, axs = plt.subplots(1, 2)
+    mcl_arr = []
+    mcd_arr = []
     if plot_mode == 'against_t':
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
@@ -76,6 +79,35 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             axs[1].plot(cf_array[i][:, 0] / cycle_time,
                         cf_array[i][:, 1],
                         label=legends[i])
+
+            cl_spl = UnivariateSpline(cf_array[i][:, 0],
+                                      cf_array[i][:, 3],
+                                      s=0)
+            mcl_s = cl_spl.integral(0.0, 1.0)
+            mcl_w = cl_spl.integral(1.0, 2.0)
+            mcl = cl_spl.integral(0.0, 2.0)
+
+            cd_spl = UnivariateSpline(cf_array[i][:, 0],
+                                      cf_array[i][:, 1],
+                                      s=0)
+            mcd_s = cd_spl.integral(0.0, 1.0)
+            mcd_w = cd_spl.integral(1.0, 2.0)
+            mcd = cd_spl.integral(0.0, 2.0)
+
+            mcl_arr.append([mcl_s, mcl_w, mcl])
+            mcd_arr.append([mcd_s, mcd_w, mcd])
+
+            with open('meancf_convergence.dat', 'w') as f:
+                for item, cf_lgd in zip(mcl_arr, legends):
+                    f.write("%s:\n" % cf_lgd)
+                    f.write("mcl_s = %s, mcl_w = %s, mcl = %s\n" %
+                            ('{0:.8g}'.format(item[0]), '{0:.8g}'.format(
+                                item[1]), '{0:.8g}'.format(item[2])))
+                for item, ref_lgd in zip(mcd_arr, legends):
+                    f.write("%s:\n" % ref_lgd)
+                    f.write("mcd_s = %s, mcd_w = %s, mcd = %s\n" %
+                            ('{0:.8g}'.format(item[0]), '{0:.8g}'.format(
+                                item[1]), '{0:.8g}'.format(item[2])))
 
         if time_to_plot != 'all':
             axs[0].set_xlim(time_to_plot)
@@ -117,7 +149,7 @@ def mesh_plotter(image_out_path):
         'lines.linewidth': 0.5,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 300,
+        'figure.dpi': 200,
     })
 
     circle_bg = plt.Circle((0, 0), 20, color='k', linewidth=0.5, fill=False)

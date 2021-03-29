@@ -1,0 +1,16 @@
+mesh1, $\Delta t$ = 1e-3:
+mcl_s = 1.576148, mcl_w = 0.12564804, mcl = 1.7017961
+mesh2, $\Delta t$ = 1e-3:
+mcl_s = 1.5842125, mcl_w = 0.16565477, mcl = 1.7498673
+mesh1, $\Delta t$ = 5e-4:
+mcl_s = 1.5774273, mcl_w = 0.12906225, mcl = 1.7064896
+mesh2, $\Delta t$ = 5e-4:
+mcl_s = 1.5866715, mcl_w = 0.1658796, mcl = 1.7525511
+mesh1, $\Delta t$ = 1e-3:
+mcd_s = 2.2313479, mcd_w = -0.1698045, mcd = 2.0615434
+mesh2, $\Delta t$ = 1e-3:
+mcd_s = 2.2537247, mcd_w = -0.2042567, mcd = 2.049468
+mesh1, $\Delta t$ = 5e-4:
+mcd_s = 2.2343019, mcd_w = -0.171395, mcd = 2.0629069
+mesh2, $\Delta t$ = 5e-4:
+mcd_s = 2.259068, mcd_w = -0.20454816, mcd = 2.0545198

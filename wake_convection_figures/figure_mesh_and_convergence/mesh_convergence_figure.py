@@ -4,16 +4,16 @@ import os
 from mcplotting_functions import read_cfd_data, cf_plotter, mesh_plotter
 #-------------input plot control----------
 cfd_data_list = [
-    'Re10000.0_stroke6.0_acf0.25_pf0.25_pa90.0_basic',
-    'Re10000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sc',
-    # 'Re10000.0_stroke6.0_acf0.25_pf0.25_pa90.0_tc',
-    'Re10000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sctc'
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_basic',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_tc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sctc'
 ]
 #-----------------------------------------
 legends = [
     r'mesh1, $\Delta t$ = 1e-3',
     r'mesh2, $\Delta t$ = 1e-3',
-    # r'mesh1, $\Delta t$ = 5e-4',
+    r'mesh1, $\Delta t$ = 5e-4',
     r'mesh2, $\Delta t$ = 5e-4'
 ]
 # legends = [
