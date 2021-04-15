@@ -1,0 +1,12 @@
+mesh1, $\Delta t$ = 1e-3:
+mcl = 2.1002972
+mesh2, $\Delta t$ = 1e-3:
+mcl = 2.0674421
+mesh1, $\Delta t$ = 5e-4:
+mcl = 2.1107416
+mesh1, $\Delta t$ = 1e-3:
+mcd = -0.021531854
+mesh2, $\Delta t$ = 1e-3:
+mcd = 0.028439031
+mesh1, $\Delta t$ = 5e-4:
+mcd = -0.033478235
