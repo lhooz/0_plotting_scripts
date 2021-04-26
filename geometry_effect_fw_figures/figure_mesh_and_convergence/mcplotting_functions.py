@@ -1,7 +1,7 @@
 """plotting functions for mesh and convergence figures"""
 
-import os
 import csv
+import os
 
 import matplotlib.image as mpimg
 import matplotlib.patches as patches
@@ -11,8 +11,33 @@ import numpy as np
 from scipy.interpolate import UnivariateSpline
 
 
-def read_cfd_data(cfd_data_file):
+def read_cfd_data(kinematics_file, cfd_data_file):
     """read cfd results force coefficients data"""
+    kinematics_arr = []
+    with open(kinematics_file) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter='(')
+        line_count = 0
+
+        for row in csv_reader:
+            if line_count <= 1:
+                line_count += 1
+            elif row[0] == ')':
+                line_count += 1
+            else:
+                t_datai = row[1]
+                # print(row)
+                rot_datai0 = row[4].split()[0]
+                kinematics_arr.append([
+                    float(t_datai),
+                    float(rot_datai0) * np.pi / 180,
+                ])
+                line_count += 1
+
+        print(f'Processed {line_count} lines in {kinematics_file}')
+
+    kinematics_arr = np.array(kinematics_arr)
+    spl = UnivariateSpline(kinematics_arr[:, 0], kinematics_arr[:, 1], s=0)
+
     cf_array = []
     with open(cfd_data_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter='\t')
@@ -22,15 +47,15 @@ def read_cfd_data(cfd_data_file):
             if line_count <= 14:
                 line_count += 1
             else:
-                cf_array.append([
-                    float(row[0]),
-                    float(row[1]),
-                    float(row[2]),
-                    float(row[3]),
-                    float(row[4]),
-                    float(row[5]),
-                    float(row[6])
-                ])
+                ti = float(row[0])
+                phii = spl(ti)
+                dphii = -1.0 * spl.derivatives(ti)[1]
+                cli = float(row[3])
+                cdi = np.sign(dphii) * (np.sin(phii) * float(row[2]) +
+                                        np.cos(phii) * float(row[1]))
+                csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
+                    row[1])
+                cf_array.append([ti, cli, cdi, csi])
                 line_count += 1
 
         print(f'Processed {line_count} lines in {cfd_data_file}')
@@ -74,19 +99,19 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     if plot_mode == 'against_t':
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
-                        cf_array[i][:, 3],
+                        cf_array[i][:, 1],
                         label=legends[i])
             axs[1].plot(cf_array[i][:, 0] / cycle_time,
-                        cf_array[i][:, 6] * 10,
+                        cf_array[i][:, 2],
                         label=legends[i])
 
             cl_spl = UnivariateSpline(cf_array[i][:, 0],
-                                      cf_array[i][:, 3],
+                                      cf_array[i][:, 1],
                                       s=0)
             mcl = cl_spl.integral(time_to_plot[0], time_to_plot[1])
 
             cd_spl = UnivariateSpline(cf_array[i][:, 0],
-                                      cf_array[i][:, 6] * 10,
+                                      cf_array[i][:, 2],
                                       s=0)
             mcd = cd_spl.integral(time_to_plot[0], time_to_plot[1])
 
@@ -114,7 +139,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             ax.set_xlabel(r'$\^t$')
 
         axs[0].set_ylabel(r'$C_L$')
-        axs[1].set_ylabel(r'$C_M$')
+        axs[1].set_ylabel(r'$C_D$')
 
         axs[0].legend(loc='upper center',
                       bbox_to_anchor=(legendx, legendy),
