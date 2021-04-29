@@ -1,7 +1,7 @@
 """script for mesh and convergence figure plots"""
 
 import os
-from mcplotting_functions import read_cfd_data, cf_plotter
+from cplotting_functions import read_cfd_data, cf_plotter
 #-------------input plot control----------
 kinematics_file = 'kinematics_convergence.dat'
 cfd_data_list = [
