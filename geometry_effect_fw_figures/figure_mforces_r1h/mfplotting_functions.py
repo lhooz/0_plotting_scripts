@@ -85,6 +85,8 @@ def read_kinematics_data(kinematics_data_file):
 
 def read_cfd_data(cfd_data_file, u2, karr, dkarr):
     """read cfd results force coefficients data"""
+    phi_spl = UnivariateSpline(karr[:, 0], karr[:, 4] * np.pi / 180, s=0)
+
     cf_array = []
     with open(cfd_data_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter='\t')
@@ -94,11 +96,16 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
             if line_count <= 14:
                 line_count += 1
             else:
+                ti = float(row[0])
+                phii = phi_spl(ti)
+                dphii = -1.0 * phi_spl.derivatives(ti)[1]
+                cli = float(row[3])
+                cdi = np.sign(dphii) * (np.sin(phii) * float(row[2]) +
+                                        np.cos(phii) * float(row[1]))
+                csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
+                    row[1])
                 cf_array.append([
-                    float(row[0]),
-                    float(row[1]),
-                    float(row[2]),
-                    float(row[3]),
+                    ti, cdi, csi, cli,
                     float(row[4]),
                     float(row[5]),
                     float(row[6])
@@ -109,6 +116,7 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
 
     cf_array = np.array(cf_array)
     cl_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 3], s=0)
+    cd_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 1], s=0)
     cmx_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 6], s=0)
     cmy_spl = UnivariateSpline(cf_array[:, 0], -cf_array[:, 5], s=0)
     cmz_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 4], s=0)
@@ -143,15 +151,16 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
     # plt.show()
     #------------------------
     mcl = cl_spl.integral(4.0, 5.0)
+    mcd = cd_spl.integral(4.0, 5.0)
     mcp = cpx_spl.integral(4.0, 5.0) + cpy_spl.integral(
         4.0, 5.0) + cpz_spl.integral(4.0, 5.0)
 
-    mcf_array = [mcl, mcp]
+    mcf_array = [mcl, mcd, mcp]
 
     return mcf_array
 
 
-def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
+def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
                image_out_path):
     """
     function to plot cfd force coefficients results
@@ -160,106 +169,72 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (14, 8),
+        'font.size': 18,
+        'figure.figsize': (6, 12),
         'lines.linewidth': 0.5,
         'lines.markersize': 12,
-        'lines.markerfacecolor': 'white',
+        # 'lines.markerfacecolor': 'white',
         'figure.dpi': 200,
-        'figure.subplot.left': 0.125,
-        'figure.subplot.right': 0.85,
-        'figure.subplot.top': 0.8,
+        'figure.subplot.left': 0.15,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.85,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.1,
-        'figure.subplot.hspace': 0.1,
+        'figure.subplot.wspace': 0.125,
+        'figure.subplot.hspace': 0.125,
     })
-    markers = ['o', 'v', 's']
+    markers = ['o', 'v', 's', '>']
+    y_label = [
+        r'$\bar{C}_L$',
+        r'$\bar{C}_D$',
+        r'$\frac{1}{P*}$',
+    ]
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
-    markr = marks[0]
-    markc = marks[1]
 
-    no_r = len(markr)
-    no_c = len(markc)
     no_legend = len(cf_legends)
     no_x = len(x_array)
-    fig, ax = plt.subplots(no_r, no_c)
-    fig2, ax2 = plt.subplots(no_r, no_c)
-    for r in range(no_r):
-        for c in range(no_c):
-            axs = [ax[r][c], ax2[r][c]]
-            for lgd in range(no_legend):
-                data_no = no_x * (no_legend * no_c * r + no_legend * c + lgd)
-                # print(data_no)
-                mcl = []
-                mcp = []
-                for xi in range(no_x):
-                    mcl.append(cf_array[data_no + xi][0])
-                    mcp.append(cf_array[data_no + xi][0] /
-                               (cf_array[data_no + xi][1]**(2 / 3)))
+    fig, ax = plt.subplots(3, 1)
+    for lgd in range(no_legend):
+        data_no = no_x * lgd
+        # print(data_no)
+        mcl = []
+        mcd = []
+        mpf = []
+        for xi in range(no_x):
+            mcl.append(cf_array[data_no + xi][0])
+            mcd.append(cf_array[data_no + xi][1])
+            mpf.append(cf_array[data_no + xi][0] /
+                       (cf_array[data_no + xi][2]**(2 / 3)))
 
-                datatoplot = [mcl, mcp]
-                for i in range(len(datatoplot)):
-                    axs[i].plot(x_array,
-                                datatoplot[i],
-                                label=cf_legends[lgd],
-                                marker=markers[lgd],
-                                linestyle='-.')
+        datatoplot = [mcl, mcd, mpf]
+        for i in range(len(datatoplot)):
+            ax[i].plot(x_array,
+                       datatoplot[i],
+                       label=cf_legends[lgd],
+                       marker=markers[lgd],
+                       linestyle='-.')
 
-                    if x_range != 'all':
-                        axs[i].set_xlim(x_range)
-                    if y_range != 'all':
-                        axs[i].set_ylim(y_range[i])
+            if lgd == 0:
+                if x_range != 'all':
+                    ax[i].set_xlim(x_range)
+                if y_range != 'all':
+                    ax[i].set_ylim(y_range[i])
 
-                    if c == 1 and r == 0:
-                        axs[i].legend(loc='upper center',
-                                      bbox_to_anchor=(0.5, 1.2),
-                                      ncol=3,
-                                      fontsize='small',
-                                      frameon=False)
+                ax[i].set_ylabel(y_label[i])
+                ax[i].set_xlabel('AR')
+                ax[i].label_outer()
 
-                    if lgd == 0:
-                        markx_loc = axs[i].get_xlim()[1] + 0.3 * (
-                            axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
-                        markxmid_loc = axs[i].get_xlim()[0] + 0.5 * (
-                            axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
-                        marky_loc = axs[i].get_ylim()[1] + 0.2 * (
-                            axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
-                        markymid_loc = axs[i].get_ylim()[0] + 0.5 * (
-                            axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
+                ax[i].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
 
-                        if r == 0:
-                            axs[i].annotate(s=markc[c],
-                                            xy=(markxmid_loc, marky_loc),
-                                            ha='center',
-                                            va='center',
-                                            annotation_clip=False)
-                        if c == no_c - 1:
-                            axs[i].annotate(s=markr[r],
-                                            xy=(markx_loc, markymid_loc),
-                                            ha='center',
-                                            va='center',
-                                            annotation_clip=False)
+    ax[0].legend(loc='upper center',
+                 bbox_to_anchor=(0.5, 1.2),
+                 ncol=no_legend,
+                 fontsize='small',
+                 frameon=False)
 
-                        axs[i].set_ylabel(y_label[i])
-                        axs[i].set_xlabel('Aspect ratio')
-                        axs[i].label_outer()
-
-                        axs[i].axhline(y=0,
-                                       color='k',
-                                       linestyle='-.',
-                                       linewidth=0.5)
-
-    title = 'mean lift coefficients plot'
-    title2 = 'efficiency plot'
+    title = 'mean coefficients r1h'
     out_image_file = os.path.join(image_out_path, title + '.png')
-    out_image_file2 = os.path.join(image_out_path, title2 + '.png')
-    out_files = [out_image_file, out_image_file2]
-    figs = [fig, fig2]
+    fig.savefig(out_image_file)
 
-    for i in range(len(figs)):
-        figs[i].savefig(out_files[i])
-        figs[i].show()
-
-    return figs
+    return fig
