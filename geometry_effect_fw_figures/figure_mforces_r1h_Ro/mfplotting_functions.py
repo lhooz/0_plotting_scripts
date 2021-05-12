@@ -83,7 +83,7 @@ def read_kinematics_data(kinematics_data_file):
     return u2, kinematics_arr, dkinematics_arr, ddkinematics_arr
 
 
-def read_cfd_data(cfd_data_file, u2, karr, dkarr):
+def read_cfd_data(cfd_data_file, u2, karr, dkarr, mscale):
     """read cfd results force coefficients data"""
     phi_spl = UnivariateSpline(karr[:, 0], karr[:, 4] * np.pi / 180, s=0)
 
@@ -105,10 +105,10 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
                 csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
                     row[1])
                 cf_array.append([
-                    ti, cdi, csi, cli,
-                    float(row[4]),
-                    float(row[5]),
-                    float(row[6])
+                    ti, cdi / mscale, csi / mscale, cli / mscale,
+                    float(row[4]) / (mscale)**1.5,
+                    float(row[5]) / (mscale)**1.5,
+                    float(row[6]) / (mscale)**1.5
                 ])
                 line_count += 1
 
@@ -160,7 +160,7 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
     return mcf_array
 
 
-def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
+def cf_plotter(Ro, no_x, data_array, legends, x_range, y_range, y_label,
                image_out_path):
     """
     function to plot cfd force coefficients results
@@ -182,18 +182,18 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         'figure.subplot.wspace': 0.125,
         'figure.subplot.hspace': 0.125,
     })
+
     markers = ['o', 'v', 's', '>', '^']
     y_label = [
         r'$\bar{C}_L$',
         r'$\bar{C}_D$',
         r'$\frac{1}{P*}$',
     ]
-    x_array = np.array(x_data)
+    # x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
 
     no_legend = len(cf_legends)
-    no_x = len(x_array)
     fig, ax = plt.subplots(3, 1)
     for lgd in range(no_legend):
         data_no = no_x * lgd
@@ -202,15 +202,17 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         mcd = []
         mpf = []
         for xi in range(no_x):
-            mcl.append(cf_array[data_no + xi][0])
-            mcd.append(cf_array[data_no + xi][1])
-            mpf.append(cf_array[data_no + xi][0] /
-                       (cf_array[data_no + xi][2]**(2 / 3)))
+            mcl.append([Ro[data_no + xi], cf_array[data_no + xi][0]])
+            mcd.append([Ro[data_no + xi], cf_array[data_no + xi][1]])
+            mpf.append([
+                Ro[data_no + xi], cf_array[data_no + xi][0] /
+                (cf_array[data_no + xi][2]**(2 / 3))
+            ])
 
-        datatoplot = [mcl, mcd, mpf]
+        datatoplot = np.array([mcl, mcd, mpf])
         for i in range(len(datatoplot)):
-            ax[i].plot(x_array,
-                       datatoplot[i],
+            ax[i].plot(datatoplot[i][:, 0],
+                       datatoplot[i][:, 1],
                        label=cf_legends[lgd],
                        marker=markers[lgd],
                        linestyle='-.')
@@ -222,21 +224,18 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
                     ax[i].set_ylim(y_range[i])
 
                 ax[i].set_ylabel(y_label[i])
-                ax[i].set_xlabel(r'$\hat r_1$')
-                # ax[i].set_xlabel('AR')
+                ax[i].set_xlabel('Ro')
                 ax[i].label_outer()
 
                 ax[i].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
 
-    ax[0].legend(
-        loc='upper center',
-        bbox_to_anchor=(0.5, 1.35),
-        # bbox_to_anchor=(0.5, 1.2),
-        ncol=3,
-        fontsize='small',
-        frameon=False)
+    ax[0].legend(loc='upper center',
+                 bbox_to_anchor=(0.5, 1.35),
+                 ncol=3,
+                 fontsize='small',
+                 frameon=False)
 
-    title = 'mean coefficients'
+    title = 'mean coefficients r1h Ro'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
 

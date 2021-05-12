@@ -12,10 +12,13 @@ pt = [0.25]
 #-----------------------------------------
 kinematics_file = 'kinematics.dat'
 cfd_data_list = []
+mscales = []
 for r1h in r1hat:
     for ofs in offset:
         for re in Re:
             for ar in AR:
+                mscalei = ((ar + ofs) / ar)**2
+                mscales.append(mscalei)
                 for p in pt:
                     cfd_data_name = 'ar' + '{0:.1f}'.format(
                         ar) + '_ofs' + '{0:.1f}'.format(
@@ -35,8 +38,8 @@ legends = [
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 8]
-cl_range = [0.5, 3.0]
-cd_range = [0.5, 3.2]
+cl_range = [1.0, 1.8]
+cd_range = [1.0, 2.8]
 pf_range = [0.3, 2.0]
 y_range = [cl_range, cd_range, pf_range]
 y_label = [r'$\bar{C_L}$', r'$\bar{C_D}$', r'$\frac{1}{P^\ast}$']
@@ -51,13 +54,13 @@ image_out_path = cwd
 #---------------------------------------
 CF_file_names = [f.name for f in os.scandir(data_dir) if f.is_file()]
 mcf_array = []
-for cfi in cfd_data_list:
+for cfi, mscale in zip(cfd_data_list, mscales):
     for CF_name in CF_file_names:
         if CF_name.startswith(cfi):
             kinematics_datai = os.path.join(kinematics_dir, CF_name)
             cfd_datai = os.path.join(data_dir, CF_name)
             u2, karr, dkarr, ddkarr = read_kinematics_data(kinematics_datai)
-            mcf_arrayi = read_cfd_data(cfd_datai, u2, karr, dkarr)
+            mcf_arrayi = read_cfd_data(cfd_datai, u2, karr, dkarr, mscale)
             mcf_array.append(mcf_arrayi)
 #---------------------------------------
 cf_plotter(x_data, mcf_array, legends, x_range, y_range, y_label,

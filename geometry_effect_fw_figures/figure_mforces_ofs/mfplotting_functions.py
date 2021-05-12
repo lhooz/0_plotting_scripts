@@ -83,7 +83,7 @@ def read_kinematics_data(kinematics_data_file):
     return u2, kinematics_arr, dkinematics_arr, ddkinematics_arr
 
 
-def read_cfd_data(cfd_data_file, u2, karr, dkarr):
+def read_cfd_data(cfd_data_file, u2, karr, dkarr, mscale):
     """read cfd results force coefficients data"""
     phi_spl = UnivariateSpline(karr[:, 0], karr[:, 4] * np.pi / 180, s=0)
 
@@ -105,10 +105,10 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
                 csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
                     row[1])
                 cf_array.append([
-                    ti, cdi, csi, cli,
-                    float(row[4]),
-                    float(row[5]),
-                    float(row[6])
+                    ti, cdi / mscale, csi / mscale, cli / mscale,
+                    float(row[4]) / (mscale)**1.5,
+                    float(row[5]) / (mscale)**1.5,
+                    float(row[6]) / (mscale)**1.5
                 ])
                 line_count += 1
 
@@ -182,9 +182,8 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         'figure.subplot.wspace': 0.125,
         'figure.subplot.hspace': 0.125,
     })
-    mistake_scales2 = [1.0, 1.77777777777778, 2.77777777777778, 4.0]
 
-    markers = ['o', 'v', 's', '>']
+    markers = ['o', 'v', 's', '>', '^']
     y_label = [
         r'$\bar{C}_L$',
         r'$\bar{C}_D$',
@@ -204,8 +203,8 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         mcd = []
         mpf = []
         for xi in range(no_x):
-            mcl.append(cf_array[data_no + xi][0] / mistake_scales2[lgd])
-            mcd.append(cf_array[data_no + xi][1] / mistake_scales2[lgd])
+            mcl.append(cf_array[data_no + xi][0])
+            mcd.append(cf_array[data_no + xi][1])
             mpf.append(cf_array[data_no + xi][0] /
                        (cf_array[data_no + xi][2]**(2 / 3)))
 
@@ -224,18 +223,21 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
                     ax[i].set_ylim(y_range[i])
 
                 ax[i].set_ylabel(y_label[i])
-                ax[i].set_xlabel('AR')
+                ax[i].set_xlabel(r'$\hat r_R$')
+                # ax[i].set_xlabel('AR')
                 ax[i].label_outer()
 
                 ax[i].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
 
-    ax[0].legend(loc='upper center',
-                 bbox_to_anchor=(0.5, 1.35),
-                 ncol=2,
-                 fontsize='small',
-                 frameon=False)
+    ax[0].legend(
+        loc='upper center',
+        bbox_to_anchor=(0.5, 1.35),
+        ncol=3,
+        # ncol=2,
+        fontsize='small',
+        frameon=False)
 
-    title = 'mean coefficients ofs'
+    title = 'mean coefficients'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
 
