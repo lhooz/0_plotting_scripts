@@ -152,7 +152,8 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
     """plot one single field data"""
     images.append(
         axto_plot.imshow(sImgdata,
-                         cmap='bwr',
+                         # cmap='bwr',
+                         cmap='seismic',
                          norm=imnorm,
                          aspect='equal',
                          extent=window,

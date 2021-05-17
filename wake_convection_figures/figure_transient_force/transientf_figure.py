@@ -4,8 +4,8 @@ import os
 from tfplotting_functions import cf_plotter, read_cfd_data
 
 #-------------input plot control----------
-pa = 45
-Re = [100, 1000, 10000]
+pa = 90
+Re = [100, 1000, 5000]
 stroke = [1.5, 3.0, 6.0]
 at = [0.25]
 pt = [0.25]
@@ -36,8 +36,8 @@ if pa == 0:
     time_to_plot = [0.0, 2.0]
 else:
     time_to_plot = [1.0, 2.0]
-# coeffs_show_range = [-7.0, 7.0]
-coeffs_show_range = [-10.0, 4.0]
+coeffs_show_range = [-7.0, 7.0]
+# coeffs_show_range = [-10.0, 4.0]
 cycle_time = 1.0
 #---------------------------------------
 cwd = os.getcwd()

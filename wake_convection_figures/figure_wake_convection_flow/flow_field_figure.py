@@ -20,14 +20,14 @@ res_vector_sc15 = [20, 25]
 res_vector_sc30 = [25, 25]
 res_vector_sc60 = [40, 25]
 resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
-time_to_plot = [1.2, 1.6]  #---time instances to plot--
+time_to_plot = [1.2, 1.4]  #---time instances to plot--
 #--------------------------------------
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = 10000.0
+Re = 100.0
 stroke = [1.5, 3.0, 6.0]
-pa = 0
+pa = 90
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]

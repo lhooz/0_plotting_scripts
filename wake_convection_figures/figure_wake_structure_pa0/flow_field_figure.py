@@ -24,7 +24,7 @@ resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = [100.0, 1000.0, 10000.0]
+Re = [100.0, 1000.0, 5000.0]
 stroke = [1.5, 3.0, 6.0]
 pa = [0.0]
 #-----------------------------------
