@@ -5,22 +5,25 @@ from cplotting_functions import read_cfd_data, cf_plotter
 #-------------input plot control----------
 kinematics_file = 'kinematics_convergence.dat'
 cfd_data_list = [
-    'ar5.0_ofs0.0_r1h0.5__Re1000.0_pt0.25_basic',
-    'ar5.0_ofs0.0_r1h0.5__Re1000.0_pt0.25_sc',
-    'ar5.0_ofs0.0_r1h0.5__Re1000.0_pt0.25_tc'
+    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25_Ro1.68_basic',
+    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25_Ro1.68_sc',
+    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25_Ro1.68_tc',
+    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25_Ro1.68_sctc',
 ]
 #-----------------------------------------
 legends = [
     r'mesh1, $\Delta t$ = 1e-3',
     r'mesh2, $\Delta t$ = 1e-3',
     r'mesh1, $\Delta t$ = 5e-4',
+    r'mesh2, $\Delta t$ = 5e-4',
 ]
 #-----------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.0, 5.0]
-show_range_cd = [-1.0, 5.0]
+show_range_cl = [-1.5, 3.0]
+show_range_cd = show_range_cl
+# show_range_cd = [-1.0, 5.0]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]

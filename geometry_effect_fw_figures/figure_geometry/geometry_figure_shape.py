@@ -5,7 +5,7 @@ import numpy as np
 from gplotting_functions import g_plotter, read_profile_data
 
 #-------------input plot control----------
-r1h = [0.4, 0.5, 0.6, 0.7]
+r1h = [0.4, 0.5, 0.6]
 ar = [1.5, 3.0, 4.5, 6.0, 7.5]
 ofs = 1.0
 #-----------------------------------------
