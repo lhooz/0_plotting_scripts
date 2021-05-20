@@ -7,9 +7,9 @@ from kplotting_functions import kf_plotter, illustrationk_plotter, read_kinemati
 #-------------input plot control----------
 illustration_data = 'Re100.0_stroke5.0_acf0.25_pf0.25_pa90.0'
 kinematic_data_list = [
-    'Re100.0_stroke5.0_acf0.25_pf0.25_pa90.0',
+    'Re100.0_stroke5.0_acf0.25_pf0.25_pa0.0',
     'Re100.0_stroke5.0_acf0.25_pf0.125_pa45.0',
-    'Re100.0_stroke5.0_acf0.25_pf0.25_pa0.0'
+    'Re100.0_stroke5.0_acf0.25_pf0.25_pa90.0',
 ]
 #-----------------------------------------
 time_scale = 1.0
@@ -25,7 +25,10 @@ data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_capture_2d_journal_data/0_kinematic_cases')
 image_out_path = cwd
 #---------------------------------------
-marks = [r'$\theta$ = 90', r'$\theta$ = 45', r'$\theta$ = 0']
+marks = [
+    r'$\alpha_E$ = 135$^\circ$', r'$\alpha_E$ = 90$^\circ$',
+    r'$\alpha_E$ = 45$^\circ$'
+]
 
 data_array = []
 idata_array = []

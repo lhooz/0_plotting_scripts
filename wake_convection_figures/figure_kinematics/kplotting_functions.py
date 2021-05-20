@@ -153,8 +153,8 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     LEsize = 100
     wing_thick = 3.5
 
-    vgap = 0.15
-    vbarh = 0.2
+    vgap = 0.65
+    vbarh = 0.3
 
     stroke = figure_parameters[0]
     data_array = np.array(iarray)
@@ -177,18 +177,18 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     vbara1 = [[stroke - pt, yp1], [stroke - pt, yp2]]
     vbara2 = [[stroke, yp1], [stroke, yp2]]
     parrow = [[stroke - pt, yparrow],
-              [stroke - pt * 0.5, yparrow + 0.8 * vgap], [stroke, yparrow]]
+              [stroke - pt * 0.5, yparrow + 0.2 * vgap], [stroke, yparrow]]
     #----------------------------
     vbart1 = [[0.0, -0.5 * vbarh], [0.0, 0.5 * vbarh]]
     vbart2 = [[stroke, -0.5 * vbarh], [stroke, 0.5 * vbarh]]
-    sarrow1 = [[0.0, 0.0], [0.5 * stroke, 0.8 * vgap],
+    sarrow1 = [[0.0, 0.0], [0.5 * stroke, 0.2 * vgap],
                [0.5 * stroke * 1.03, 0.0]]
-    sarrow2 = [[0.5 * stroke, 0.0], [stroke, 0.8 * vgap], [stroke, 0.0]]
+    sarrow2 = [[0.5 * stroke, 0.0], [stroke, 0.2 * vgap], [stroke, 0.0]]
 
     #--side bars and arrows for motion illustration--
     vbars = vbara1 + vbara2 + vbart1 + vbart2
     arrows = [parrow, sarrow1, sarrow2]
-    arrowlegend = ['plate pitch', 'plate translation', '']
+    arrowlegend = [r'$\hat p_t$', 'plate translation', '']
     #----------------------------------
 
     nverts = len(vbars)
@@ -217,8 +217,9 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     wingpath = path.Path(wing, codes)
     patch = patches.PathPatch(wingpath, edgecolor='k', linewidth=wing_thick)
 
-    #--aoa and pitch angle annotation--
-    line_length = 1.1
+    #==========AOAs annotation===================
+    #--aoa annotation--
+    line_length = 1.22
     annotation_plength = 0.89 * line_length
     aoa_line = []
     t_aoa = illustration_t_0_1[0]
@@ -236,11 +237,41 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
         annotation_plength * np.cos(aoat_aoa)
     ])
     annotation_pmid = np.array([
-        tt_aoa - 1.16 * annotation_plength * np.sin(aoat_aoa * 1.5),
-        1.16 * annotation_plength * np.cos(aoat_aoa * 1.5)
+        tt_aoa - 1.2 * annotation_plength * np.sin(aoat_aoa * 1.5),
+        1.2 * annotation_plength * np.cos(aoat_aoa * 1.5)
     ])
+
+    aoa_line.append(aoalineLE)
+    aoa_line.append(aoaline_origin)
+
+    #--aoaE annotation--
+    aoaE_line = []
+    t_aoa = illustration_t_0_1[-1]
+    aoat_aoa = (aoa_spl(t_aoa) - 45) * np.pi / 180
+    tt_aoa = t_spl(t_aoa)
+
+    #---points for line drawing and annotation---
+    aoaline_origin = np.array([tt_aoa, 0])
+    aoalineLE = np.array([
+        tt_aoa - line_length * np.sin(aoat_aoa), line_length * np.cos(aoat_aoa)
+    ])
+    annotation_p1E = np.array([tt_aoa - annotation_plength, 0])
+    annotation_p2E = np.array([
+        tt_aoa - annotation_plength * np.sin(aoat_aoa),
+        annotation_plength * np.cos(aoat_aoa)
+    ])
+    annotation_pmidE = np.array([
+        tt_aoa - 1.4 * annotation_plength * np.sin(aoat_aoa * 1.22),
+        1.2 * annotation_plength * np.cos(aoat_aoa * 1.5)
+    ])
+
+    aoaE_line.append(aoalineLE)
+    aoaE_line.append(aoaline_origin)
+
+    #========================================================
+
     #----annotation points for pitch angle---
-    annotation_palength = 0.2 * annotation_plength
+    annotation_palength = 0.25 * annotation_plength
 
     t_pa = [pt_time, 1.0]
     aoat_pa = np.array([
@@ -262,13 +293,10 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
         annotation_palength * np.cos(aoat_pa[1])
     ])
     annotation_pamid = np.array([
-        tt_pa[2] - 2.6 * annotation_palength * np.sin(aoat_pa[2]),
-        2.6 * annotation_palength * np.cos(aoat_pa[2])
+        tt_pa[2] - 2.4 * annotation_palength * np.sin(aoat_pa[2]),
+        2.4 * annotation_palength * np.cos(aoat_pa[2])
     ])
     #----------------------------
-
-    aoa_line.append(aoalineLE)
-    aoa_line.append(aoaline_origin)
 
     nverts = len(aoa_line)
     codes = np.ones(nverts, int) * path.Path.LINETO
@@ -285,10 +313,33 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                        arrowprops=dict(arrowstyle='<-',
                                        facecolor='k',
                                        lw=1,
-                                       connectionstyle='arc3,rad=-0.4'),
+                                       connectionstyle='arc3,rad=-0.5'),
                        annotation_clip=False)
     ax_toplot.annotate(s=r'$\alpha$',
                        xy=(annotation_pmid[0], annotation_pmid[1]),
+                       ha='center',
+                       va='center',
+                       annotation_clip=False)
+
+    nvertsE = len(aoaE_line)
+    codesE = np.ones(nverts, int) * path.Path.LINETO
+    codesE[0::2] = path.Path.MOVETO
+    aoalinepathE = path.Path(aoaE_line, codesE)
+    aoapatchE = patches.PathPatch(aoalinepathE,
+                                  edgecolor='k',
+                                  linewidth=1,
+                                  linestyle='-.')
+
+    ax_toplot.annotate(s='',
+                       xy=(annotation_p1E[0], annotation_p1E[1]),
+                       xytext=(annotation_p2E[0], annotation_p2E[1]),
+                       arrowprops=dict(arrowstyle='<-',
+                                       facecolor='k',
+                                       lw=1,
+                                       connectionstyle='arc3,rad=0.5'),
+                       annotation_clip=False)
+    ax_toplot.annotate(s=r'$\alpha_E$',
+                       xy=(annotation_pmidE[0], annotation_pmidE[1]),
                        ha='center',
                        va='center',
                        annotation_clip=False)
@@ -296,11 +347,12 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                        xy=(annotation_pa1[0], annotation_pa1[1]),
                        xytext=(annotation_pa2[0], annotation_pa2[1]),
                        arrowprops=dict(arrowstyle='<-',
+                                       linestyle='-.',
                                        facecolor='k',
                                        lw=1,
-                                       connectionstyle='arc3,rad=-0.4'),
+                                       connectionstyle='arc3,rad=-0.5'),
                        annotation_clip=False)
-    ax_toplot.annotate(s=r'$\theta$',
+    ax_toplot.annotate(s=r'plate pitch',
                        xy=(annotation_pamid[0], annotation_pamid[1]),
                        ha='center',
                        va='center',
@@ -308,6 +360,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     #--------------------------
 
     ax_toplot.add_patch(aoapatch)
+    ax_toplot.add_patch(aoapatchE)
     ax_toplot.add_patch(patch)
     ax_toplot.add_patch(barpatch)
     LE = np.array(LE)
@@ -318,12 +371,16 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
             arstyle = '<-'
         else:
             arstyle = '-'
+        if arrow == arrows[0]:
+            lstyle = '-'
+        else:
+            lstyle = '-.'
 
         ax_toplot.annotate(s='',
                            xy=(arrow[0][0], arrow[0][1]),
                            xytext=(arrow[2][0], arrow[2][1]),
                            arrowprops=dict(arrowstyle=arstyle,
-                                           linestyle='-.',
+                                           linestyle=lstyle,
                                            facecolor='k',
                                            lw=1),
                            annotation_clip=False)
@@ -334,7 +391,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                            annotation_clip=False)
     #--------------------------------------
     ax_toplot.set_xlim([-0.6, stroke + 0.6])
-    ax_toplot.set_ylim([-0.8, 1.0])
+    ax_toplot.set_ylim([-1.0, 2.0])
     ax_toplot.set_aspect('equal')
     ax_toplot.axis('off')
 
@@ -352,7 +409,7 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 14,
-        'figure.figsize': (14, 8),
+        'figure.figsize': (12, 8),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
@@ -360,15 +417,23 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
     })
     data_array = np.array(data_array)
 
-    gs_kw = dict(left=0.125,
-                 right=0.9,
-                 top=0.55,
+    gs_kw = dict(left=0.25,
+                 right=0.85,
+                 top=0.85,
                  bottom=0.2,
                  wspace=0.1,
-                 hspace=0.0)
+                 hspace=0.2)
 
-    fig, axs = plt.subplots(nrows=2, ncols=3, gridspec_kw=gs_kw)
-    for axr1i, kinematic_listi, marker, iarrayi in zip(axs[0, :],
+    gs_i = dict(left=0.125,
+                right=0.825,
+                top=0.8,
+                bottom=0.2,
+                wspace=0.05,
+                hspace=0.0)
+
+    fig1, axs = plt.subplots(nrows=3, ncols=2, gridspec_kw=gs_kw)
+    fig2, axi = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_kw)
+    for axr1i, kinematic_listi, marker, iarrayi in zip(axs[:, 1],
                                                        kinematic_data_list,
                                                        marks, idata_array):
         figure_parametersi = [
@@ -380,12 +445,13 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
                        figure_parametersi)
 
     labels = [r'$u/U_T$', r'$\.\alpha/\.\alpha_M$']
-    for axr2i, datai in zip(axs[1, :], data_array):
+    for axr2i, datai in zip(axs[:, 0], data_array):
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 1], label=labels[0])
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 2], label=labels[1])
-        axr2i.set_xlabel(r'Non-dimensional time $(\/\^t\/)$')
+        axr2i.set_xlabel(r'$\^t$')
         axr2i.set_ylabel('Normalized velocity')
-        axr2i.legend()
+        if axr2i == axs[0, 0]:
+            axr2i.legend(fontsize='small', frameon=False)
         axr2i.axvline(x=1.0, color='k', linestyle='-', linewidth=0.5)
         axr2i.label_outer()
         axr2i.set_aspect('auto')
@@ -395,40 +461,14 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
             axr2i.set_ylim(show_range)
 
     title = 'kinematics plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
-
-    bx_loc = axs[0, 0].get_xlim()[0] - 0.1 * (axs[0, 0].get_xlim()[1] -
-                                              axs[0, 0].get_xlim()[0])
-    by_loc = axs[0, 0].get_ylim()[1] + 0.2 * (axs[0, 0].get_ylim()[1] -
-                                              axs[0, 0].get_ylim()[0])
-    axs[0, 0].annotate(s='(b)',
-                       xy=(bx_loc, by_loc),
-                       ha='center',
-                       va='center',
-                       annotation_clip=False)
+    out_image_file1 = os.path.join(image_out_path, title + '_case.png')
+    out_image_file2 = os.path.join(image_out_path, title + '_illustration.png')
 
     #----add illustration figure-----
-    gs_i = fig.add_gridspec(nrows=1,
-                            ncols=1,
-                            left=0.2,
-                            right=0.825,
-                            top=0.9,
-                            bottom=0.6,
-                            wspace=0.05,
-                            hspace=0.0)
-
-    axi = fig.add_subplot(gs_i[0, 0])
     illustrationk_plotter(axi, iarray, ifigure_parameters)
 
-    ax_loc = axi.get_xlim()[0] - 0.0 * (axi.get_xlim()[1] - axi.get_xlim()[0])
-    ay_loc = axi.get_ylim()[1] - 0.1 * (axi.get_ylim()[1] - axi.get_ylim()[0])
-    axi.annotate(s='(a)',
-                 xy=(ax_loc, ay_loc),
-                 ha='center',
-                 va='center',
-                 annotation_clip=False)
-
-    plt.savefig(out_image_file)
+    fig1.savefig(out_image_file1)
+    fig2.savefig(out_image_file2)
     # plt.show()
 
-    return fig
+    return fig1, fig2
