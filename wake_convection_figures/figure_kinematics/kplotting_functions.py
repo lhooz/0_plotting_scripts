@@ -188,7 +188,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     #--side bars and arrows for motion illustration--
     vbars = vbara1 + vbara2 + vbart1 + vbart2
     arrows = [parrow, sarrow1, sarrow2]
-    arrowlegend = [r'$\hat p_t$', 'plate translation', '']
+    arrowlegend = [r'$\hat p_t$', 'Plate translation', '']
     #----------------------------------
 
     nverts = len(vbars)
@@ -352,7 +352,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                                        lw=1,
                                        connectionstyle='arc3,rad=-0.5'),
                        annotation_clip=False)
-    ax_toplot.annotate(s=r'plate pitch',
+    ax_toplot.annotate(s=r'Plate pitch',
                        xy=(annotation_pamid[0], annotation_pamid[1]),
                        ha='center',
                        va='center',
@@ -409,27 +409,27 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 14,
-        'figure.figsize': (12, 8),
+        'figure.figsize': (6 * 2, 2.75 * 3),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
+        'figure.dpi': 300,
     })
     data_array = np.array(data_array)
 
-    gs_kw = dict(left=0.25,
-                 right=0.85,
-                 top=0.85,
+    gs_kw = dict(left=0.2,
+                 right=0.8,
+                 top=0.8,
                  bottom=0.2,
-                 wspace=0.1,
-                 hspace=0.2)
+                 wspace=0.17,
+                 hspace=0.17)
 
-    gs_i = dict(left=0.125,
-                right=0.825,
+    gs_i = dict(left=0.2,
+                right=0.8,
                 top=0.8,
                 bottom=0.2,
-                wspace=0.05,
-                hspace=0.0)
+                wspace=0.17,
+                hspace=0.17)
 
     fig1, axs = plt.subplots(nrows=3, ncols=2, gridspec_kw=gs_kw)
     fig2, axi = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_kw)
@@ -449,20 +449,20 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 1], label=labels[0])
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 2], label=labels[1])
         axr2i.set_xlabel(r'$\^t$')
-        axr2i.set_ylabel('Normalized velocity')
+        if axr2i == axs[1, 0]:
+            axr2i.set_ylabel('Normalized velocity')
         if axr2i == axs[0, 0]:
             axr2i.legend(fontsize='small', frameon=False)
         axr2i.axvline(x=1.0, color='k', linestyle='-', linewidth=0.5)
         axr2i.label_outer()
-        axr2i.set_aspect('auto')
         if time_to_plot != 'all':
             axr2i.set_xlim(time_to_plot)
         if show_range != 'all':
             axr2i.set_ylim(show_range)
 
     title = 'kinematics plot'
-    out_image_file1 = os.path.join(image_out_path, title + '_case.png')
-    out_image_file2 = os.path.join(image_out_path, title + '_illustration.png')
+    out_image_file1 = os.path.join(image_out_path, title + '_case.svg')
+    out_image_file2 = os.path.join(image_out_path, title + '_illustration.svg')
 
     #----add illustration figure-----
     illustrationk_plotter(axi, iarray, ifigure_parameters)

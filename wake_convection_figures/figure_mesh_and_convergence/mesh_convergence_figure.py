@@ -4,17 +4,17 @@ import os
 from mcplotting_functions import read_cfd_data, cf_plotter, mesh_plotter
 #-------------input plot control----------
 cfd_data_list = [
-    'Re5000.0_stroke6.0_acf0.25_pf0.25_pa90.0_basic',
-    'Re5000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sc',
-    'Re5000.0_stroke6.0_acf0.25_pf0.25_pa90.0_tc',
-    'Re5000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sctc'
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_basic',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_tc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sctc'
 ]
 #-----------------------------------------
 legends = [
-    r'mesh1, $\Delta t$ = 1e-3',
-    r'mesh2, $\Delta t$ = 1e-3',
-    r'mesh1, $\Delta t$ = 5e-4',
-    r'mesh2, $\Delta t$ = 5e-4'
+    r'Mesh current, $\Delta t$ current',
+    r'Mesh fine, $\Delta t$ current',
+    r'Mesh current, $\Delta t$ fine',
+    r'Mesh fine, $\Delta t$ fine'
 ]
 # legends = [
 # r'mesh1, $\Delta t$ = 1e-3',
@@ -24,9 +24,9 @@ legends = [
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [0, 2.0]
-show_range_cl = [-2.5, 10]
+show_range_cl = [-2.0, 9.0]
 show_range_cd = show_range_cl
-# show_range_cd = [-3, 8]
+# show_range_cd = [-2.0, 6.5]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]

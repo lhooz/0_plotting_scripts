@@ -29,7 +29,7 @@ image_out_path = cd
 # r'experiment, $\alpha = 45 ^\circ$', r'experiment, $\alpha = 60 ^\circ$'
 # ]
 legendcfd = [
-    r'Simulation, $\alpha = 45 ^\circ$', r'Simulation, $\alpha = 60 ^\circ$'
+    r'Current CFD, $\alpha = 45 ^\circ$', r'Current CFD, $\alpha = 60 ^\circ$'
 ]
 legendexp = [
     r'Experiment, $\alpha = 45 ^\circ$', r'Experiment, $\alpha = 60 ^\circ$'

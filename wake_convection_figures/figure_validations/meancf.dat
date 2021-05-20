@@ -1,6 +1,6 @@
-Simulation, $\alpha = 45 ^\circ$:
+Current CFD, $\alpha = 45 ^\circ$:
 mcf_s = 1.5606286, mcf_w = -0.0074406704, mcf = 1.553188
-Simulation, $\alpha = 60 ^\circ$:
+Current CFD, $\alpha = 60 ^\circ$:
 mcf_s = 1.182339, mcf_w = -0.12866752, mcf = 1.0536715
 Experiment, $\alpha = 45 ^\circ$:
 mcf_s = 1.6449142, mcf_w = 0.007675782, mref = 1.65259

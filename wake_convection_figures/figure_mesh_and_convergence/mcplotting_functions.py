@@ -49,28 +49,26 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 14,
-        'figure.figsize': (12, 4),
-        'lines.linewidth': 2.0,
+        'figure.figsize': (12, 11),
+        'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
-        'figure.subplot.left': 0.125,
-        'figure.subplot.right': 0.9,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.2,
+        'figure.subplot.right': 0.8,
         'figure.subplot.top': 0.8,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.2,
-        'figure.subplot.hspace': 0.1,
+        'figure.subplot.wspace': 0.17,
+        'figure.subplot.hspace': 0.17,
     })
-    legendx = 1.1
-    legendy = 1.2
-
     cf_array = np.array(data_array)
     range_cl = show_range[0]
     range_cd = show_range[1]
 
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(2, 1)
     mcl_arr = []
     mcd_arr = []
+
     if plot_mode == 'against_t':
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
@@ -120,18 +118,18 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             ax.axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
             ax.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
             ax.set_xlabel(r'$\^t$')
+            ax.label_outer()
 
-        axs[0].set_ylabel(r'$C_L$')
-        axs[1].set_ylabel(r'$C_D$')
+        axs[0].set_ylabel(r'$C_l$')
+        axs[1].set_ylabel(r'$C_d$')
 
-        axs[0].legend(loc='upper center',
-                      bbox_to_anchor=(legendx, legendy),
-                      ncol=4,
+        axs[0].legend(loc='upper right',
+                      ncol=1,
                       fontsize='small',
                       frameon=False)
 
     title = 'convergence plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
     # plt.show()
 
@@ -144,19 +142,19 @@ def mesh_plotter(image_out_path):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 24,
-        'figure.figsize': (14, 12),
-        'lines.linewidth': 0.5,
+        'font.size': 14,
+        'figure.figsize': (10, 10),
+        'lines.linewidth': 4,
         'lines.markersize': 0.1,
-        'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
+        'lines.markerfacecolor': 'k',
+        'figure.dpi': 300,
     })
 
-    circle_bg = plt.Circle((0, 0), 20, color='k', linewidth=0.5, fill=False)
+    circle_bg = plt.Circle((0, 0), 20, color='k', linewidth=4, fill=False)
     circle_overset = plt.Circle((-5, 0),
                                 10,
                                 color='k',
-                                linewidth=0.5,
+                                linewidth=4,
                                 fill=False)
 
     LE = [-5 + 0.5 * np.cos(45 * np.pi / 180), 0.5 * np.sin(45 * np.pi / 180)]
@@ -169,7 +167,7 @@ def mesh_plotter(image_out_path):
     plinepath = path.Path(plate_line, codes)
     platepatch = patches.PathPatch(plinepath,
                                    edgecolor='k',
-                                   linewidth=1,
+                                   linewidth=4,
                                    linestyle='-')
 
     #-----------domain plot------------
@@ -181,33 +179,50 @@ def mesh_plotter(image_out_path):
                 hspace=0.0)
 
     fig, axd = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_d)
+    axd.spines['right'].set_visible(False)
+    axd.spines['top'].set_visible(False)
+    # make arrows
+    axd.plot((1), (0),
+             ls="",
+             marker=">",
+             ms=8,
+             color="k",
+             transform=axd.transAxes,
+             clip_on=False)
+    axd.plot((0), (1),
+             ls="",
+             marker="^",
+             ms=8,
+             color="k",
+             transform=axd.transAxes,
+             clip_on=False)
 
     axd.add_artist(circle_bg)
     axd.add_artist(circle_overset)
     axd.add_patch(platepatch)
 
-    axd.annotate(s='flat plate',
+    axd.annotate(s='Flat plate',
                  xy=(-5.0, -1.1),
                  ha='center',
                  va='center',
                  annotation_clip=False)
-    axd.annotate(s='overset patch',
-                 xy=(5.0, -4.0),
+    axd.annotate(s='Domain boundary',
+                 xy=(6.5, -8.0),
                  ha='center',
                  va='center',
                  annotation_clip=False)
-    axd.annotate(s='overset domain',
+    axd.annotate(s='Overset domain',
                  xy=(-5.0, 4.5),
                  ha='center',
                  va='center',
                  annotation_clip=False)
-    axd.annotate(s='background domain',
+    axd.annotate(s='Background domain',
                  xy=(0.0, 14.0),
                  ha='center',
                  va='center',
                  annotation_clip=False)
-    axd.annotate(s='far-field',
-                 xy=(-15.0, 16.7),
+    axd.annotate(s='Far field',
+                 xy=(-15.0, 16.0),
                  ha='center',
                  va='center',
                  annotation_clip=False)
@@ -218,6 +233,6 @@ def mesh_plotter(image_out_path):
     axd.set_xlabel('x/c')
     axd.set_ylabel('y/c')
 
-    oimage_file = os.path.join(image_out_path, 'domain.png')
+    oimage_file = os.path.join(image_out_path, 'domain.svg')
     plt.savefig(oimage_file)
     # plt.show()

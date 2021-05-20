@@ -134,18 +134,18 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 15,
-        'figure.figsize': (10, 6),
-        'lines.linewidth': 2.0,
+        'font.size': 14,
+        'figure.figsize': (12, 11),
+        'lines.linewidth': 4.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
-        'figure.subplot.left': 0.125,
-        'figure.subplot.right': 0.9,
-        'figure.subplot.top': 0.9,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.2,
+        'figure.subplot.right': 0.8,
+        'figure.subplot.top': 0.8,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.1,
-        'figure.subplot.hspace': 0.1,
+        'figure.subplot.wspace': 0.17,
+        'figure.subplot.hspace': 0.17,
     })
     kine_array = np.array(data_array[0])
     cf_array = np.array(data_array[1])
@@ -212,9 +212,9 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                      va='center',
                      annotation_clip=False)
 
-    ax1.set_xlabel(r'Non-dimensional time $(\/\^t\/)$')
+    ax1.set_xlabel(r'$\^t$')
 
-    fig2, ax2 = plt.subplots(1, 2)
+    fig2, ax2 = plt.subplots(2, 1)
 
     if time_to_plot != 'all':
         ax2[0].set_xlim(time_to_plot)
@@ -249,8 +249,9 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
 
         mref_arr.append([mref_s, mref_w, mref])
 
-        ax2[i].set_xlabel(r'Non-dimensional time $(\/\^t\/)$')
-        ax2[i].set_ylabel(r'$C_L$')
+        ax2[i].set_xlabel(r'$\^t$')
+        ax2[i].set_ylabel(r'$C_l$')
+        ax2[i].label_outer()
         ax2[i].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
         ax2[i].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
         ax2[i].legend(frameon=False)
@@ -258,8 +259,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     ax1.set_ylabel(r'$u/U_T$')
     ax1.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-    out_image_file1 = os.path.join(image_out_path, 'kinematics.png')
-    out_image_file2 = os.path.join(image_out_path, 'coefficients.png')
+    out_image_file1 = os.path.join(image_out_path, 'kinematics.svg')
+    out_image_file2 = os.path.join(image_out_path, 'coefficients.svg')
     # ax.set_title(title)
 
     with open('meancf.dat', 'w') as f:
@@ -274,11 +275,11 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                     ('{0:.8g}'.format(item[0]), '{0:.8g}'.format(
                         item[1]), '{0:.8g}'.format(item[2])))
 
-    fig1.set_size_inches(10, 4)
-    fig2.set_size_inches(15, 4)
+    fig1.set_size_inches(12, 5.5)
+    fig2.set_size_inches(12, 11)
     fig1.savefig(out_image_file1)
     fig2.savefig(out_image_file2)
-    plt.show()
+    # plt.show()
 
     return fig1, fig2
 
