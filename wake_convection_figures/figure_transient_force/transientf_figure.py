@@ -5,7 +5,7 @@ from tfplotting_functions import cf_plotter, read_cfd_data
 
 #-------------input plot control----------
 pa = 90
-Re = [100, 1000, 5000]
+Re = [100, 1000]
 stroke = [1.5, 3.0, 6.0]
 at = [0.25]
 pt = [0.25]
@@ -26,7 +26,7 @@ for re in Re:
                                 p) + '_pa' + '{0:.1f}'.format(pa)
                 cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
-legendre = [r'$Re = ' + str(x) + '$' for x in Re]
+legendre = [r'$Re = 10^2$', r'$Re = 10^3$']
 legendsc = [r'$s/c = ' + str(x) + '$' for x in stroke]
 legends = [legendre, legendsc]
 #---------------------------------------
@@ -36,7 +36,7 @@ if pa == 0:
     time_to_plot = [0.0, 2.0]
 else:
     time_to_plot = [1.0, 2.0]
-coeffs_show_range = [-7.0, 7.0]
+coeffs_show_range = [-10.0, 10.0]
 # coeffs_show_range = [-10.0, 4.0]
 cycle_time = 1.0
 #---------------------------------------
@@ -44,7 +44,7 @@ cwd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                   'wake_convection_data')
 oimage_file = os.path.join(
-    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + '.png')
+    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + '.svg')
 #---------------------------------------
 cf_array = []
 for cfi in cfd_data_list:

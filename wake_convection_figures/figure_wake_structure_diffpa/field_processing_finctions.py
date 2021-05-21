@@ -162,9 +162,9 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
     axto_plot.contour(
         sCtrdata,
         levels,
-        linewidths=1.2,
+        linewidths=1.5,
         # linestyles='--',
-        colors='k',
+        colors='lime',
         extent=window,
         origin='lower')
     axto_plot.quiver(grid_x,
@@ -182,7 +182,7 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
     codes[-1] = path.Path.CLOSEPOLY
     wgeopatch = path.Path(wdata, codes)
     patch = patches.PathPatch(wgeopatch,
-                              linewidth=0.2,
+                              linewidth=1.5,
                               facecolor='k',
                               edgecolor='k',
                               alpha=1.0)
@@ -199,9 +199,9 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (12, 8),
-        'lines.linewidth': 0.5,
+        'font.size': 14,
+        'figure.figsize': (15, 11),
+        'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -212,18 +212,18 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
     no_c = len(marksc)
     imnorm = colors.Normalize(vmin=-20, vmax=20)
     levels = [1.0]
-    zoom_order = 5
+    zoom_order = 6
 
     images = []
     ax_all = []
     #----plot different pa data----
-    gs_kw = dict(left=0.125,
-                 right=0.85,
-                 top=0.85,
-                 bottom=0.15,
+    gs_kw = dict(left=0.2,
+                 right=0.8,
+                 top=0.8,
+                 bottom=0.2,
                  wspace=0.05,
                  hspace=0.05,
-                 width_ratios=[4, 5.5, 8.5])
+                 width_ratios=[32, 40, 42])
 
     fig, ax = plt.subplots(nrows=no_r, ncols=no_c, gridspec_kw=gs_kw)
     for ci in range(no_c):
@@ -239,16 +239,17 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             wdatai = wgeo_data[ci][ri]
 
             sImgdatai = zoom(sImgdatai, zoom_order)
-            sImgdatai = gaussian_filter(sImgdatai, sigma=3.0)
+            sImgdatai = gaussian_filter(sImgdatai, sigma=5.0)
             sCtrdatai = zoom(sCtrdatai, zoom_order)
-            sCtrdatai = gaussian_filter(sCtrdatai, sigma=3.0)
+            sCtrdatai = gaussian_filter(sCtrdatai, sigma=5.0)
 
-            if ci == 0:
-                quiver_scale = 50
-            elif ci == 1:
-                quiver_scale = 35
-            else:
-                quiver_scale = 20
+            # if ci == 0:
+                # quiver_scale = 50
+            # elif ci == 1:
+                # quiver_scale = 35
+            # else:
+                # quiver_scale = 20
+            quiver_scale = 20
 
             single_plot_field(images, axre, windows[ci], grid_x, grid_y,
                               sImgdatai, sCtrdatai, vdatai, wdatai, imnorm,

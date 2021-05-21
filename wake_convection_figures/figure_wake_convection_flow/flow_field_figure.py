@@ -11,23 +11,29 @@ from field_processing_finctions import (field_plot, grid_vorz, grid_ufield,
                                         read_vfield, read_wgeo)
 
 #--------------figure parameters------------
-window_sc15 = [-1.0, 3.0, -2.5, 2.5]
-window_sc30 = [-1.0, 4.5, -2.5, 2.5]
-window_sc60 = [-1.0, 7.5, -2.5, 2.5]
-resolution = [200, 200]  #--interpolate res for vorticity field--
+#----pa = 0 window--
+# window_sc15 = [-0.6, 2.6, -1.8, 1.8]
+# window_sc30 = [-0.1, 3.9, -1.8, 1.8]
+# window_sc60 = [2.7, 6.9, -1.8, 1.8]
+#---pa = 45 window--
+window_sc15 = [-0.1, 3.1, -2.0, 1.6]
+window_sc30 = [0.4, 4.4, -2.0, 1.6]
+window_sc60 = [3.2, 7.4, -2.0, 1.6]
+#------------------------------------------
+resolution = [250, 220]  #--interpolate res for vorticity field--
 #--interpolate res for velocity field--
-res_vector_sc15 = [20, 25]
-res_vector_sc30 = [25, 25]
-res_vector_sc60 = [40, 25]
+res_vector_sc15 = [20, 22]
+res_vector_sc30 = [25, 22]
+res_vector_sc60 = [26, 22]
 resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
-time_to_plot = [1.2, 1.4]  #---time instances to plot--
+time_to_plot = [1.2, 1.6]  #---time instances to plot--
 #--------------------------------------
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
 Re = 100.0
 stroke = [1.5, 3.0, 6.0]
-pa = 90
+pa = 45
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
@@ -39,7 +45,7 @@ data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_convection_data/4_FIELD_RESULTS')
 oimage_file = os.path.join(
     cwd, 'wake_flow_pa' + '{0:.0f}'.format(pa) + '_Re' + '{0:.0f}'.format(Re) +
-    '.png')
+    '.svg')
 #-----------------------------------
 fdata_all = []
 wdata_all = []

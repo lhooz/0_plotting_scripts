@@ -44,24 +44,24 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (12, 10),
-        'lines.linewidth': 1.8,
-        'lines.markersize': 0.1,
+        'font.size': 14,
+        'figure.figsize': (15, 4.0 * 2 * 1.25),
+        'lines.linewidth': 3.0,
+        'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
-        'figure.subplot.left': 0.125,
-        'figure.subplot.right': 0.85,
-        'figure.subplot.top': 0.9,
-        'figure.subplot.bottom': 0.125,
-        'figure.subplot.wspace': 0.15,
-        'figure.subplot.hspace': 0.1,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.2,
+        'figure.subplot.right': 0.8,
+        'figure.subplot.top': 0.8,
+        'figure.subplot.bottom': 0.2,
+        'figure.subplot.wspace': 0.17,
+        'figure.subplot.hspace': 0.17,
     })
     cf_array = np.array(data_array)
     legendre = legends[0]
     legendsc = legends[1]
 
-    fig, ax = plt.subplots(3, 2)
+    fig, ax = plt.subplots(2, 2)
     if plot_mode == 'against_t':
         rowno = 0
         for axrow in ax:
@@ -107,16 +107,16 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
                 axrow[1].set_xticklabels([])
 
             axrow[1].set_yticklabels([])
-            axrow[0].set_ylabel(r'$C_L$')
-            axrow[1].set_ylabel(r'$C_D$')
+            axrow[0].set_ylabel(r'$C_l$')
+            axrow[1].set_ylabel(r'$C_d$')
             if axrow[0] == ax[0][0]:
                 axrow[1].legend(loc='upper center',
-                                bbox_to_anchor=(-0.05, 1.2),
+                                bbox_to_anchor=(-0.05, 1.18),
                                 ncol=3,
                                 fontsize='small',
                                 frameon=False)
 
-            markx_loc = axrow[1].get_xlim()[1] + 0.18 * (
+            markx_loc = axrow[1].get_xlim()[1] + 0.12 * (
                 axrow[1].get_xlim()[1] - axrow[1].get_xlim()[0])
             markymid_loc = axrow[1].get_ylim()[0] + 0.5 * (
                 axrow[1].get_ylim()[1] - axrow[1].get_ylim()[0])
@@ -133,8 +133,8 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
             axrow[0].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
             axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-            # v_lines = [1.2, 1.4]
-            v_lines = [1.2, 1.6]
+            v_lines = [1.2, 1.4]
+            # v_lines = [1.2, 1.6]
             for line in v_lines:
                 axrow[0].axvline(x=line,
                                  color='k',
@@ -150,6 +150,6 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
             rowno += 1
 
     plt.savefig(oimage_file)
-    plt.show()
+    # plt.show()
 
     return fig

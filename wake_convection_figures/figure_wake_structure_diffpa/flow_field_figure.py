@@ -11,33 +11,33 @@ from field_processing_finctions import (field_plot, grid_vorz, grid_ufield,
                                         read_vfield, read_wgeo)
 
 #--------------figure parameters------------
-window_sc15 = [-1.0, 3.0, -2.5, 2.5]
-window_sc30 = [-1.0, 4.5, -2.5, 2.5]
-window_sc60 = [-1.0, 7.5, -2.5, 2.5]
-resolution = [200, 200]  #--interpolate res for vorticity field--
+window_sc15 = [-0.5, 2.7, -2.1, 1.5]
+window_sc30 = [0.0, 4.0, -2.1, 1.5]
+window_sc60 = [2.8, 7.0, -2.1, 1.5]
+resolution = [250, 220]  #--interpolate res for vorticity field--
 #--interpolate res for velocity field--
-res_vector_sc15 = [20, 25]
-res_vector_sc30 = [25, 25]
-res_vector_sc60 = [40, 25]
+res_vector_sc15 = [20, 22]
+res_vector_sc30 = [25, 22]
+res_vector_sc60 = [26, 22]
 resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
 #--------------------------------------
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = [5000.0]
+Re = [100.0]
 stroke = [1.5, 3.0, 6.0]
 pa = [45.0, 90.0]
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
-markpa = [r'$\theta = ' + '{0:.0f}'.format(x) + '\degree$' for x in pa]
+markpa = [r'$\theta = ' + '{0:.0f}'.format(x) + '^\circ$' for x in pa]
 marks = [marksc, markpa]
 #-----------------------------------
 cwd = os.getcwd()
 data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_convection_data/4_FIELD_RESULTS')
 oimage_file = os.path.join(
-    cwd, 'wake_structure_dpa_Re' + '{0:.0f}'.format(Re[0]) + '.png')
+    cwd, 'wake_structure_dpa_Re' + '{0:.0f}'.format(Re[0]) + '.svg')
 #-----------------------------------
 fdata_all = []
 wdata_all = []
