@@ -28,13 +28,16 @@ for pai in pa:
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
 x_data = stroke
-markc = [r'$\theta = ' + '{0:.0f}'.format(x) + '^\circ$' for x in pa]
+markc = [
+    r'$\alpha_E$ = 135$^\circ$', r'$\alpha_E$ = 90$^\circ$',
+    r'$\alpha_E$ = 45$^\circ$'
+]
 legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 #---------------------------------------
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 6.5]
-cl_range = [-0.8, 0.7]
+cl_range = [-0.8, 0.8]
 cd_range = cl_range
 rl_range = [-0.5, 0.5]
 rd_range = rl_range

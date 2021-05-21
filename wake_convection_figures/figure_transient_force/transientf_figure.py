@@ -3,8 +3,8 @@ import os
 
 from tfplotting_functions import cf_plotter, read_cfd_data
 
-#-------------input plot control----------
-pa = 45
+#------------input plot control----------
+pa = 90
 Re = [100, 1000]
 # stroke = [6]
 stroke = [1.5, 3.0, 6.0]
@@ -34,13 +34,16 @@ legends = [legendre, legendsc]
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 # if pa == 0:
-    # time_to_plot = [0.0, 2.0]
+# time_to_plot = [0.0, 2.0]
 # else:
-    # time_to_plot = [1.0, 2.0]
+# time_to_plot = [1.0, 2.0]
 time_to_plot = [0.0, 2.0]
-# coeffs_show_range = [-5.0, 7.0] #--pa0--
-coeffs_show_range = [-42.0, 34.0] #--pa45--
-# coeffs_show_range = [-16.0, 37.0] #--pa90--
+if pa == 0:
+    coeffs_show_range = [-5.0, 7.0]  #--pa0--
+elif pa == 45:
+    coeffs_show_range = [-42.0, 34.0]  #--pa45--
+elif pa == 90:
+    coeffs_show_range = [-16.0, 37.0]  #--pa90--
 # coeffs_show_range = [-10.0, 4.0]
 cycle_time = 1.0
 #---------------------------------------
@@ -59,5 +62,5 @@ for cfi in cfd_data_list:
 data_array = cf_array
 #---------------------------------------
 
-cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range, oimage_file,
-           cycle_time, 'against_t')
+cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
+           oimage_file, cycle_time, 'against_t')

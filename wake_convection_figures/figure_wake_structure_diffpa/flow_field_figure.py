@@ -24,13 +24,13 @@ resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = [100.0]
+Re = [1000.0]
 stroke = [1.5, 3.0, 6.0]
 pa = [45.0, 90.0]
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
-markpa = [r'$\theta = ' + '{0:.0f}'.format(x) + '^\circ$' for x in pa]
+markpa = [r'$\alpha_E = 90^\circ$', r'$\alpha_E = 45^\circ$']
 marks = [marksc, markpa]
 #-----------------------------------
 cwd = os.getcwd()

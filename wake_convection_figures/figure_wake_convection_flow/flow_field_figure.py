@@ -11,14 +11,22 @@ from field_processing_finctions import (field_plot, grid_vorz, grid_ufield,
                                         read_vfield, read_wgeo)
 
 #--------------figure parameters------------
-#----pa = 0 window--
-# window_sc15 = [-0.6, 2.6, -1.8, 1.8]
-# window_sc30 = [-0.1, 3.9, -1.8, 1.8]
-# window_sc60 = [2.7, 6.9, -1.8, 1.8]
-#---pa = 45 window--
-window_sc15 = [-0.1, 3.1, -2.0, 1.6]
-window_sc30 = [0.4, 4.4, -2.0, 1.6]
-window_sc60 = [3.2, 7.4, -2.0, 1.6]
+pa = 90
+Re = 100.0
+if pa == 0:
+    #----pa = 0 window--
+    window_sc15 = [-0.6, 2.6, -1.8, 1.8]
+    window_sc30 = [-0.1, 3.9, -1.8, 1.8]
+    window_sc60 = [2.7, 6.9, -1.8, 1.8]
+elif pa == 45:
+    #---pa = 45 window--
+    window_sc15 = [-0.1, 3.1, -2.0, 1.6]
+    window_sc30 = [0.4, 4.4, -2.0, 1.6]
+    window_sc60 = [3.2, 7.4, -2.0, 1.6]
+elif pa == 90:
+    window_sc15 = [-0.1, 3.1, -2.0, 1.6]
+    window_sc30 = [0.5, 4.5, -2.0, 1.6]
+    window_sc60 = [3.4, 7.6, -2.0, 1.6]
 #------------------------------------------
 resolution = [250, 220]  #--interpolate res for vorticity field--
 #--interpolate res for velocity field--
@@ -31,9 +39,7 @@ time_to_plot = [1.2, 1.4, 1.6]  #---time instances to plot--
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = 1000.0
 stroke = [1.5, 3.0, 6.0]
-pa = 45
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]

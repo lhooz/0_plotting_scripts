@@ -44,16 +44,16 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (15, 4.0 * 2 * 1.25),
+        'font.size': 18,
+        'figure.figsize': (14, 4.0 * 2 * 1.25),
         'lines.linewidth': 3.0,
         'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
-        'figure.subplot.left': 0.2,
-        'figure.subplot.right': 0.8,
-        'figure.subplot.top': 0.8,
-        'figure.subplot.bottom': 0.2,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
         'figure.subplot.wspace': 0.17,
         'figure.subplot.hspace': 0.17,
     })
@@ -65,6 +65,8 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
     if plot_mode == 'against_t':
         rowno = 0
         for axrow in ax:
+            # axrow[0].set_yticks(np.arange(-60, 60, 15)) #--for pa90--
+            # axrow[1].set_yticks(np.arange(-60, 60, 15))
             datano = rowno * len(legendsc)
             for i in range(len(legendsc)):
                 axrow[0].plot(cf_array[datano + i][:, 0] / cycle_time,
@@ -89,17 +91,16 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
 
             if axrow[0] == ax[-1][0]:
                 for axc, text_loci in zip(axrow, text_loc):
-                    if 'pa0' in oimage_file:
-                        axc.annotate(s='stroke motion',
-                                     xy=(0.55, text_loci),
-                                     ha='center',
-                                     va='center',
-                                     annotation_clip=False)
-                        axc.annotate(s='wake effect',
-                                     xy=(1.55, text_loci),
-                                     ha='center',
-                                     va='center',
-                                     annotation_clip=False)
+                    axc.annotate(s='stroke motion',
+                                 xy=(0.55, text_loci),
+                                 ha='center',
+                                 va='center',
+                                 annotation_clip=False)
+                    axc.annotate(s='wake effect',
+                                 xy=(1.55, text_loci),
+                                 ha='center',
+                                 va='center',
+                                 annotation_clip=False)
 
                     axc.set_xlabel(r'$\^t$')
             else:
@@ -116,7 +117,7 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
                                 fontsize='small',
                                 frameon=False)
 
-            markx_loc = axrow[1].get_xlim()[1] + 0.12 * (
+            markx_loc = axrow[1].get_xlim()[1] + 0.13 * (
                 axrow[1].get_xlim()[1] - axrow[1].get_xlim()[0])
             markymid_loc = axrow[1].get_ylim()[0] + 0.5 * (
                 axrow[1].get_ylim()[1] - axrow[1].get_ylim()[0])
@@ -134,7 +135,7 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
             axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
             if pa == 90:
-                v_lines = [1.2, 1.4]
+                v_lines = [1.2, 1.4, 1.6]
             else:
                 v_lines = [1.2, 1.4, 1.6]
             for line in v_lines:
@@ -166,16 +167,16 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (15, 4.0 * 2 * 1.25),
+        'font.size': 18,
+        'figure.figsize': (14, 4.0 * 2 * 1.25),
         'lines.linewidth': 3.0,
         'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
-        'figure.subplot.left': 0.2,
-        'figure.subplot.right': 0.8,
-        'figure.subplot.top': 0.8,
-        'figure.subplot.bottom': 0.2,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
         'figure.subplot.wspace': 0.17,
         'figure.subplot.hspace': 0.17,
     })
@@ -187,6 +188,8 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
     if plot_mode == 'against_t':
         rowno = 0
         for axrow in ax:
+            # axrow[0].set_yticks(np.arange(-10, 10, 2.5))
+            # axrow[1].set_yticks(np.arange(-10, 10, 2.5))
             datano = rowno * len(legendre)
             for i in range(len(legendre)):
                 axrow[0].plot(cf_array[datano + i][:, 0] / cycle_time,
@@ -215,12 +218,12 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
             axrow[1].set_ylabel(r'$C_d$')
             if axrow[0] == ax[0][0]:
                 axrow[1].legend(loc='upper center',
-                                bbox_to_anchor=(-0.05, 1.21),
+                                bbox_to_anchor=(-0.05, 1.25),
                                 ncol=3,
                                 fontsize='small',
                                 frameon=False)
 
-            markx_loc = axrow[1].get_xlim()[1] + 0.11 * (
+            markx_loc = axrow[1].get_xlim()[1] + 0.13 * (
                 axrow[1].get_xlim()[1] - axrow[1].get_xlim()[0])
             markymid_loc = axrow[1].get_ylim()[0] + 0.5 * (
                 axrow[1].get_ylim()[1] - axrow[1].get_ylim()[0])
@@ -238,7 +241,7 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
             axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
             if pa == 90:
-                v_lines = [1.2, 1.4]
+                v_lines = [1.2, 1.4, 1.6]
             else:
                 v_lines = [1.2, 1.4, 1.6]
             for line in v_lines:

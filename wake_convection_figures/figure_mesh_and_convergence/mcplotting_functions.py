@@ -48,22 +48,23 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (12, 11),
+        'font.size': 18,
+        'figure.figsize': (10, 10),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
-        'figure.subplot.left': 0.2,
-        'figure.subplot.right': 0.8,
-        'figure.subplot.top': 0.8,
-        'figure.subplot.bottom': 0.2,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.95,
+        'figure.subplot.top': 0.95,
+        'figure.subplot.bottom': 0.1,
         'figure.subplot.wspace': 0.17,
         'figure.subplot.hspace': 0.17,
     })
     cf_array = np.array(data_array)
     range_cl = show_range[0]
     range_cd = show_range[1]
+    linstyles = ['-', '--', '--', '--']
 
     fig, axs = plt.subplots(2, 1)
     mcl_arr = []
@@ -73,10 +74,12 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
                         cf_array[i][:, 3],
-                        label=legends[i])
+                        label=legends[i],
+                        linestyle=linstyles[i])
             axs[1].plot(cf_array[i][:, 0] / cycle_time,
                         cf_array[i][:, 1],
-                        label=legends[i])
+                        label=legends[i],
+                        linestyle=linstyles[i])
 
             cl_spl = UnivariateSpline(cf_array[i][:, 0],
                                       cf_array[i][:, 3],
@@ -142,7 +145,7 @@ def mesh_plotter(image_out_path):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
+        'font.size': 18,
         'figure.figsize': (10, 10),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
@@ -202,12 +205,12 @@ def mesh_plotter(image_out_path):
     axd.add_patch(platepatch)
 
     axd.annotate(s='Flat plate',
-                 xy=(-5.0, -1.1),
+                 xy=(-5.5, -1.5),
                  ha='center',
                  va='center',
                  annotation_clip=False)
     axd.annotate(s='Domain boundary',
-                 xy=(6.5, -8.0),
+                 xy=(8.2, -8.0),
                  ha='center',
                  va='center',
                  annotation_clip=False)
@@ -222,7 +225,7 @@ def mesh_plotter(image_out_path):
                  va='center',
                  annotation_clip=False)
     axd.annotate(s='Far field',
-                 xy=(-15.0, 16.0),
+                 xy=(-16.0, 16.0),
                  ha='center',
                  va='center',
                  annotation_clip=False)
@@ -230,8 +233,8 @@ def mesh_plotter(image_out_path):
     axd.set_xlim([-22, 22])
     axd.set_ylim([-22, 22])
     axd.set_aspect('equal')
-    axd.set_xlabel('x/c')
-    axd.set_ylabel('y/c')
+    axd.set_xlabel(r'$x/c$')
+    axd.set_ylabel(r'$y/c$')
 
     oimage_file = os.path.join(image_out_path, 'domain.svg')
     plt.savefig(oimage_file)

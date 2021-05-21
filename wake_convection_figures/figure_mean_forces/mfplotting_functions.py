@@ -60,15 +60,15 @@ def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (15, 4.0 * 2 * 1.25),
+        'font.size': 18,
+        'figure.figsize': (14, 4.0 * 2 * 1.25),
         'lines.linewidth': 2.0,
         'lines.markersize': 12,
         'figure.dpi': 300,
-        'figure.subplot.left': 0.2,
-        'figure.subplot.right': 0.8,
-        'figure.subplot.top': 0.8,
-        'figure.subplot.bottom': 0.2,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
         'figure.subplot.wspace': 0.17,
         'figure.subplot.hspace': 0.17,
     })
@@ -120,6 +120,7 @@ def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
                             label=cf_legends[lgd],
                             marker=markers[lgd],
                             linestyle='-.')
+                axs[i].set_xticks(np.arange(0, 7, step=1.5))
 
                 if x_range != 'all':
                     axs[i].set_xlim(x_range)
@@ -128,13 +129,13 @@ def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
 
                 if r == 0 and i in [0, 2]:
                     axs[i].legend(loc='upper center',
-                                  bbox_to_anchor=(1.0, 1.21),
+                                  bbox_to_anchor=(1.1, 1.25),
                                   ncol=3,
                                   fontsize='small',
                                   frameon=False)
 
                 if lgd == 0:
-                    markx_loc = axs[i].get_xlim()[1] + 0.11 * (
+                    markx_loc = axs[i].get_xlim()[1] + 0.15 * (
                         axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
                     markymid_loc = axs[i].get_ylim()[0] + 0.5 * (
                         axs[i].get_ylim()[1] - axs[i].get_ylim()[0])

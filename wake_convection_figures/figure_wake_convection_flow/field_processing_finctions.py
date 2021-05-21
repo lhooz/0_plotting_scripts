@@ -200,7 +200,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
+        'font.size': 18,
         'figure.figsize': (15, 16.5),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
@@ -218,10 +218,10 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
     images = []
     ax_all = []
     #----plot different pa data----
-    gs_kw = dict(left=0.2,
-                 right=0.8,
-                 top=0.8,
-                 bottom=0.2,
+    gs_kw = dict(left=0.1,
+                 right=0.9,
+                 top=0.9,
+                 bottom=0.1,
                  wspace=0.05,
                  hspace=0.05,
                  width_ratios=[32, 40, 42])

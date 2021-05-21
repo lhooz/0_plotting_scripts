@@ -134,16 +134,16 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (12, 11),
+        'font.size': 18,
+        'figure.figsize': (10, 10),
         'lines.linewidth': 4.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
-        'figure.subplot.left': 0.2,
-        'figure.subplot.right': 0.8,
-        'figure.subplot.top': 0.8,
-        'figure.subplot.bottom': 0.2,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.95,
+        'figure.subplot.top': 0.95,
+        'figure.subplot.bottom': 0.12,
         'figure.subplot.wspace': 0.17,
         'figure.subplot.hspace': 0.17,
     })
@@ -179,7 +179,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     for datai in kine_array:
         ax1.plot((datai[:, 0] + datax_shift) / time_scale,
                  datai[:, 1],
-                 linewidth=4)
+                 linewidth=8)
         vbar1 = [[ini_t, y1], [ini_t, y2]]
         vbar2 = [[ini_t + acc_t, y1], [ini_t + acc_t, y2]]
         vbars = vbar1 + vbar2
@@ -240,7 +240,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
             ref_array_shifted[i][:, 1],
             label=ref_legends[i],
             # marker='s',
-            linestyle='-.')
+            linestyle='-')
 
         ref_spl = UnivariateSpline(ref_t, ref_array_shifted[i][:, 1], s=0)
         mref_s = ref_spl.integral(0.0, 1.0)

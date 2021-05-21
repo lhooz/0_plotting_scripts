@@ -358,6 +358,31 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                        va='center',
                        annotation_clip=False)
     #--------------------------
+    #---------lift and drag frame annotation--------
+    ax_toplot.annotate(s='Lift',
+                       xy=(-1.0 + 0.5, -0.022),
+                       xytext=(-1.0 + 0.5, 1.0),
+                       arrowprops=dict(
+                           arrowstyle='<-',
+                           facecolor='k',
+                           lw=1,
+                       ),
+                       ha='center',
+                       va='center',
+                       annotation_clip=False)
+
+    ax_toplot.annotate(s='Drag',
+                       xy=(-0.978 + 0.5, 0.0),
+                       xytext=(-2.0 + 0.5, 0.0),
+                       arrowprops=dict(
+                           arrowstyle='<-',
+                           facecolor='k',
+                           lw=1,
+                       ),
+                       ha='center',
+                       va='center',
+                       annotation_clip=False)
+    #------------------------------------------------
 
     ax_toplot.add_patch(aoapatch)
     ax_toplot.add_patch(aoapatchE)
@@ -408,7 +433,7 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
+        'font.size': 18,
         'figure.figsize': (6 * 2, 2.75 * 3),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
@@ -417,22 +442,22 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
     })
     data_array = np.array(data_array)
 
-    gs_kw = dict(left=0.2,
-                 right=0.8,
-                 top=0.8,
-                 bottom=0.2,
+    gs_kw = dict(left=0.1,
+                 right=0.95,
+                 top=0.95,
+                 bottom=0.1,
                  wspace=0.17,
                  hspace=0.17)
 
     gs_i = dict(left=0.2,
-                right=0.8,
-                top=0.8,
-                bottom=0.2,
+                right=0.95,
+                top=0.95,
+                bottom=0.1,
                 wspace=0.17,
                 hspace=0.17)
 
     fig1, axs = plt.subplots(nrows=3, ncols=2, gridspec_kw=gs_kw)
-    fig2, axi = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_kw)
+    fig2, axi = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_i)
     for axr1i, kinematic_listi, marker, iarrayi in zip(axs[:, 1],
                                                        kinematic_data_list,
                                                        marks, idata_array):

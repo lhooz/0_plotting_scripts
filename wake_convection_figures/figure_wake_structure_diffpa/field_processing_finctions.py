@@ -199,7 +199,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
+        'font.size': 18,
         'figure.figsize': (15, 11),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
@@ -217,10 +217,10 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
     images = []
     ax_all = []
     #----plot different pa data----
-    gs_kw = dict(left=0.2,
-                 right=0.8,
-                 top=0.8,
-                 bottom=0.2,
+    gs_kw = dict(left=0.1,
+                 right=0.9,
+                 top=0.9,
+                 bottom=0.1,
                  wspace=0.05,
                  hspace=0.05,
                  width_ratios=[32, 40, 42])
@@ -243,12 +243,6 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             sCtrdatai = zoom(sCtrdatai, zoom_order)
             sCtrdatai = gaussian_filter(sCtrdatai, sigma=5.0)
 
-            # if ci == 0:
-                # quiver_scale = 50
-            # elif ci == 1:
-                # quiver_scale = 35
-            # else:
-                # quiver_scale = 20
             quiver_scale = 20
 
             single_plot_field(images, axre, windows[ci], grid_x, grid_y,

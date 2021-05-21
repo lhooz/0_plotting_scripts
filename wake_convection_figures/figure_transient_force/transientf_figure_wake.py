@@ -4,7 +4,7 @@ import os
 from tfplotting_functions import cf_plotter_wake, read_cfd_data
 
 #-------------input plot control----------
-pa = 0 
+pa = 90
 Re = [100, 1000]
 # stroke = [6]
 stroke = [1.5, 3.0, 6.0]
@@ -38,9 +38,12 @@ time_to_plot = [1.0, 2.0]
 # coeffs_show_range = [-5.0, 7.0] #--pa0--
 # coeffs_show_range = [-42.0, 34.0] #--pa45--
 # coeffs_show_range = [-16.0, 37.0] #--pa90--
-coeffs_show_range = [-0.8, 1.2] #--pa0 wake--
-# coeffs_show_range = [-8.0, 2.0] #--pa45 wake--
-# coeffs_show_range = [-4.0, 3.0] #--pa90 wake--
+if pa == 0:
+    coeffs_show_range = [-1.5, 1.5]  #--pa0 wake--
+elif pa == 45:
+    coeffs_show_range = [-8.0, 2.0]  #--pa45 wake--
+elif pa == 90:
+    coeffs_show_range = [-4.0, 4.0]  #--pa90 wake--
 cycle_time = 1.0
 #---------------------------------------
 cwd = os.getcwd()
