@@ -51,7 +51,7 @@ def read_cfd_data(cfd_data_file):
     return mcf_array
 
 
-def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
+def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
                image_out_path):
     """
     function to plot cfd force coefficients results
@@ -60,24 +60,22 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (10, 12),
-        'lines.linewidth': 0.5,
+        'font.size': 14,
+        'figure.figsize': (15, 4.0 * 2 * 1.25),
+        'lines.linewidth': 2.0,
         'lines.markersize': 12,
-        # 'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
-        'figure.subplot.left': 0.125,
-        'figure.subplot.right': 0.9,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.2,
+        'figure.subplot.right': 0.8,
         'figure.subplot.top': 0.8,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.15,
-        'figure.subplot.hspace': 0.1,
+        'figure.subplot.wspace': 0.17,
+        'figure.subplot.hspace': 0.17,
     })
-    markers = ['s', 'o', '>']
+    markers = ['s', 'o', '^']
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
-    markc = marks
 
     no_c = 2
     no_r = len(markc)
@@ -106,6 +104,17 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
                 datatoplot = [mcl, mcd, ratiol, ratiod]
 
             for i in range(len(datatoplot)):
+                if lgd == 0:
+                    axs[i].axhline(y=0,
+                                   color='k',
+                                   linestyle='-.',
+                                   linewidth=0.5)
+
+                    axs[i].axvline(x=3.0,
+                                   color='k',
+                                   linestyle='-.',
+                                   linewidth=0.5)
+
                 axs[i].plot(x_array,
                             datatoplot[i],
                             label=cf_legends[lgd],
@@ -119,15 +128,13 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
 
                 if r == 0 and i in [0, 2]:
                     axs[i].legend(loc='upper center',
-                                  bbox_to_anchor=(1.0, 1.25),
+                                  bbox_to_anchor=(1.0, 1.21),
                                   ncol=3,
                                   fontsize='small',
                                   frameon=False)
 
                 if lgd == 0:
-                    marky_loc = axs[i].get_ylim()[1] + 0.2 * (
-                        axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
-                    markx_loc = axs[i].get_xlim()[1] + 0.13 * (
+                    markx_loc = axs[i].get_xlim()[1] + 0.11 * (
                         axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
                     markymid_loc = axs[i].get_ylim()[0] + 0.5 * (
                         axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
@@ -147,20 +154,15 @@ def cf_plotter(x_data, data_array, marks, legends, x_range, y_range, y_label,
                         axs[i].set_xticklabels([])
                     # axs[i].label_outer()
 
-                    axs[i].axhline(y=0,
-                                   color='k',
-                                   linestyle='-.',
-                                   linewidth=0.5)
-
     title = 'mean force coefficients plot'
     title2 = 'mean force ratio plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
-    out_image_file2 = os.path.join(image_out_path, title2 + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
+    out_image_file2 = os.path.join(image_out_path, title2 + '.svg')
     out_files = [out_image_file, out_image_file2]
     figs = [fig, fig2]
 
     for i in range(len(figs)):
         figs[i].savefig(out_files[i])
-        figs[i].show()
+        # figs[i].show()
 
     return figs

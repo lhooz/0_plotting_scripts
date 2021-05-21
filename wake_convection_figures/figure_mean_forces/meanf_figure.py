@@ -5,7 +5,7 @@ from mfplotting_functions import cf_plotter, read_cfd_data
 
 #-------------input plot control----------
 pa = [0, 45, 90]
-Re = [100, 1000, 10000]
+Re = [100, 1000]
 stroke = [1.5, 3.0, 6.0]
 at = [0.25]
 pt = [0.25]
@@ -28,20 +28,20 @@ for pai in pa:
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
 x_data = stroke
-markpa = [r'$\theta = ' + '{0:.0f}'.format(x) + '\degree$' for x in pa]
-legends = [r'$Re = ' + '{0:.0f}'.format(x) + '$' for x in Re]
+markc = [r'$\theta = ' + '{0:.0f}'.format(x) + '^\circ$' for x in pa]
+legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 #---------------------------------------
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 6.5]
-cl_range = [-0.9, 0.6]
+cl_range = [-0.8, 0.7]
 cd_range = cl_range
-rl_range = [-0.4, 0.4]
+rl_range = [-0.5, 0.5]
 rd_range = rl_range
 y_range = [cl_range, cd_range, rl_range, rd_range]
 y_label = [
-    r'$\bar{C}_{LW}$', r'$\bar{C}_{DW}$', r'$\bar{C}_{LW}/\bar{C}_{LS}$',
-    r'$\bar{C}_{DW}/\bar{C}_{DS}$'
+    r'$\bar{C}_{lw}$', r'$\bar{C}_{dw}$', r'$\bar{C}_{lw}/\bar{C}_{ls}$',
+    r'$\bar{C}_{dw}/\bar{C}_{ds}$'
 ]
 #---------------------------------------
 cwd = os.getcwd()
@@ -55,5 +55,5 @@ for cfi in cfd_data_list:
     mcf_arrayi = read_cfd_data(cfd_datai)
     mcf_array.append(mcf_arrayi)
 #---------------------------------------
-cf_plotter(x_data, mcf_array, markpa, legends, x_range, y_range, y_label,
+cf_plotter(x_data, mcf_array, markc, legends, x_range, y_range, y_label,
            image_out_path)

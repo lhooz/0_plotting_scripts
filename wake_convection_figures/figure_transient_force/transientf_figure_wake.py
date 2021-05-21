@@ -1,10 +1,10 @@
 """plotting cfd run results"""
 import os
 
-from tfplotting_functions import cf_plotter, read_cfd_data
+from tfplotting_functions import cf_plotter_wake, read_cfd_data
 
 #-------------input plot control----------
-pa = 45
+pa = 0 
 Re = [100, 1000]
 # stroke = [6]
 stroke = [1.5, 3.0, 6.0]
@@ -12,8 +12,8 @@ at = [0.25]
 pt = [0.25]
 #-----------------------------------------
 cfd_data_list = []
-for re in Re:
-    for s in stroke:
+for s in stroke:
+    for re in Re:
         for a in at:
             for p in pt:
                 if pa == 45:
@@ -33,22 +33,21 @@ legends = [legendre, legendsc]
 #---------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
-# if pa == 0:
-    # time_to_plot = [0.0, 2.0]
-# else:
-    # time_to_plot = [1.0, 2.0]
-time_to_plot = [0.0, 2.0]
+
+time_to_plot = [1.0, 2.0]
 # coeffs_show_range = [-5.0, 7.0] #--pa0--
-coeffs_show_range = [-42.0, 34.0] #--pa45--
+# coeffs_show_range = [-42.0, 34.0] #--pa45--
 # coeffs_show_range = [-16.0, 37.0] #--pa90--
-# coeffs_show_range = [-10.0, 4.0]
+coeffs_show_range = [-0.8, 1.2] #--pa0 wake--
+# coeffs_show_range = [-8.0, 2.0] #--pa45 wake--
+# coeffs_show_range = [-4.0, 3.0] #--pa90 wake--
 cycle_time = 1.0
 #---------------------------------------
 cwd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                   'wake_convection_data')
 oimage_file = os.path.join(
-    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + '.svg')
+    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + '_wake.svg')
 #---------------------------------------
 cf_array = []
 for cfi in cfd_data_list:
@@ -59,5 +58,5 @@ for cfi in cfd_data_list:
 data_array = cf_array
 #---------------------------------------
 
-cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range, oimage_file,
-           cycle_time, 'against_t')
+cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
+                oimage_file, cycle_time, 'against_t')

@@ -26,12 +26,12 @@ res_vector_sc15 = [20, 22]
 res_vector_sc30 = [25, 22]
 res_vector_sc60 = [26, 22]
 resolution_vector = [res_vector_sc15, res_vector_sc30, res_vector_sc60]
-time_to_plot = [1.2, 1.6]  #---time instances to plot--
+time_to_plot = [1.2, 1.4, 1.6]  #---time instances to plot--
 #--------------------------------------
 Uref = [1.786, 3.571, 7.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
-Re = 100.0
+Re = 1000.0
 stroke = [1.5, 3.0, 6.0]
 pa = 45
 #-----------------------------------

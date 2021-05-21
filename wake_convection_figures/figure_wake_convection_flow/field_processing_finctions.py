@@ -201,7 +201,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 14,
-        'figure.figsize': (15, 11),
+        'figure.figsize': (15, 16.5),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
