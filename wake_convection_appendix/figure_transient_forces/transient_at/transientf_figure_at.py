@@ -29,7 +29,7 @@ time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [0, 2.0]
 coeffs_show_range = [-3.0, 8]
-cycle_time = 1.1
+cycle_time = 1.0
 #---------------------------------------
 cd = os.getcwd()
 wd = os.path.join(

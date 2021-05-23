@@ -32,9 +32,9 @@ legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 # x_range = 'all'
 # y_range = 'all'
 x_range = [2, 10]
-cl_range = [-0.5, 0.5]
+cl_range = [-0.75, 0.75]
 rl_range = [-0.5, 0.5]
-cd_range = [-0.5, 0.5]
+cd_range = [-0.75, 0.75]
 rd_range = [-0.5, 0.5]
 rld_range = [-15, 15]
 y_range = [cl_range, rl_range, cd_range, rd_range, rld_range]

@@ -36,11 +36,11 @@ def read_cfd_data(cfd_data_file):
     cl_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 3], s=0)
     cd_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 1], s=0)
 
-    mcl_s = cl_spl.integral(0.0, 1.1)
-    mcl_w = cl_spl.integral(1.1, 2.2)
+    mcl_s = cl_spl.integral(0.0, 1.0)
+    mcl_w = cl_spl.integral(1.0, 2.0)
     # mcl_w = cl_spl(1.2)
-    mcd_s = cd_spl.integral(0.0, 1.1)
-    mcd_w = -cd_spl.integral(1.1, 2.2)
+    mcd_s = cd_spl.integral(0.0, 1.0)
+    mcd_w = cd_spl.integral(1.0, 2.0)
 
     ratio_l = mcl_w / mcl_s
     ratio_d = mcd_w / mcd_s
