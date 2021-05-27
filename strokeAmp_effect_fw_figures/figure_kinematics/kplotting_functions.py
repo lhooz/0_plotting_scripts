@@ -87,7 +87,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (10, 10),
+        'figure.figsize': (12, 10),
         'lines.linewidth': 4.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
@@ -102,9 +102,9 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
 
     fig1, ax = plt.subplots(2, 1)
 
-    labels = [r'$\phi/A$', r'$\alpha/\Theta$']
-    legendax1 = [r'$\^a_t = 0.5$', r'$\^a_t = 0.25$', r'$\^a_t = 0.125$']
-    legendax2 = [r'$\^p_t = 0.5$', r'$\^p_t = 0.25$', r'$\^p_t = 0.125$']
+    labels = [r'$2\phi/A$', r'$2\theta/\Theta$']
+    legendax1 = [r'$\^t_a = 0.5$', r'$\^t_a = 0.25$', r'$\^t_a = 0.125$']
+    legendax2 = [r'$\^t_p = 0.5$', r'$\^t_p = 0.25$', r'$\^t_p = 0.125$']
 
     for kine_array, lgd1, lgd2 in zip(karray_all, legendax1, legendax2):
         ax[0].plot(kine_array[:, 0] / time_scale, kine_array[:, 1], label=lgd1)

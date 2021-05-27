@@ -124,12 +124,12 @@ def g_plotter_ofs(data_array, legends, x_range, y_range, image_out_path):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (10, 6),
-        'lines.linewidth': 2,
+        'font.size': 18,
+        'figure.figsize': (14, 6),
+        'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
+        'figure.dpi': 300,
     })
     data_array = np.array(data_array)
 
