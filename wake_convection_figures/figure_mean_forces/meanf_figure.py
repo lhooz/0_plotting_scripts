@@ -27,6 +27,12 @@ for pai in pa:
                                     p) + '_pa' + '{0:.1f}'.format(pai)
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
+#----effects for each case-------
+markEr1 = [['i', 's', 'i'], ['i', 's', 's']]
+markEr2 = [['i', 'i', 'i'], ['i', 'i', 's']]
+markEr3 = [['s', 'i', 's'], ['s', 'i', 's']]
+markEffects = [markEr1, markEr2, markEr3]
+#--------------------------------
 x_data = stroke
 markc = [
     r'$\alpha_E$ = 135$^\circ$', r'$\alpha_E$ = 90$^\circ$',
@@ -37,9 +43,9 @@ legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 6.5]
-cl_range = [-0.8, 0.8]
+cl_range = [-4.5, 4.5]
 cd_range = cl_range
-rl_range = [-0.5, 0.5]
+rl_range = [-2, 2]
 rd_range = rl_range
 y_range = [cl_range, cd_range, rl_range, rd_range]
 y_label = [
@@ -58,5 +64,20 @@ for cfi in cfd_data_list:
     mcf_arrayi = read_cfd_data(cfd_datai)
     mcf_array.append(mcf_arrayi)
 #---------------------------------------
-cf_plotter(x_data, mcf_array, markc, legends, x_range, y_range, y_label,
-           image_out_path)
+with open('meancf_all.dat', 'w') as f:
+    for data_name, mvalues in zip(cfd_data_list, mcf_array):
+        f.write("%s:\n" % data_name)
+        f.write(
+            "mcl_s = %s, mcl_w = %s, ratio_l = %s, mcd_s = %s, mcd_w = %s, ratio_d = %s, ratio_ld = %s\n"
+            % (
+                '{0:.8g}'.format(mvalues[0]),
+                '{0:.8g}'.format(mvalues[1]),
+                '{0:.8g}'.format(mvalues[2]),
+                '{0:.8g}'.format(mvalues[3]),
+                '{0:.8g}'.format(mvalues[4]),
+                '{0:.8g}'.format(mvalues[5]),
+                '{0:.8g}'.format(mvalues[6]),
+            ))
+
+cf_plotter(x_data, mcf_array, markc, markEffects, legends, x_range, y_range,
+           y_label, image_out_path)

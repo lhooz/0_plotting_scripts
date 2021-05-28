@@ -76,15 +76,15 @@ def ktrace_plotter(ax_toplot, illustration_t, marker, iarray,
     """
     function to plot cfd force coefficients results
     """
-    LEsize = 20
-    wing_thick = 1.5
+    LEsize = 30
+    wing_thick = 2.5
 
     vgap = 0.15
 
     data_array = np.array(iarray)
     stroke = figure_parameters[0]
-    yt = 1.0 + vgap
-    y_marker = 1.05 + vgap
+    yt = 0.7 + vgap
+    y_marker = 1.18 + vgap
 
     t_spl = UnivariateSpline(iarray[:, 0], -iarray[:, 1], s=0)
     aoa_spl = UnivariateSpline(iarray[:, 0], -iarray[:, 2], s=0)
@@ -112,11 +112,11 @@ def ktrace_plotter(ax_toplot, illustration_t, marker, iarray,
     ax_toplot.scatter(LE[:, 0], LE[:, 1], s=LEsize, c='k')
 
     #-----marks annotation--
-    t_mid = illustration_t[int(len(illustration_t) / 2) - 1]
-    tt_mid = t_spl(t_mid)
+    # t_mid = illustration_t[int(len(illustration_t) / 2) - 1]
+    # tt_mid = t_spl(t_mid)
 
     ax_toplot.annotate(s=marker,
-                       xy=(tt_mid, y_marker),
+                       xy=(hinge[-1], y_marker),
                        ha='center',
                        va='center',
                        annotation_clip=False)
@@ -138,7 +138,7 @@ def ktrace_plotter(ax_toplot, illustration_t, marker, iarray,
                        annotation_clip=False)
     #--------------------------------------
     ax_toplot.set_xlim([-0.6, stroke + 0.6])
-    ax_toplot.set_ylim([-0.8, 1.0])
+    ax_toplot.set_ylim([-0.8, 1.5])
     ax_toplot.axhline(y=0, color='k', linestyle='-.', linewidth=1)
     ax_toplot.axis('off')
     ax_toplot.set_aspect('equal')
@@ -150,8 +150,8 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     """
     function to plot cfd force coefficients results
     """
-    LEsize = 100
-    wing_thick = 3.5
+    LEsize = 250
+    wing_thick = 6
 
     vgap = 0.65
     vbarh = 0.3
@@ -188,7 +188,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     #--side bars and arrows for motion illustration--
     vbars = vbara1 + vbara2 + vbart1 + vbart2
     arrows = [parrow, sarrow1, sarrow2]
-    arrowlegend = [r'$\hat p_t$', 'Plate translation', '']
+    arrowlegend = ['Plate rotation', 'Plate translation', '']
     #----------------------------------
 
     nverts = len(vbars)
@@ -261,7 +261,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
         annotation_plength * np.cos(aoat_aoa)
     ])
     annotation_pmidE = np.array([
-        tt_aoa - 1.4 * annotation_plength * np.sin(aoat_aoa * 1.22),
+        tt_aoa - 1.42 * annotation_plength * np.sin(aoat_aoa * 1.22),
         1.2 * annotation_plength * np.cos(aoat_aoa * 1.5)
     ])
 
@@ -338,7 +338,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                                        lw=1,
                                        connectionstyle='arc3,rad=0.5'),
                        annotation_clip=False)
-    ax_toplot.annotate(s=r'$\alpha_E$',
+    ax_toplot.annotate(s=r'$\alpha_{int}$',
                        xy=(annotation_pmidE[0], annotation_pmidE[1]),
                        ha='center',
                        va='center',
@@ -347,12 +347,12 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
                        xy=(annotation_pa1[0], annotation_pa1[1]),
                        xytext=(annotation_pa2[0], annotation_pa2[1]),
                        arrowprops=dict(arrowstyle='<-',
-                                       linestyle='-.',
+                                       linestyle='-',
                                        facecolor='k',
                                        lw=1,
                                        connectionstyle='arc3,rad=-0.5'),
                        annotation_clip=False)
-    ax_toplot.annotate(s=r'Plate pitch',
+    ax_toplot.annotate(s=r'$\theta$',
                        xy=(annotation_pamid[0], annotation_pamid[1]),
                        ha='center',
                        va='center',
@@ -397,7 +397,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
         else:
             arstyle = '-'
         if arrow == arrows[0]:
-            lstyle = '-'
+            lstyle = '-.'
         else:
             lstyle = '-.'
 
@@ -433,9 +433,9 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
+        'font.size': 19,
         'figure.figsize': (6 * 2, 2.75 * 3),
-        'lines.linewidth': 4,
+        'lines.linewidth': 6,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -446,15 +446,15 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
                  right=0.95,
                  top=0.95,
                  bottom=0.1,
-                 wspace=0.17,
-                 hspace=0.17)
+                 wspace=0.1,
+                 hspace=0.1)
 
     gs_i = dict(left=0.2,
                 right=0.95,
                 top=0.95,
                 bottom=0.1,
-                wspace=0.17,
-                hspace=0.17)
+                wspace=0.1,
+                hspace=0.1)
 
     fig1, axs = plt.subplots(nrows=3, ncols=2, gridspec_kw=gs_kw)
     fig2, axi = plt.subplots(nrows=1, ncols=1, gridspec_kw=gs_i)
@@ -470,7 +470,8 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
                        figure_parametersi)
 
     labels = [r'$u/U_T$', r'$\.\alpha/\.\alpha_M$']
-    for axr2i, datai in zip(axs[:, 0], data_array):
+    axr2 = axs[:, 0]
+    for axr2i, datai in zip(axr2, data_array):
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 1], label=labels[0])
         axr2i.plot(datai[:, 0] / time_scale, datai[:, 2], label=labels[1])
         axr2i.set_xlabel(r'$\^t$')
@@ -484,6 +485,82 @@ def kf_plotter(kinematic_data_list, kinematics_t, data_array, idata_array,
             axr2i.set_xlim(time_to_plot)
         if show_range != 'all':
             axr2i.set_ylim(show_range)
+
+    #------at pt annotations--------------
+    acc_t = 0.125
+    ini_t_both = [0.02, 0.98 - acc_t]
+    y1 = 1.05
+    y2 = 1.15
+    ymid = 0.5 * (y1 + y2)
+    ytext = 1.25
+
+    for ini_t in ini_t_both:
+        vbar1 = [[ini_t, y1], [ini_t, y2]]
+        vbar2 = [[ini_t + acc_t, y1], [ini_t + acc_t, y2]]
+        vbars = vbar1 + vbar2
+        arrow1 = [[ini_t, ymid], [ini_t + acc_t, ymid]]
+        text_loc = [ini_t + 0.5 * acc_t, ytext]
+        arrows = [arrow1]
+        annotate_text = r'$\hat{t}_a$'
+
+        nverts = len(vbars)
+        codes = np.ones(nverts, int) * path.Path.LINETO
+        codes[0::2] = path.Path.MOVETO
+        vbarath = path.Path(vbars, codes)
+        barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=0.5)
+
+        axr2[0].add_patch(barpatch)
+
+        for arrow in arrows:
+            axr2[0].annotate(s='',
+                             xy=(arrow[0][0], arrow[0][1]),
+                             xytext=(arrow[1][0], arrow[1][1]),
+                             arrowprops=dict(arrowstyle='<-',
+                                             facecolor='k',
+                                             lw=0.5),
+                             annotation_clip=False)
+        axr2[0].annotate(s=annotate_text,
+                         xy=(text_loc[0], text_loc[1]),
+                         ha='center',
+                         va='center',
+                         annotation_clip=False)
+
+    #--------------------pt2-------------
+    pt2_both = [0.125, 0.24]
+    for i in range(2):
+        pt2 = pt2_both[i]
+        ini_t_pt2 = 0.98 - pt2
+
+        vbar1 = [[ini_t_pt2, y1], [ini_t_pt2, y2]]
+        vbar2 = [[ini_t_pt2 + pt2, y1], [ini_t_pt2 + pt2, y2]]
+        vbars = vbar1 + vbar2
+        arrow1 = [[ini_t_pt2, ymid], [ini_t_pt2 + pt2, ymid]]
+        text_loc = [ini_t_pt2 + 0.5 * pt2, ytext]
+        arrows = [arrow1]
+        annotate_text = r'$\hat{t}_p$'
+
+        nverts = len(vbars)
+        codes = np.ones(nverts, int) * path.Path.LINETO
+        codes[0::2] = path.Path.MOVETO
+        vbarath = path.Path(vbars, codes)
+        barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=0.5)
+
+        axr2[i + 1].add_patch(barpatch)
+
+        for arrow in arrows:
+            axr2[i + 1].annotate(s='',
+                                 xy=(arrow[0][0], arrow[0][1]),
+                                 xytext=(arrow[1][0], arrow[1][1]),
+                                 arrowprops=dict(arrowstyle='<-',
+                                                 facecolor='k',
+                                                 lw=0.5),
+                                 annotation_clip=False)
+        axr2[i + 1].annotate(s=annotate_text,
+                             xy=(text_loc[0], text_loc[1]),
+                             ha='center',
+                             va='center',
+                             annotation_clip=False)
+    #---------------------------------------
 
     title = 'kinematics plot'
     out_image_file1 = os.path.join(image_out_path, title + '_case.svg')

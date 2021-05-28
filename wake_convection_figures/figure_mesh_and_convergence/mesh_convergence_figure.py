@@ -11,10 +11,8 @@ cfd_data_list = [
 ]
 #-----------------------------------------
 legends = [
-    r'Mesh current, $\Delta t$ current',
-    r'Mesh fine, $\Delta t$ current',
-    r'Mesh current, $\Delta t$ fine',
-    r'Mesh fine, $\Delta t$ fine'
+    r'320,000 cells, $\Delta t = 1$e-3', r'650,000 cells, $\Delta t = 1$e-3',
+    r'320,000 cells, $\Delta t = 5$e-4', r'650,000 cells, $\Delta t = 5$e-4'
 ]
 # legends = [
 # r'mesh1, $\Delta t$ = 1e-3',

@@ -124,19 +124,20 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     """
     datax_shift = 0.02 * time_scale - 0.05
     ref_shit_constant = 0.025
-    ini_t = 0.02
     acc_t = 0.16 / time_scale
+    ini_t_both = [0.02, 0.98 - acc_t]
     y1 = 1.05
     y2 = 1.15
     ymid = 0.5 * (y1 + y2)
+    ytext = 1.17
 
     plt.rcParams.update({
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (10, 10),
-        'lines.linewidth': 4.0,
+        'font.size': 19,
+        'figure.figsize': (10, 8),
+        'lines.linewidth': 3.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -144,8 +145,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         'figure.subplot.right': 0.95,
         'figure.subplot.top': 0.95,
         'figure.subplot.bottom': 0.12,
-        'figure.subplot.wspace': 0.17,
-        'figure.subplot.hspace': 0.17,
+        'figure.subplot.wspace': 0.1,
+        'figure.subplot.hspace': 0.1,
     })
     kine_array = np.array(data_array[0])
     cf_array = np.array(data_array[1])
@@ -179,38 +180,40 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     for datai in kine_array:
         ax1.plot((datai[:, 0] + datax_shift) / time_scale,
                  datai[:, 1],
-                 linewidth=8)
-        vbar1 = [[ini_t, y1], [ini_t, y2]]
-        vbar2 = [[ini_t + acc_t, y1], [ini_t + acc_t, y2]]
-        vbars = vbar1 + vbar2
-        arrow1 = [[ini_t, ymid], [ini_t + acc_t, ymid]]
-        text_loc = [[ini_t + acc_t, ymid], [0.5, ymid]]
-        arrows = [arrow1]
-        annotate_text = r'$\hat{a}_t = 0.16$'
+                 linewidth=9)
+        for ini_t in ini_t_both:
+            vbar1 = [[ini_t, y1], [ini_t, y2]]
+            vbar2 = [[ini_t + acc_t, y1], [ini_t + acc_t, y2]]
+            vbars = vbar1 + vbar2
+            arrow1 = [[ini_t, ymid], [ini_t + acc_t, ymid]]
+            text_loc = [ini_t + 0.5 * acc_t, ytext]
+            arrows = [arrow1]
+            annotate_text = r'$\hat{t}_a$'
 
-        nverts = len(vbars)
-        codes = np.ones(nverts, int) * path.Path.LINETO
-        codes[0::2] = path.Path.MOVETO
-        vbarath = path.Path(vbars, codes)
-        barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=0.5)
+            nverts = len(vbars)
+            codes = np.ones(nverts, int) * path.Path.LINETO
+            codes[0::2] = path.Path.MOVETO
+            vbarath = path.Path(vbars, codes)
+            barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=0.5)
 
-        ax1.add_patch(barpatch)
+            ax1.add_patch(barpatch)
 
-        for arrow in arrows:
-            ax1.annotate(s='',
-                         xy=(arrow[0][0], arrow[0][1]),
-                         xytext=(arrow[1][0], arrow[1][1]),
-                         arrowprops=dict(arrowstyle='<->',
+            for arrow in arrows:
+                ax1.annotate(s='',
+                             xy=(arrow[0][0], arrow[0][1]),
+                             xytext=(arrow[1][0], arrow[1][1]),
+                             arrowprops=dict(arrowstyle='<-',
+                                             facecolor='k',
+                                             lw=0.5),
+                             annotation_clip=False)
+            ax1.annotate(s=annotate_text,
+                         xy=(text_loc[0], text_loc[1]),
+                         arrowprops=dict(arrowstyle='->',
                                          facecolor='k',
                                          lw=0.5),
+                         ha='center',
+                         va='center',
                          annotation_clip=False)
-        ax1.annotate(s=annotate_text,
-                     xy=(text_loc[0][0], text_loc[0][1]),
-                     xytext=(text_loc[1][0], text_loc[1][1]),
-                     arrowprops=dict(arrowstyle='->', facecolor='k', lw=0.5),
-                     ha='center',
-                     va='center',
-                     annotation_clip=False)
 
     ax1.set_xlabel(r'$\^t$')
 
@@ -275,8 +278,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                     ('{0:.8g}'.format(item[0]), '{0:.8g}'.format(
                         item[1]), '{0:.8g}'.format(item[2])))
 
-    fig1.set_size_inches(12, 5.5)
-    fig2.set_size_inches(12, 11)
+    fig1.set_size_inches(10, 5)
+    fig2.set_size_inches(10, 8)
     fig1.savefig(out_image_file1)
     fig2.savefig(out_image_file2)
     # plt.show()

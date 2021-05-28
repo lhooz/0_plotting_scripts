@@ -16,9 +16,9 @@ time_scale = 1.0
 kinematics_t = np.linspace(0.0, 1.0, 30)
 #-----------------------------------------
 # time_to_plot = 'all'
-show_range = 'all'
+# show_range = 'all'
 time_to_plot = [0, 2.0]
-# show_range = [-0.5, 3]
+show_range = [-0.1, 1.4]
 #---------------------------------------
 cwd = os.getcwd()
 data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
@@ -26,8 +26,8 @@ data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
 image_out_path = cwd
 #---------------------------------------
 marks = [
-    r'$\alpha_E$ = 135$^\circ$', r'$\alpha_E$ = 90$^\circ$',
-    r'$\alpha_E$ = 45$^\circ$'
+    r'$\alpha_{int}$ = 135$^\circ$', r'$\alpha_{int}$ = 90$^\circ$',
+    r'$\alpha_{int}$ = 45$^\circ$'
 ]
 
 data_array = []

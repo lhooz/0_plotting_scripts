@@ -48,9 +48,9 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (10, 10),
-        'lines.linewidth': 4,
+        'font.size': 19,
+        'figure.figsize': (10, 8),
+        'lines.linewidth': 3,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -58,8 +58,8 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         'figure.subplot.right': 0.95,
         'figure.subplot.top': 0.95,
         'figure.subplot.bottom': 0.1,
-        'figure.subplot.wspace': 0.17,
-        'figure.subplot.hspace': 0.17,
+        'figure.subplot.wspace': 0.1,
+        'figure.subplot.hspace': 0.1,
     })
     cf_array = np.array(data_array)
     range_cl = show_range[0]
@@ -145,7 +145,7 @@ def mesh_plotter(image_out_path):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
+        'font.size': 19,
         'figure.figsize': (10, 10),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
@@ -154,14 +154,14 @@ def mesh_plotter(image_out_path):
     })
 
     circle_bg = plt.Circle((0, 0), 20, color='k', linewidth=4, fill=False)
-    circle_overset = plt.Circle((-5, 0),
+    circle_overset = plt.Circle((-3, 0),
                                 10,
                                 color='k',
                                 linewidth=4,
                                 fill=False)
 
-    LE = [-5 + 0.5 * np.cos(45 * np.pi / 180), 0.5 * np.sin(45 * np.pi / 180)]
-    TE = [-5 - 0.5 * np.cos(45 * np.pi / 180), -0.5 * np.sin(45 * np.pi / 180)]
+    LE = [-3 + 0.5 * np.cos(45 * np.pi / 180), 0.5 * np.sin(45 * np.pi / 180)]
+    TE = [-3 - 0.5 * np.cos(45 * np.pi / 180), -0.5 * np.sin(45 * np.pi / 180)]
     plate_line = [LE, TE]
 
     nverts = len(plate_line)
@@ -170,7 +170,7 @@ def mesh_plotter(image_out_path):
     plinepath = path.Path(plate_line, codes)
     platepatch = patches.PathPatch(plinepath,
                                    edgecolor='k',
-                                   linewidth=4,
+                                   linewidth=2,
                                    linestyle='-')
 
     #-----------domain plot------------
@@ -209,11 +209,11 @@ def mesh_plotter(image_out_path):
                  ha='center',
                  va='center',
                  annotation_clip=False)
-    axd.annotate(s='Domain boundary',
-                 xy=(8.2, -8.0),
-                 ha='center',
-                 va='center',
-                 annotation_clip=False)
+    # axd.annotate(s='Domain boundary',
+                 # xy=(8.2, -8.0),
+                 # ha='center',
+                 # va='center',
+                 # annotation_clip=False)
     axd.annotate(s='Overset domain',
                  xy=(-5.0, 4.5),
                  ha='center',

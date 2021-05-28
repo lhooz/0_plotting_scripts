@@ -37,10 +37,10 @@ def read_cfd_data(cfd_data_file):
     cd_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 1], s=0)
 
     mcl_s = cl_spl.integral(0.0, 1.0)
-    mcl_w = cl_spl.integral(1.0, 2.0)
+    mcl_w = cl_spl.integral(1.0, 1.18) / 0.18
     # mcl_w = cl_spl(1.2)
     mcd_s = cd_spl.integral(0.0, 1.0)
-    mcd_w = cd_spl.integral(1.0, 2.0)
+    mcd_w = cd_spl.integral(1.0, 1.18) / 0.18
 
     ratio_l = mcl_w / mcl_s
     ratio_d = mcd_w / mcd_s
@@ -51,8 +51,8 @@ def read_cfd_data(cfd_data_file):
     return mcf_array
 
 
-def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
-               image_out_path):
+def cf_plotter(x_data, data_array, markc, markEffects, legends, x_range,
+               y_range, y_label, image_out_path):
     """
     function to plot cfd force coefficients results
     """
@@ -60,19 +60,20 @@ def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (14, 4.0 * 2 * 1.25),
-        'lines.linewidth': 2.0,
-        'lines.markersize': 12,
+        'font.size': 19,
+        'figure.figsize': (12, 10),
+        'lines.linewidth': 1.0,
+        'lines.markersize': 20,
         'figure.dpi': 300,
         'figure.subplot.left': 0.1,
         'figure.subplot.right': 0.9,
         'figure.subplot.top': 0.9,
         'figure.subplot.bottom': 0.1,
-        'figure.subplot.wspace': 0.17,
-        'figure.subplot.hspace': 0.17,
+        'figure.subplot.wspace': 0.13,
+        'figure.subplot.hspace': 0.1,
     })
-    markers = ['s', 'o', '^']
+    markers = ['s', 's', '^']
+    markerColor = ['tab:blue', 'tab:orange']
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
@@ -108,18 +109,33 @@ def cf_plotter(x_data, data_array, markc, legends, x_range, y_range, y_label,
                     axs[i].axhline(y=0,
                                    color='k',
                                    linestyle='-.',
-                                   linewidth=0.5)
+                                   linewidth=0.5,
+                                   zorder=-1)
 
                     axs[i].axvline(x=3.0,
                                    color='k',
                                    linestyle='-.',
-                                   linewidth=0.5)
+                                   linewidth=0.5,
+                                   zorder=-1)
 
                 axs[i].plot(x_array,
                             datatoplot[i],
                             label=cf_legends[lgd],
+                            linestyle='-.',
                             marker=markers[lgd],
-                            linestyle='-.')
+                            zorder=-1)
+                for xi, yi, mEffect in zip(x_array, datatoplot[i],
+                                           markEffects[r][lgd]):
+                    if mEffect == 'i':
+                        mcolor = markerColor[lgd]
+                    else:
+                        mcolor = 'white'
+                    axs[i].scatter(xi,
+                                   yi,
+                                   marker=markers[lgd],
+                                   color=mcolor,
+                                   edgecolors=markerColor[lgd],
+                                   zorder=1)
                 axs[i].set_xticks(np.arange(0, 7, step=1.5))
 
                 if x_range != 'all':

@@ -12,7 +12,7 @@ ref_data_lst = ['exp_aoa45', 'exp_aoa60']
 # time_to_plot = 'all'
 # show_range = 'all'
 time_to_plot = [0, 2.0]
-show_range = [-0.05, 1.2]
+show_range = [-0.05, 1.25]
 #---------------------------------------
 time_scale = 1.0 / 0.96
 #---------------------------------------
