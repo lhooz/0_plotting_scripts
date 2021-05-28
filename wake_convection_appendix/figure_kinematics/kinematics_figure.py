@@ -28,32 +28,48 @@ kinematic_data_folder = os.path.join(
 image_out_path = cd
 #---------------------------------------
 legendt = [
-    r'$\^a_t$ = ' + x.split('_')[2].split('acf')[1]
-    for x in kinematic_data_list
+    r'$\^t_a$ = 0.063',
+    r'$\^t_a$ = 0.125',
+    r'$\^t_a$ = 0.25',
+    r'$\^t_a$ = 0.063',
+    r'$\^t_a$ = 0.063',
 ]
 legendp = [
-    r'$\^p_t$ = ' + x.split('_')[3].split('pf')[1] for x in kinematic_data_list
+    r'$\^t_p$ = ' + x.split('_')[3].split('pf')[1] for x in kinematic_data_list
 ]
 legends = [legendt, legendp]
 
 data_array = []
+idata_array = []
 for ki in kinematic_data_list:
     kinematics_datai = os.path.join(wd, kinematic_data_folder, ki + '.dat')
     k_arrayi, dk_arrayi, ddk_arrayi = read_kinematics_data(kinematics_datai)
+
     ti = np.array([dk_arrayi[:, 0]])
     dtransi = np.abs(np.array([dk_arrayi[:, 1]]))
-    aoai = np.abs(np.array([k_arrayi[:, 6]]))
+    daoai = np.abs(np.array([dk_arrayi[:, 6]]))
+
+    transi = np.array([k_arrayi[:, 1]])
+    aoai = np.array([k_arrayi[:, 6]])
 
     #--scaling factors--
     vel_scalei = np.amax(dtransi)
+    avel_scalei = np.amax(daoai)
     #-------------------
     dtransi = dtransi / vel_scalei
+    if avel_scalei >= 1e-3:
+        daoai = daoai / avel_scalei
 
     arrayi = np.append(ti, dtransi, axis=0)
-    arrayi = np.append(arrayi, aoai, axis=0)
+    arrayi = np.append(arrayi, daoai, axis=0)
     arrayi = np.transpose(arrayi)
 
+    iarrayi = np.append(ti, transi, axis=0)
+    iarrayi = np.append(iarrayi, aoai, axis=0)
+    iarrayi = np.transpose(iarrayi)
+
     data_array.append(arrayi)
+    idata_array.append(iarrayi)
 #---------------------------------------
 illustration_file = os.path.join(wd, kinematic_data_folder,
                                  illustration_data + '.dat')

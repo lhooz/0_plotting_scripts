@@ -126,10 +126,10 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     ref_shit_constant = 0.025
     acc_t = 0.16 / time_scale
     ini_t_both = [0.02, 0.98 - acc_t]
-    y1 = 1.05
-    y2 = 1.15
+    y1 = 1.04
+    y2 = 1.14
     ymid = 0.5 * (y1 + y2)
-    ytext = 1.17
+    ytext = 1.16
 
     plt.rcParams.update({
         # "text.usetex": True,
@@ -144,7 +144,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         'figure.subplot.left': 0.1,
         'figure.subplot.right': 0.95,
         'figure.subplot.top': 0.95,
-        'figure.subplot.bottom': 0.12,
+        'figure.subplot.bottom': 0.15,
         'figure.subplot.wspace': 0.1,
         'figure.subplot.hspace': 0.1,
     })
@@ -278,7 +278,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                     ('{0:.8g}'.format(item[0]), '{0:.8g}'.format(
                         item[1]), '{0:.8g}'.format(item[2])))
 
-    fig1.set_size_inches(10, 5)
+    fig1.set_size_inches(10, 4)
     fig2.set_size_inches(10, 8)
     fig1.savefig(out_image_file1)
     fig2.savefig(out_image_file2)

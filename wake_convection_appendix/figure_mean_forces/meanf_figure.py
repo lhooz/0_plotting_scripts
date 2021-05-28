@@ -11,8 +11,8 @@ pt90 = [0.125, 0.25, 0.5]
 pt0 = [0.25]
 #-----------------------------------------
 cfd_data_list_pa90 = []
-for p in pt90:
-    for a in at:
+for a in at:
+    for p in pt90:
         for re in Re:
             for s in stroke:
                 pafolder_pa90 = 'SIM_RESULTS_pa90'
@@ -24,18 +24,22 @@ for p in pt90:
                 cfd_data_list_pa90.append(cfd_data_path_pa90)
 #-----------------------------------------
 x_data = stroke
-markr90 = [r'$\^p_t = ' + '{0:.3g}'.format(x) + '$' for x in pt90]
-markc = [r'$\^a_t = ' + '{0:.3g}'.format(x) + '$' for x in at]
-marks90 = [markr90, markc]
+markp = [r'$\^p_t = ' + '{0:.3g}'.format(x) + '$' for x in pt90]
+marka = [r'$\^a_t = ' + '{0:.3g}'.format(x) + '$' for x in at]
+marks90 = [marka, markp]
 legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 #---------------------------------------
 # x_range = 'all'
 # y_range = 'all'
 x_range = [2, 10]
-cl_range = [-0.75, 0.75]
-rl_range = [-0.5, 0.5]
-cd_range = [-0.75, 0.75]
-rd_range = [-0.5, 0.5]
+# cl_range = [-0.75, 0.75]
+# rl_range = [-0.5, 0.5]
+# cd_range = [-0.75, 0.75]
+# rd_range = [-0.5, 0.5]
+cl_range = [-3.5, 3.5]
+rl_range = [-1, 1]
+cd_range = [-3.5, 3.5]
+rd_range = [-1, 1]
 rld_range = [-15, 15]
 y_range = [cl_range, rl_range, cd_range, rd_range, rld_range]
 y_label = [

@@ -37,10 +37,10 @@ def read_cfd_data(cfd_data_file):
     cd_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 1], s=0)
 
     mcl_s = cl_spl.integral(0.0, 1.0)
-    mcl_w = cl_spl.integral(1.0, 2.0)
+    mcl_w = cl_spl.integral(1.0, 1.2) / 0.2
     # mcl_w = cl_spl(1.2)
     mcd_s = cd_spl.integral(0.0, 1.0)
-    mcd_w = cd_spl.integral(1.0, 2.0)
+    mcd_w = cd_spl.integral(1.0, 1.2) / 0.2
 
     ratio_l = mcl_w / mcl_s
     ratio_d = mcd_w / mcd_s
@@ -60,27 +60,29 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (14, 12),
-        'lines.linewidth': 2,
-        'lines.markersize': 12,
+        'font.size': 19,
+        'figure.figsize': (10, 4),
+        'lines.linewidth': 0.5,
+        'lines.markersize': 8,
         # 'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
         'figure.subplot.left': 0.1,
         'figure.subplot.right': 0.9,
-        'figure.subplot.top': 0.9,
-        'figure.subplot.bottom': 0.1,
+        'figure.subplot.top': 0.85,
+        'figure.subplot.bottom': 0.15,
         'figure.subplot.wspace': 0.1,
         'figure.subplot.hspace': 0.1,
     })
     markers = ['o', 'v', 's']
+    colorlgd = ['tab:blue', 'tab:orange']
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
     markr = marks[0]
     markc = marks[1]
 
-    no_r = len(markr)
+    # no_r = len(markr)
+    no_r = 1
     no_c = len(markc)
     no_legend = len(cf_legends)
     no_x = len(x_array)
@@ -89,7 +91,8 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
     fig3, ax3 = plt.subplots(no_r, no_c)
     fig4, ax4 = plt.subplots(no_r, no_c)
     fig5, ax5 = plt.subplots(no_r, no_c)
-    for r in range(no_r):
+    # for r in range(no_r):
+    for r in range(3):
         for c in range(no_c):
             if no_r > 1:
                 axi = ax[r][c]
@@ -124,24 +127,27 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
                     axs[i].plot(x_array,
                                 datatoplot[i],
                                 label=cf_legends[lgd],
-                                marker=markers[lgd],
+                                color=colorlgd[lgd],
+                                marker=markers[r],
                                 linestyle='-.')
 
+                    axs[i].set_xticks(np.arange(2, 12, step=2))
                     if x_range != 'all':
                         axs[i].set_xlim(x_range)
                     if y_range != 'all':
                         axs[i].set_ylim(y_range[i])
 
-                    if r == 0:
-                        if c == 1:
-                            axs[i].legend(loc='upper center',
-                                          bbox_to_anchor=(0.5, 1.17),
-                                          ncol=3,
-                                          fontsize='small',
-                                          frameon=False)
+
+                    # if r == 0:
+                    # if c == 1:
+                    # axs[i].legend(loc='upper center',
+                    # bbox_to_anchor=(0.5, 1.17),
+                    # ncol=3,
+                    # fontsize='small',
+                    # frameon=False)
 
                     if lgd == 0:
-                        marky_loc = axs[i].get_ylim()[1] + 0.2 * (
+                        marky_loc = axs[i].get_ylim()[1] + 0.1 * (
                             axs[i].get_ylim()[1] - axs[i].get_ylim()[0])
                         markx_loc = axs[i].get_xlim()[1] + 0.2 * (
                             axs[i].get_xlim()[1] - axs[i].get_xlim()[0])
@@ -158,16 +164,16 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
                             axs[i].set_ylabel(y_label[i])
                         else:
                             axs[i].set_yticklabels([])
-                        if c == no_c - 1:
-                            axs[i].annotate(s=markr[r],
-                                            xy=(markx_loc, markymid_loc),
-                                            ha='center',
-                                            va='center',
-                                            annotation_clip=False)
+                        # if c == no_c - 1:
+                        # axs[i].annotate(s=markr[r],
+                        # xy=(markx_loc, markymid_loc),
+                        # ha='center',
+                        # va='center',
+                        # annotation_clip=False)
                         if r == no_r - 1:
                             axs[i].set_xlabel(r'$s/c$')
-                        else:
-                            axs[i].set_xticklabels([])
+                        # else:
+                            # axs[i].set_xticklabels([])
 
                         axs[i].axhline(y=0,
                                        color='k',

@@ -35,8 +35,8 @@ markEffects = [markEr1, markEr2, markEr3]
 #--------------------------------
 x_data = stroke
 markc = [
-    r'$\alpha_E$ = 135$^\circ$', r'$\alpha_E$ = 90$^\circ$',
-    r'$\alpha_E$ = 45$^\circ$'
+    r'$\alpha_{int}$ = 135$^\circ$', r'$\alpha_{int}$ = 90$^\circ$',
+    r'$\alpha_{int}$ = 45$^\circ$'
 ]
 legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 #---------------------------------------

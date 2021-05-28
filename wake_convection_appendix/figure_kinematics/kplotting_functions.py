@@ -80,12 +80,18 @@ def kf_plotter(kinematic_data_list, data_array, legends, time_to_plot,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (12, 8),
-        'lines.linewidth': 4,
+        'font.size': 19,
+        'figure.figsize': (10, 7),
+        'lines.linewidth': 9,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.13,
+        'figure.subplot.hspace': 0.1,
     })
     data_array = np.array(data_array)
     legendt = legends[0]
@@ -100,18 +106,16 @@ def kf_plotter(kinematic_data_list, data_array, legends, time_to_plot,
                 ax1.plot(datai[:, 0] / time_scale, datai[:, 1], label=legendti)
 
             if 'acf0.125' in kinematici:
-                ax2.plot(datai[:, 0] / time_scale,
-                         45 + datai[:, 2],
-                         label=legendpi)
+                ax2.plot(datai[:, 0] / time_scale, datai[:, 2], label=legendpi)
 
     # ax1.set_xlabel(r'$\^t$')
     ax1.set_xticklabels([])
     ax2.set_xlabel(r'$\^t$')
 
     ax1.set_ylabel(r'$u/U_T$')
-    ax2.set_ylabel(r'$\alpha,\/\deg$')
+    ax2.set_ylabel(r'$\.\alpha/\.\alpha_M$')
     ax1.legend(fontsize='small', frameon=False)
-    ax2.legend(loc='lower right', fontsize='small', frameon=False)
+    ax2.legend(loc='upper right', fontsize='small', frameon=False)
     title = 'kinematics plot'
     out_image_file = os.path.join(image_out_path, title + '.svg')
     # fig.suptitle(title)
@@ -144,7 +148,7 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 25,
+        'font.size': 19,
         'figure.figsize': (width * whratio, width),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
