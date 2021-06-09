@@ -188,7 +188,7 @@ def illustrationk_plotter(ax_toplot, iarray, figure_parameters):
     #--side bars and arrows for motion illustration--
     vbars = vbara1 + vbara2 + vbart1 + vbart2
     arrows = [parrow, sarrow1, sarrow2]
-    arrowlegend = ['Plate rotation', 'Plate translation', '']
+    arrowlegend = ['Pitch rotation', 'Plate translation', '']
     #----------------------------------
 
     nverts = len(vbars)

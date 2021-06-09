@@ -30,7 +30,7 @@ pa = [45.0, 90.0]
 #-----------------------------------
 windows = [window_sc15, window_sc30, window_sc60]
 marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
-markpa = [r'$\alpha_E = 90^\circ$', r'$\alpha_E = 45^\circ$']
+markpa = [r'$\alpha_{int} = 90^\circ$', r'$\alpha_{int} = 45^\circ$']
 marks = [marksc, markpa]
 #-----------------------------------
 cwd = os.getcwd()

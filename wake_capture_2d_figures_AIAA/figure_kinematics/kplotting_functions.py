@@ -81,11 +81,17 @@ def kf_plotter(kinematic_data_list, data_array, legends, time_to_plot,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (10, 6),
+        'figure.figsize': (10, 7),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.15,
+        'figure.subplot.wspace': 0.13,
+        'figure.subplot.hspace': 0.1,
     })
     data_array = np.array(data_array)
     legendt = legends[0]
@@ -109,11 +115,12 @@ def kf_plotter(kinematic_data_list, data_array, legends, time_to_plot,
     ax2.set_xlabel(r'Non-dimensional time $(\/\^t\/)$')
 
     ax1.set_ylabel(r'$u/U_T$')
-    ax2.set_ylabel(r'$\alpha,\/\deg$')
-    ax1.legend()
-    ax2.legend()
+    ax2.set_ylabel(r'$\alpha$')
+    ax2.set_yticks(np.arange(45, 150, 15))
+    ax1.legend(fontsize='small', frameon=False)
+    ax2.legend(loc='lower right', fontsize='small', frameon=False)
     title = 'kinematics plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     # fig.suptitle(title)
 
     ax1.axvline(x=1.0, color='k', linestyle='-', linewidth=0.5)
@@ -126,7 +133,7 @@ def kf_plotter(kinematic_data_list, data_array, legends, time_to_plot,
         ax2.set_ylim(show_range)
 
     plt.savefig(out_image_file)
-    plt.show()
+    # plt.show()
 
     return fig
 
@@ -144,12 +151,18 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 25,
-        'figure.figsize': (width * whratio, width),
+        'font.size': 18,
+        'figure.figsize': (14, 5),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.13,
+        'figure.subplot.hspace': 0.1,
     })
     data_array = np.array(iarray)
     stroke = figure_parameters[0]
@@ -162,28 +175,7 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
     y4 = y3 + vbarh
     yarrow2 = y3 + 0.5 * vbarh
 
-    vbart1 = [[0, y1], [0, y2]]
-    vbart2 = [[at, y1], [at, y2]]
-    arrow1 = [[0, yarrow1], [at * 0.5, yarrow1 + 0.8 * vgap], [at, yarrow1]]
-    vbart3 = [[stroke - at, y1], [stroke - at, y2]]
-    vbart4 = [[stroke, y1], [stroke, y2]]
-    arrow2 = [[stroke - at, yarrow1],
-              [stroke - at * 0.5, yarrow1 + 0.8 * vgap], [stroke, yarrow1]]
-
-    vbara1 = [[stroke - pt, y3], [stroke - pt, y4]]
-    vbara2 = [[stroke, y3], [stroke, y4]]
-    arrow3 = [[stroke - pt, yarrow2],
-              [stroke - pt * 0.5, yarrow2 + 0.8 * vgap], [stroke, yarrow2]]
-    vbars = vbart1 + vbart2 + vbart3 + vbart4 + vbara1 + vbara2
-    arrows = [arrow1, arrow2, arrow3]
-    arrowlegend = [r'$\frac{1}{2}\^a_t$', r'$\frac{1}{2}\^a_t$', r'$\^p_t$']
-
-    nverts = len(vbars)
-    codes = np.ones(nverts, int) * path.Path.LINETO
-    codes[0::2] = path.Path.MOVETO
-    vbarath = path.Path(vbars, codes)
-    barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=1)
-
+    #---------------------------------------------------------
     t_spl = UnivariateSpline(iarray[:, 0], -iarray[:, 1], s=0)
     aoa_spl = UnivariateSpline(iarray[:, 0], -iarray[:, 2], s=0)
     hinge = []
@@ -205,9 +197,33 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
     wingpath = path.Path(wing, codes)
     patch = patches.PathPatch(wingpath, edgecolor='k', linewidth=4)
 
+    #-------------------------------------------
+    vbart1 = [[hinge[0], y1], [hinge[0], y2]]
+    vbart2 = [[at, y1], [at, y2]]
+    arrow1 = [[hinge[0], yarrow1], [at * 0.5, yarrow1 + 0.8 * vgap],
+              [at, yarrow1]]
+    vbart3 = [[stroke - at, y1], [stroke - at, y2]]
+    vbart4 = [[stroke, y1], [stroke, y2]]
+    arrow2 = [[stroke - at, yarrow1],
+              [stroke - at * 0.5, yarrow1 + 0.8 * vgap], [stroke, yarrow1]]
+
+    vbara1 = [[stroke - pt, y3], [stroke - pt, y4]]
+    vbara2 = [[stroke, y3], [stroke, y4]]
+    arrow3 = [[stroke - pt, yarrow2],
+              [stroke - pt * 0.5, yarrow2 + 0.8 * vgap], [stroke, yarrow2]]
+    vbars = vbart1 + vbart2 + vbart3 + vbart4 + vbara1 + vbara2
+    arrows = [arrow1, arrow2, arrow3]
+    arrowlegend = [r'$\frac{1}{2}\^a_t$', r'$\frac{1}{2}\^a_t$', r'$\^p_t$']
+
+    nverts = len(vbars)
+    codes = np.ones(nverts, int) * path.Path.LINETO
+    codes[0::2] = path.Path.MOVETO
+    vbarath = path.Path(vbars, codes)
+    barpatch = patches.PathPatch(vbarath, edgecolor='k', linewidth=1)
+
     #--aoa line for annotation--
-    line_length = 1.1
-    annotation_plength = 0.89 * line_length
+    line_length = 1.15
+    annotation_plength = 0.87 * line_length
     aoa_line = []
     t_mid = illustration_t[int(len(illustration_t) / 2) - 2]
     aoat_mid = (aoa_spl(t_mid) - 45) * np.pi / 180
@@ -245,7 +261,7 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
     ax1.annotate(s='',
                  xy=(annotation_p1[0], annotation_p1[1]),
                  xytext=(annotation_p2[0], annotation_p2[1]),
-                 arrowprops=dict(arrowstyle='<->',
+                 arrowprops=dict(arrowstyle='<-',
                                  facecolor='k',
                                  lw=1,
                                  connectionstyle='arc3,rad=-0.4'),
@@ -267,7 +283,7 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
         ax1.annotate(s='',
                      xy=(arrow[0][0], arrow[0][1]),
                      xytext=(arrow[2][0], arrow[2][1]),
-                     arrowprops=dict(arrowstyle='<->', facecolor='k', lw=1),
+                     arrowprops=dict(arrowstyle='<-', facecolor='k', lw=1),
                      annotation_clip=False)
         ax1.annotate(s=alegend,
                      xy=(arrow[1][0], arrow[1][1]),
@@ -297,12 +313,13 @@ def illustrationk_plotter(illustration_t, iarray, figure_parameters,
     #--------------------------------------
     ax1.set_xlim([-0.6, stroke + 0.6])
     ax1.set_ylim([-1, (stroke + 2) / whratio - 1])
+    ax1.set_aspect('equal')
     ax1.axhline(y=0, color='k', linestyle='-.', linewidth=1)
 
-    out_image_file = os.path.join(image_out_path, 'wing_path.png')
+    out_image_file = os.path.join(image_out_path, 'wing_path.svg')
 
     plt.axis('off')
     plt.savefig(out_image_file)
-    plt.show()
+    # plt.show()
 
     return fig

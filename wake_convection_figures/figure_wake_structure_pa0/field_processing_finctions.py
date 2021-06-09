@@ -200,8 +200,8 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (15, 11),
+        'font.size': 19,
+        'figure.figsize': (14, 10.3),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
@@ -253,7 +253,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             if ri == 0:
                 markx_loc = axre.get_xlim()[0] + 0.5 * (axre.get_xlim()[1] -
                                                         axre.get_xlim()[0])
-                marky_loc = axre.get_ylim()[1] + 0.1 * (axre.get_ylim()[1] -
+                marky_loc = axre.get_ylim()[1] + 0.06 * (axre.get_ylim()[1] -
                                                         axre.get_ylim()[0])
                 axre.annotate(s=marksc[ci],
                               xy=(markx_loc, marky_loc),
@@ -262,7 +262,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
                               annotation_clip=False)
 
             if ci == no_c - 1:
-                markx_loc = axre.get_xlim()[1] + 0.17 * (axre.get_xlim()[1] -
+                markx_loc = axre.get_xlim()[1] + 0.15 * (axre.get_xlim()[1] -
                                                          axre.get_xlim()[0])
                 marky_loc = axre.get_ylim()[0] + 0.5 * (axre.get_ylim()[1] -
                                                         axre.get_ylim()[0])

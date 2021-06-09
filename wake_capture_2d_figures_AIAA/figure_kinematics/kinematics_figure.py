@@ -12,7 +12,7 @@ kinematic_data_list = [
 ]
 illustration_data = 'Re100.0_stroke5.0_acf0.25_pf0.25'
 #-----------------------------------------
-time_scale = 1.1
+time_scale = 1.0
 illustration_t = np.linspace(0.05, 1.05, 20)
 #-----------------------------------------
 # time_to_plot = 'all'
@@ -22,7 +22,8 @@ time_to_plot = [0, 2.5]
 #---------------------------------------
 kinematic_data_folder = '0_kinematic_cases'
 cd = os.getcwd()
-wd = os.path.dirname(cd)
+wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
+                        'wake_capture_2d_AIAA_data')
 image_out_path = cd
 #---------------------------------------
 legendt = [

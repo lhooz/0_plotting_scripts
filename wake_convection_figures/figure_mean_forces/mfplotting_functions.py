@@ -37,10 +37,10 @@ def read_cfd_data(cfd_data_file):
     cd_spl = UnivariateSpline(cf_array[:, 0], cf_array[:, 1], s=0)
 
     mcl_s = cl_spl.integral(0.0, 1.0)
-    mcl_w = cl_spl.integral(1.0, 1.18) / 0.18
+    mcl_w = cl_spl.integral(1.0, 1.2) / 0.2
     # mcl_w = cl_spl(1.2)
     mcd_s = cd_spl.integral(0.0, 1.0)
-    mcd_w = cd_spl.integral(1.0, 1.18) / 0.18
+    mcd_w = cd_spl.integral(1.0, 1.2) / 0.2
 
     ratio_l = mcl_w / mcl_s
     ratio_d = mcd_w / mcd_s
@@ -74,6 +74,7 @@ def cf_plotter(x_data, data_array, markc, markEffects, legends, x_range,
     })
     markers = ['s', 's', '^']
     markerColor = ['tab:blue', 'tab:orange']
+    ytickSteps = [1.0, 1.0, 0.5, 0.5]
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
     cf_legends = np.array(legends)
@@ -137,6 +138,7 @@ def cf_plotter(x_data, data_array, markc, markEffects, legends, x_range,
                                    edgecolors=markerColor[lgd],
                                    zorder=1)
                 axs[i].set_xticks(np.arange(0, 7, step=1.5))
+                axs[i].set_yticks(np.arange(-5, 5, step=ytickSteps[i]))
 
                 if x_range != 'all':
                     axs[i].set_xlim(x_range)

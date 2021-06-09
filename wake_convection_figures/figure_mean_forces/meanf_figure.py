@@ -28,7 +28,7 @@ for pai in pa:
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
 #----effects for each case-------
-markEr1 = [['i', 's', 'i'], ['i', 's', 's']]
+markEr1 = [['i', 's', 'i'], ['i', 's', 'i']]
 markEr2 = [['i', 'i', 'i'], ['i', 'i', 's']]
 markEr3 = [['s', 'i', 's'], ['s', 'i', 's']]
 markEffects = [markEr1, markEr2, markEr3]
@@ -43,9 +43,10 @@ legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 6.5]
-cl_range = [-4.5, 4.5]
+# cl_range = [-4.5, 4.5]
+cl_range = [-3.75, 2.4]
 cd_range = cl_range
-rl_range = [-2, 2]
+rl_range = [-1.6, 1]
 rd_range = rl_range
 y_range = [cl_range, cd_range, rl_range, rd_range]
 y_label = [

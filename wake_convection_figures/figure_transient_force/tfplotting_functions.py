@@ -47,13 +47,13 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
         'font.size': 19,
         'figure.figsize': (12, 6),
         'lines.linewidth': 2.0,
-        'lines.markersize': 1.5,
+        # 'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
         'figure.subplot.left': 0.1,
         'figure.subplot.right': 0.9,
         'figure.subplot.top': 0.9,
-        'figure.subplot.bottom': 0.1,
+        'figure.subplot.bottom': 0.2,
         'figure.subplot.wspace': 0.12,
         'figure.subplot.hspace': 0.1,
     })
@@ -76,6 +76,18 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
                           cf_array[datano + i][:, 1],
                           label=legendsc[i])
 
+        if pa == 90:
+            if plot_mode != 'wake':
+                axrow[0].set_yticks(np.arange(-20, 40, 15))
+                axrow[1].set_yticks(np.arange(-20, 40, 15))
+
+        if time_to_plot != 'all':
+            axrow[0].set_xlim(time_to_plot)
+            axrow[1].set_xlim(time_to_plot)
+        if coeffs_show_range != 'all':
+            axrow[0].set_ylim(coeffs_show_range)
+            axrow[1].set_ylim(coeffs_show_range)
+
         texty_loc1 = axrow[0].get_ylim()[0] + 0.05 * (axrow[0].get_ylim()[1] -
                                                       axrow[0].get_ylim()[0])
         texty_loc2 = axrow[1].get_ylim()[0] + 0.05 * (axrow[1].get_ylim()[1] -
@@ -96,7 +108,8 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
                                  va='center',
                                  annotation_clip=False)
 
-                    axc.set_xlabel(r'$\^t$')
+            axrow[0].set_xlabel(r'$\^t$')
+            axrow[1].set_xlabel(r'$\^t$')
         else:
             axrow[0].set_xticklabels([])
             axrow[1].set_xticklabels([])
@@ -130,14 +143,7 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
         axrow[0].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
         axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-        if pa == 90:
-            if plot_mode != 'wake':
-                axrow[0].set_yticks(np.arange(-20, 40, 15))
-                axrow[1].set_yticks(np.arange(-20, 40, 15))
-
-            v_lines = [1.2, 1.4, 1.6]
-        else:
-            v_lines = [1.2, 1.4, 1.6]
+        v_lines = [1.2, 1.4, 1.6]
         for line in v_lines:
             axrow[0].axvline(x=line,
                              color='k',
@@ -150,17 +156,10 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
                              linewidth=1,
                              alpha=0.25)
 
-        if time_to_plot != 'all':
-            axrow[0].set_xlim(time_to_plot)
-            axrow[1].set_xlim(time_to_plot)
-        if coeffs_show_range != 'all':
-            axrow[0].set_ylim(coeffs_show_range)
-            axrow[1].set_ylim(coeffs_show_range)
-
         rowno += 1
 
     if plot_mode == 'wake':
-        fig.set_size_inches(12, 4)
+        fig.set_size_inches(12, 6.5)
 
     plt.savefig(oimage_file)
     # plt.show()
@@ -267,6 +266,100 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
                                  alpha=0.25)
 
             rowno += 1
+
+    plt.savefig(oimage_file)
+    # plt.show()
+
+    return fig
+
+
+def cf_plotter_wakeV2(pa, data_array, legends, time_to_plot, coeffs_show_range,
+                      oimage_file, cycle_time, plot_mode):
+    """
+    function to plot cfd force coefficients results
+    """
+    plt.rcParams.update({
+        # "text.usetex": True,
+        'mathtext.fontset': 'stix',
+        'font.family': 'STIXGeneral',
+        'font.size': 19,
+        'figure.figsize': (12, 4),
+        'lines.linewidth': 2.0,
+        # 'lines.markersize': 1.5,
+        'lines.markerfacecolor': 'white',
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.85,
+        'figure.subplot.bottom': 0.2,
+        'figure.subplot.wspace': 0.12,
+        'figure.subplot.hspace': 0.1,
+    })
+    cf_array = np.array(data_array)
+    legendre = legends[0]
+    legendsc = legends[1]
+
+    fig, ax = plt.subplots(1, 2)
+
+    cno = 0
+    for axc in ax:
+        # axc[0].set_yticks(np.arange(-60, 60, 15)) #--for pa90--
+        # axc[1].set_yticks(np.arange(-60, 60, 15))
+        datano = cno * len(legendsc)
+        for i in range(len(legendsc)):
+            if pa == 45:
+                axc.plot(cf_array[datano + i][:, 0] / cycle_time,
+                         cf_array[datano + i][:, 1],
+                         label=legendsc[i])
+            else:
+                axc.plot(cf_array[datano + i][:, 0] / cycle_time,
+                         cf_array[datano + i][:, 3],
+                         label=legendsc[i])
+
+        if time_to_plot != 'all':
+            axc.set_xlim(time_to_plot)
+        if coeffs_show_range != 'all':
+            axc.set_ylim(coeffs_show_range)
+
+        axc.set_xlabel(r'$\^t$')
+
+        if axc == ax[-1]:
+            axc.set_yticklabels([])
+
+        if axc == ax[0]:
+            if pa == 45:
+                axc.set_ylabel(r'$C_d$')
+            else:
+                axc.set_ylabel(r'$C_l$')
+
+        markx_loc = axc.get_xlim()[0] + 0.5 * (axc.get_xlim()[1] -
+                                               axc.get_xlim()[0])
+        markymid_loc = axc.get_ylim()[1] + 0.07 * (axc.get_ylim()[1] -
+                                                   axc.get_ylim()[0])
+
+        axc.annotate(s=legendre[cno],
+                     xy=(markx_loc, markymid_loc),
+                     ha='center',
+                     va='center',
+                     annotation_clip=False)
+
+        axc.axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
+        axc.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
+
+        v_lines = [1.2, 1.4, 1.6]
+        for line in v_lines:
+            axc.axvline(x=line,
+                        color='k',
+                        linestyle='-.',
+                        linewidth=1,
+                        alpha=0.25)
+            axc.axvline(x=line,
+                        color='k',
+                        linestyle='-.',
+                        linewidth=1,
+                        alpha=0.25)
+
+        cno += 1
 
     plt.savefig(oimage_file)
     # plt.show()

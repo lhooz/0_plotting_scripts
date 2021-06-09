@@ -134,17 +134,23 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         'font.family': 'STIXGeneral',
         'font.size': 18,
         'figure.figsize': (10, 8),
-        'lines.linewidth': 1.8,
-        'lines.markersize': 4,
-        'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'lines.linewidth': 2,
+        'lines.markersize': 5,
+        # 'lines.markerfacecolor': 'white',
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.15,
+        'figure.subplot.right': 0.95,
+        'figure.subplot.top': 0.95,
+        'figure.subplot.bottom': 0.15,
+        'figure.subplot.wspace': 0.15,
+        'figure.subplot.hspace': 0.15,
     })
     kine_array = np.array(data_array[0])
     cf_array = np.array(data_array[1])
     ref_array = np.array(data_array[2])
     cf_legends = np.array(legends[0])
     ref_legends = np.array(legends[1])
-    ref_markers = ['s', 'v']
+    ref_markers = ['s', '^']
 
     ref_array_shifted = []
     for ref_arrayi in ref_array:
@@ -164,6 +170,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         # print(ref_arrayi)
 
     fig, (ax1, ax2) = plt.subplots(2, 1)
+    ax2.set_yticks(np.arange(-3.0, 5.0, 0.75))
     if time_to_plot != 'all':
         ax1.set_xlim(time_to_plot)
         ax2.set_xlim(time_to_plot)
@@ -223,7 +230,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                      linewidth=0.5)
 
         ax1.set_xticklabels([])
-        ax2.set_xlabel(r'Non-dimensional time $(\/\^t\/)$')
+        ax2.set_xlabel(r'$\^t$')
 
         abx_loc = ax1.get_xlim()[0] + 0.5 * (ax1.get_xlim()[1] -
                                              ax1.get_xlim()[0])
@@ -232,16 +239,16 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         by_loc = ax2.get_ylim()[0] - 0.25 * (ax2.get_ylim()[1] -
                                              ax2.get_ylim()[0])
 
-        ax1.annotate(s='(a)',
-                     xy=(abx_loc, ay_loc),
-                     ha='center',
-                     va='center',
-                     annotation_clip=False)
-        ax2.annotate(s='(b)',
-                     xy=(abx_loc, by_loc),
-                     ha='center',
-                     va='center',
-                     annotation_clip=False)
+        # ax1.annotate(s='(a)',
+        # xy=(abx_loc, ay_loc),
+        # ha='center',
+        # va='center',
+        # annotation_clip=False)
+        # ax2.annotate(s='(b)',
+        # xy=(abx_loc, by_loc),
+        # ha='center',
+        # va='center',
+        # annotation_clip=False)
 
     elif plot_mode == 'against_phi':
         for i in range(len(cf_legends)):
@@ -252,17 +259,17 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         ax2.set_xlabel(r'$\phi\/(\deg)$')
 
     ax1.set_ylabel(r'$u/U_T$')
-    ax2.set_ylabel(r'$C_L$')
+    ax2.set_ylabel(r'$C_l$')
     ax1.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
     ax2.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
     ax2.axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
     title = 'validation plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     # ax.set_title(title)
-    ax2.legend()
+    ax2.legend(fontsize='small', frameon=False)
 
     plt.savefig(out_image_file)
-    plt.show()
+    # plt.show()
 
     return fig
 

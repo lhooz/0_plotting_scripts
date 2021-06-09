@@ -11,8 +11,8 @@ from field_processing_finctions import (field_plot, grid_vorz, grid_ufield,
                                         read_vfield, read_wgeo)
 
 #--------------figure parameters------------
-pa = 90
-Re = 100.0
+pa = 0
+Re = 1000.0
 if pa == 0:
     #----pa = 0 window--
     window_sc15 = [-0.6, 2.6, -1.8, 1.8]

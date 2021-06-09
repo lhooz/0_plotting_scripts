@@ -18,7 +18,8 @@ time_scale = 1.0 / 0.96
 #---------------------------------------
 validation_data_folder = '4_validation_results'
 cd = os.getcwd()
-wd = os.path.dirname(cd)
+wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
+                        'wake_capture_2d_AIAA_data')
 image_out_path = cd
 #---------------------------------------
 # legendcfd = [
