@@ -45,11 +45,17 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (16, 12),
-        'lines.linewidth': 1.8,
+        'figure.figsize': (14, 10),
+        'lines.linewidth': 2,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.1,
+        'figure.subplot.hspace': 0.1,
     })
     cf_array = np.array(data_array)
     markre = marks[0]
@@ -65,9 +71,12 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
                 ax_mk = int(i / 3)
                 legendi = np.mod(i, 3)
                 ax[ax_mk].plot(cf_array[datano + i][:, 0] / cycle_time,
-                               cf_array[datano + i][:, 3],
+                               # cf_array[datano + i][:, 3], #--cl--
+                               cf_array[datano + i][:, 1], #--cl--
                                label=legends[legendi])
 
+                ax[ax_mk].set_yticks(np.arange(-15, 20, 7.5))  #--cl--=
+                # ax[ax_mk].set_yticks(np.arange(-15, 20, 7.5))
                 if time_to_plot != 'all':
                     ax[ax_mk].set_xlim(time_to_plot)
                 if coeffs_show_range != 'all':
@@ -75,7 +84,7 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
 
             for ai in range(len(ax)):
                 if ai == 0:
-                    marky_loc = ax[0].get_ylim()[1] + 0.27 * (
+                    marky_loc = ax[0].get_ylim()[1] + 0.08 * (
                         ax[0].get_ylim()[1] - ax[0].get_ylim()[0])
                     ax[0].annotate(s=markre[rei],
                                    xy=(1, marky_loc),
@@ -87,7 +96,8 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
                 ax[ai].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
                 if ax[0] == axs[:, 0][0]:
-                    ax[ai].set_ylabel(r'$C_L$')
+                    # ax[ai].set_ylabel(r'$C_l$')
+                    ax[ai].set_ylabel(r'$C_d$')
                 else:
                     ax[ai].set_yticklabels([])
 
@@ -95,7 +105,7 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
                     ax[ai].set_xticklabels([])
 
                 if ax[0] == axs[:, -1][0]:
-                    markx_loc = ax[ai].get_xlim()[1] + 0.15 * (
+                    markx_loc = ax[ai].get_xlim()[1] + 0.1 * (
                         ax[ai].get_xlim()[1] - ax[ai].get_xlim()[0])
                     marky_loc = ax[ai].get_ylim()[0] + 0.5 * (
                         ax[ai].get_ylim()[1] - ax[ai].get_ylim()[0])
@@ -107,9 +117,10 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
                                     annotation_clip=False)
 
                     ax[0].legend(loc='upper center',
-                                 bbox_to_anchor=(-0.7, 1.27),
+                                 bbox_to_anchor=(-0.6, 1.4),
                                  ncol=4,
-                                 fontsize='small')
+                                 fontsize='small',
+                                 frameon=False)
 
             texty_loc = ax[-1].get_ylim()[0] + 0.05 * (ax[-1].get_ylim()[1] -
                                                        ax[-1].get_ylim()[0])
@@ -117,18 +128,20 @@ def cf_plotter(data_array, marks, time_to_plot, coeffs_show_range,
                             xy=(0.55, texty_loc),
                             ha='center',
                             va='center',
+                            fontsize=15,
                             annotation_clip=False)
             ax[-1].annotate(s='wake effect',
                             xy=(1.55, texty_loc),
                             ha='center',
                             va='center',
+                            fontsize=15,
                             annotation_clip=False)
 
             ax[-1].set_xlabel(r'$\^t$')
 
     title = 'force coefficients plot pt'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     plt.savefig(out_image_file)
-    plt.show()
+    # plt.show()
 
     return fig

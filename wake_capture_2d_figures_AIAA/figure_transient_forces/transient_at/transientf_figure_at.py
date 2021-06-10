@@ -20,25 +20,27 @@ for re in Re:
                             a) + '_pf' + '{0:.3g}'.format(p)
                 cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
-markre = [r'$Re = ' + '{0:.0f}'.format(x) + '$' for x in Re]
-marksc = [r'$s/c = ' + '{0:.1f}'.format(x) + '$' for x in stroke]
+markre = [r'$Re = 10^2$', r'$Re = 10^3$', r'$Re = 10^4$']
+marksc = [r'$s/c = ' + '{0:.0f}'.format(x) + '$' for x in stroke]
 markat = [r'$\^a_t = ' + '{0:.3g}'.format(x) + '$' for x in at]
 marks = [markre, marksc, markat]
 #---------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [0, 2.5]
-coeffs_show_range = [-2.5, 10]
-cycle_time = 1.1
+coeffs_show_range = [-3, 9] #--cl--
+# coeffs_show_range = [-10, 15] #--cd--
+cycle_time = 1.0
 #---------------------------------------
 cd = os.getcwd()
-wd = os.path.dirname(cd)
-wd = os.path.dirname(wd)
+wd = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(cd)))),
+    'wake_capture_2d_AIAA_data')
 image_out_path = cd
 #---------------------------------------
 cf_array = []
 for cfi in cfd_data_list:
-    cfd_datai = os.path.join(wd, '1_SIM_RESULTS', cfi)
+    cfd_datai = os.path.join(wd, '2_SIM_RESULTS', cfi)
     cf_arrayi = read_cfd_data(cfd_datai)
     cf_array.append(cf_arrayi)
 

@@ -45,11 +45,17 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 18,
-        'figure.figsize': (14, 10),
-        'lines.linewidth': 1.8,
+        'figure.figsize': (12, 10),
+        'lines.linewidth': 2,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.1,
+        'figure.subplot.right': 0.9,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.1,
+        'figure.subplot.hspace': 0.1,
     })
     cf_array = np.array(data_array)
     legendre = legends[0]
@@ -110,16 +116,17 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
 
             axrow[1].set_yticklabels([])
             # print(cf_array[:, -1])
-            axrow[0].set_ylabel(r'$C_L$')
-            axrow[1].set_ylabel(r'$C_D$')
+            axrow[0].set_ylabel(r'$C_l$')
+            axrow[1].set_ylabel(r'$C_d$')
             # ax.set_title(title)
             if axrow[0] == ax[0][0]:
                 axrow[1].legend(loc='upper center',
-                                bbox_to_anchor=(-0.1, 1.27),
+                                bbox_to_anchor=(-0.05, 1.17),
                                 ncol=4,
-                                fontsize='small')
+                                fontsize='small',
+                                frameon=False)
 
-            markx_loc = axrow[1].get_xlim()[1] + 0.15 * (
+            markx_loc = axrow[1].get_xlim()[1] + 0.1 * (
                 axrow[1].get_xlim()[1] - axrow[1].get_xlim()[0])
             markymid_loc = axrow[1].get_ylim()[0] + 0.5 * (
                 axrow[1].get_ylim()[1] - axrow[1].get_ylim()[0])
@@ -139,8 +146,8 @@ def cf_plotter(data_array, legends, time_to_plot, coeffs_show_range,
             rowno += 1
 
     title = 'force coefficients plot sc'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     plt.savefig(out_image_file)
-    plt.show()
+    # plt.show()
 
     return fig
