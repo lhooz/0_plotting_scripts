@@ -1,7 +1,7 @@
 """plotting cfd run results"""
 import os
 
-from mfplotting_functions import cf_plotter90, read_cfd_data
+from mfplotting_functions import cf_plotter90V2, read_cfd_data
 
 #-------------input plot control----------
 Re = [100, 1000, 10000]
@@ -10,8 +10,8 @@ at = [0.125, 0.25, 0.5]
 pt90 = [0.125, 0.25, 0.5]
 #-----------------------------------------
 cfd_data_list = []
-for p in pt90:
-    for a in at:
+for a in at:
+    for p in pt90:
         for re in Re:
             for s in stroke:
                 cfd_data_name = 'Re' + '{0:.1f}'.format(
@@ -23,8 +23,7 @@ for p in pt90:
 x_data = stroke
 markp = [r'$\^p_t = ' + '{0:.3g}'.format(x) + '$' for x in pt90]
 marka = [r'$\^a_t = ' + '{0:.3g}'.format(x) + '$' for x in at]
-# marks90 = [marka, markp]
-marks90 = [markp, marka]
+marks90 = [marka, markp]
 legends = [r'$Re = 10^2$', r'$Re = 10^3$', r'$Re = 10^4$']
 #---------------------------------------
 # x_range = 'all'
@@ -60,7 +59,5 @@ data_array_pa90 = mcf_array_pa90
 figname90 = 'pa90'
 #---------------------------------------
 
-cf_plotter90(x_data, data_array_pa90, marks90, legends, x_range, y_range,
+cf_plotter90V2(x_data, data_array_pa90, marks90, legends, x_range, y_range,
              y_label, image_out_path, figname90)
-# cf_plotter0(x_data, data_array_pa0, marks0, legends, x_range, y_range,
-# y_label, image_out_path, figname0)
