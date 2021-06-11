@@ -344,7 +344,7 @@ def cf_plotter90V2(x_data, data_array, marks, legends, x_range, y_range,
     ]
     figs = [fig, fig2, fig3, fig4, fig5]
 
-    for i in [0, 2]:
+    for i in range(len(figs)):
         figs[i].savefig(out_files[i])
         # figs[i].show()
 
