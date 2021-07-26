@@ -179,10 +179,10 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
                                        linestyle='-.',
                                        linewidth=0.5)
 
-    title = 'mean lift coefficients plot_ta ' + figname
-    title2 = 'mean lift ratio plot ' + figname
-    title3 = 'mean drag coefficients plot_ta ' + figname
-    title4 = 'mean drag ratio plot ' + figname
+    title = 'mean lift coefficients plot_ppt ' + figname
+    title2 = 'mean lift ratio plot_ppt ' + figname
+    title3 = 'mean drag coefficients plot_ppt ' + figname
+    title4 = 'mean drag ratio plot_ppt ' + figname
     title5 = 'mean wake ld ratio plot ' + figname
     out_image_file = os.path.join(image_out_path, title + '.svg')
     out_image_file2 = os.path.join(image_out_path, title2 + '.svg')
@@ -195,7 +195,7 @@ def cf_plotter90(x_data, data_array, marks, legends, x_range, y_range, y_label,
     ]
     figs = [fig, fig2, fig3, fig4, fig5]
 
-    for i in [0, 2]:
+    for i in [0, 1, 2, 3]:
         figs[i].savefig(out_files[i])
         # figs[i].show()
 

@@ -63,7 +63,7 @@ def g_plotter_Joukowsky(data_array, marks, x_range, y_range, image_out_path):
         'font.family': 'STIXGeneral',
         'font.size': 18,
         'figure.figsize': (13, 14),
-        'lines.linewidth': 2,
+        'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,

@@ -25,7 +25,7 @@ data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'Joukowsky_data/wing_profiles')
 image_out_path = cwd
 #---------------------------------------
-marks = ['FF', 'BB', 'HM', 'HB', 'CF', 'HF', 'DF', 'LB']
+marks = ['Fruit fly', 'Bumblebee', 'Hawkmoth', 'Honeybee', 'Crane fly', 'Hoverfly', 'Drone fly', 'Ladybird']
 
 data_array = []
 for data_name in planform_list:

@@ -88,7 +88,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
         'font.family': 'STIXGeneral',
         'font.size': 18,
         'figure.figsize': (10, 10),
-        'lines.linewidth': 2.0,
+        'lines.linewidth': 4.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -102,7 +102,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
 
     fig1, ax = plt.subplots(2, 1)
 
-    labels = [r'$\Omega/\Omega_M$', r'AoA']
+    labels = [r'$|\it{\Omega(t)}|/\Omega_M$', r'AoA [deg]']
     legendax2 = [
         r'$C_\theta = 0$', r'$C_\theta = 1$', r'$C_\theta = 5$',
         r'$C_\theta = 10$', r'$C_\theta = 100$'
@@ -136,12 +136,12 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
         axi.label_outer()
 
     ax[1].set_ylim([40, 100])
-    ax[1].legend(
-        # loc='upper center',
-        # bbox_to_anchor=(0.5, 1.35),
-        ncol=5,
-        fontsize='small',
-        frameon=False)
+    # ax[1].legend(
+        # # loc='upper center',
+        # # bbox_to_anchor=(0.5, 1.35),
+        # ncol=5,
+        # fontsize='small',
+        # frameon=False)
 
     out_image_file1 = os.path.join(image_out_path, 'kinematics.svg')
 

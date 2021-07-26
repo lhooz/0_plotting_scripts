@@ -5,16 +5,19 @@ import numpy as np
 from kplotting_functions import k_plotter, read_kinematics_data
 
 #-------------input plot control----------
+# kinematic_data_list = [
+    # 'smooth_phi160_atf0_ptc0_3d.dat',
+    # 'smooth_phi160_atf0_ptc1_3d.dat',
+    # 'smooth_phi160_atf0_ptc5_3d.dat',
+    # 'smooth_phi160_atf0_ptc10_3d.dat',
+    # 'smooth_phi160_atf0_ptc100_3d.dat',
+# ]
 kinematic_data_list = [
-    'smooth_phi160_atf0_ptc0_3d.dat',
-    'smooth_phi160_atf0_ptc1_3d.dat',
     'smooth_phi160_atf0_ptc5_3d.dat',
-    'smooth_phi160_atf0_ptc10_3d.dat',
-    'smooth_phi160_atf0_ptc100_3d.dat',
 ]
 #---------------------------------------
 time_to_plot = [0, 1.0]
-show_range = [-1.2, 1.2]
+show_range = [-0.2, 1.2]
 #---------------------------------------
 time_scale = 1.0
 #---------------------------------------
@@ -36,7 +39,7 @@ for kinematic_data_name in kinematic_data_list:
     avel_scale = np.amax(np.abs(daoa))
     # dphi += vel_scale
     #-------------------
-    dphi = dphi / vel_scale
+    dphi = np.abs(dphi) / vel_scale
     daoa = 90 - np.abs(daoa)
 
     kine_array = np.append(ti, dphi, axis=0)
