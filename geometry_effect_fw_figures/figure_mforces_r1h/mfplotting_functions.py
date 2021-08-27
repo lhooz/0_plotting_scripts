@@ -161,7 +161,7 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr):
 
 
 def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
-               image_out_path):
+               image_out_path, title, x_label):
     """
     function to plot cfd force coefficients results
     """
@@ -222,7 +222,7 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
                     ax[i].set_ylim(y_range[i])
 
                 ax[i].set_ylabel(y_label[i])
-                ax[i].set_xlabel(r'$\hat r_1$')
+                ax[i].set_xlabel(x_label)
                 # ax[i].set_xlabel('AR')
                 ax[i].label_outer()
 
@@ -236,7 +236,7 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         fontsize='small',
         frameon=False)
 
-    title = 'mean coefficients'
+    title = 'mean coefficients_r1h' + title
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
 

@@ -88,7 +88,6 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     })
     legendx = 1.1
     legendy = 1.2
-    mistake_scales = [1.0, 1.77777777777778, 2.77777777777778, 4.0]
 
     cf_array = np.array(data_array)
     range_cl = show_range[0]
@@ -100,26 +99,26 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     if plot_mode == 'against_t':
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
-                        cf_array[i][:, 1] / mistake_scales[i],
+                        cf_array[i][:, 1],
                         label=legends[i])
             axs[1].plot(cf_array[i][:, 0] / cycle_time,
-                        cf_array[i][:, 2] / mistake_scales[i],
+                        cf_array[i][:, 2],
                         label=legends[i])
 
             cl_spl = UnivariateSpline(cf_array[i][:, 0] / cycle_time,
-                                      cf_array[i][:, 1] / mistake_scales[i],
+                                      cf_array[i][:, 1],
                                       s=0)
             mcl = cl_spl.integral(time_to_plot[0], time_to_plot[1])
 
             cd_spl = UnivariateSpline(cf_array[i][:, 0] / cycle_time,
-                                      cf_array[i][:, 2] / mistake_scales[i],
+                                      cf_array[i][:, 2],
                                       s=0)
             mcd = cd_spl.integral(time_to_plot[0], time_to_plot[1])
 
             mcl_arr.append(mcl)
             mcd_arr.append(mcd)
 
-            with open('meancf_ofs.dat', 'w') as f:
+            with open('meancf_ofs_AR3.dat', 'w') as f:
                 for item, cf_lgd in zip(mcl_arr, legends):
                     f.write("%s:\n" % cf_lgd)
                     f.write("mcl = %s\n" % '{0:.8g}'.format(item))
@@ -148,7 +147,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       fontsize='small',
                       frameon=False)
 
-    title = 'transient force AR'
+    title = 'transient_ofs_AR3'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
     # plt.show()

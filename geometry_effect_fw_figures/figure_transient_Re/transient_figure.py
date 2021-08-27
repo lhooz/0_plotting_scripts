@@ -9,27 +9,29 @@ kinematics_file = 'kinematics.dat'
 cfd_data_list = [
     'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25',
     'ar3.0_ofs0.0_r1h0.5__Re1000.0_pt0.25',
+    'ar3.0_ofs0.0_r1h0.5__Re8000.0_pt0.25',
 ]
 #-----------------------------------------
 legends = [
     r'Re = 100',
     r'Re = 1000',
+    r'Re = 8000',
 ]
 #-----------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.5, 5.0]
-show_range_cd = [-1.5, 5.0]
+show_range_cl = [-1.5, 3.0]
+show_range_cd = [-1.5, 3.0]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]
 #-----------------------------------------
 cwd = os.getcwd()
 kinematics_dir = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
+    os.path.dirname(os.path.dirname(cwd)),
     'geometry_effect_fw_data/1_kinematic_cases')
-data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
+data_dir = os.path.join(os.path.dirname(os.path.dirname(cwd)),
                         'geometry_effect_fw_data/5_SIM_RESULTS')
 image_out_path = cwd
 #-----------------------------------------

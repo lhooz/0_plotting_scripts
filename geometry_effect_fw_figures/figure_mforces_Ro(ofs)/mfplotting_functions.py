@@ -83,7 +83,7 @@ def read_kinematics_data(kinematics_data_file):
     return u2, kinematics_arr, dkinematics_arr, ddkinematics_arr
 
 
-def read_cfd_data(cfd_data_file, u2, karr, dkarr, mscale):
+def read_cfd_data(cfd_data_file, u2, karr, dkarr):
     """read cfd results force coefficients data"""
     phi_spl = UnivariateSpline(karr[:, 0], karr[:, 4] * np.pi / 180, s=0)
 
@@ -105,10 +105,10 @@ def read_cfd_data(cfd_data_file, u2, karr, dkarr, mscale):
                 csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
                     row[1])
                 cf_array.append([
-                    ti, cdi / mscale, csi / mscale, cli / mscale,
-                    float(row[4]) / (mscale)**1.5,
-                    float(row[5]) / (mscale)**1.5,
-                    float(row[6]) / (mscale)**1.5
+                    ti, cdi, csi, cli,
+                    float(row[4]),
+                    float(row[5]),
+                    float(row[6])
                 ])
                 line_count += 1
 
@@ -235,7 +235,7 @@ def cf_plotter(Ro, no_x, data_array, legends, x_range, y_range, y_label,
                  fontsize='small',
                  frameon=False)
 
-    title = 'mean coefficients r1h Ro'
+    title = 'mean coefficients_Ro(ofs)'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
 

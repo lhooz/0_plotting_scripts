@@ -118,7 +118,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             mcl_arr.append(mcl)
             mcd_arr.append(mcd)
 
-            with open('meancf_re.dat', 'w') as f:
+            with open('meancf_RE.dat', 'w') as f:
                 for item, cf_lgd in zip(mcl_arr, legends):
                     f.write("%s:\n" % cf_lgd)
                     f.write("mcl = %s\n" % '{0:.8g}'.format(item))
@@ -147,7 +147,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       fontsize='small',
                       frameon=False)
 
-    title = 'transient force Re'
+    title = 'transient_Re'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
     # plt.show()

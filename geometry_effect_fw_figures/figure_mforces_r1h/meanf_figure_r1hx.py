@@ -25,6 +25,8 @@ for ar in AR:
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
 x_data = r1hat
+title = '_r1hx'
+x_label = r'$\hat r_1$'
 legends = ['AR = ' + '{0:.1f}'.format(ar) for ar in AR]
 #---------------------------------------
 # x_range = 'all'
@@ -56,4 +58,4 @@ for cfi in cfd_data_list:
             mcf_array.append(mcf_arrayi)
 #---------------------------------------
 cf_plotter(x_data, mcf_array, legends, x_range, y_range, y_label,
-           image_out_path)
+           image_out_path, title, x_label)

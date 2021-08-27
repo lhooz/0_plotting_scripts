@@ -55,7 +55,7 @@ for cfi in cfd_data_list:
             kinematics_datai = os.path.join(kinematics_dir, CF_name)
             cfd_datai = os.path.join(data_dir, CF_name)
             u2, karr, dkarr, ddkarr = read_kinematics_data(kinematics_datai)
-            mcf_arrayi = read_cfd_data(cfd_datai, u2, karr, dkarr, 1.0)
+            mcf_arrayi = read_cfd_data(cfd_datai, u2, karr, dkarr)
             mcf_array.append(mcf_arrayi)
 #---------------------------------------
 cf_plotter(Ro, no_x, mcf_array, legends, x_range, y_range, y_label,

@@ -11,7 +11,7 @@ import numpy as np
 from scipy.interpolate import UnivariateSpline
 
 
-def read_cfd_data(kinematics_file, cfd_data_file, mscale):
+def read_cfd_data(kinematics_file, cfd_data_file):
     """read cfd results force coefficients data"""
     kinematics_arr = []
     with open(kinematics_file) as csv_file:
@@ -55,7 +55,7 @@ def read_cfd_data(kinematics_file, cfd_data_file, mscale):
                                         np.cos(phii) * float(row[1]))
                 csi = np.cos(phii) * float(row[2]) - np.sin(phii) * float(
                     row[1])
-                cf_array.append([ti, cli / mscale, cdi / mscale, csi / mscale])
+                cf_array.append([ti, cli, cdi, csi])
                 line_count += 1
 
         print(f'Processed {line_count} lines in {cfd_data_file}')
@@ -118,7 +118,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             mcl_arr.append(mcl)
             mcd_arr.append(mcd)
 
-            with open('meancf_ofs.dat', 'w') as f:
+            with open('meancf_ofs_AR1_5.dat', 'w') as f:
                 for item, cf_lgd in zip(mcl_arr, legends):
                     f.write("%s:\n" % cf_lgd)
                     f.write("mcl = %s\n" % '{0:.8g}'.format(item))
@@ -147,7 +147,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       fontsize='small',
                       frameon=False)
 
-    title = 'transient force AR'
+    title = 'transient_ofs_AR1_5'
     out_image_file = os.path.join(image_out_path, title + '.png')
     fig.savefig(out_image_file)
     # plt.show()
