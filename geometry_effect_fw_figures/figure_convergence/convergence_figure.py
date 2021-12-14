@@ -12,17 +12,17 @@ cfd_data_list = [
 ]
 #-----------------------------------------
 legends = [
-    r'mesh1, $\Delta t$ = 1e-3',
-    r'mesh2, $\Delta t$ = 1e-3',
-    r'mesh1, $\Delta t$ = 5e-4',
-    r'mesh2, $\Delta t$ = 5e-4',
+    r'3 million, $\Delta t$ = 1e-3',
+    r'6 million, $\Delta t$ = 1e-3',
+    r'3 million, $\Delta t$ = 5e-4',
+    r'6 million, $\Delta t$ = 5e-4',
 ]
 #-----------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.5, 3.0]
-show_range_cd = show_range_cl
+show_range_cl = [-0.2, 2.2]
+show_range_cd = [-1.2, 2.7]
 # show_range_cd = [-1.0, 5.0]
 cycle_time = 1.0
 #---------------------------------------

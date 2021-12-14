@@ -17,18 +17,18 @@ time_scale = 1.0
 #---------------------------------------
 cd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
-                  'geometry_effect_fw_data/2_validation_data')
+                  'geometry_effect_fw_data/3_validation_data')
 image_out_path = cd
 #---------------------------------------
 legendad = [
-    'Current', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
 ]
 legendsym = [
-    'Current', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet',
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet',
     'CFD, Jihoon and Haecheon'
 ]
 legenddl = [
-    'Current', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
 ]
 legends = [legendad, legendsym, legenddl]
 #---------------------------------------

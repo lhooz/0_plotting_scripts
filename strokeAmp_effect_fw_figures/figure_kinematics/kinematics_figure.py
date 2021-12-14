@@ -6,9 +6,9 @@ from kplotting_functions import k_plotter, read_kinematics_data
 
 #-------------input plot control----------
 kinematic_data_list = [
-    'phi124_at0.5_pt0.5_3d.dat',
-    'phi160_at0.25_pt0.25_3d.dat',
-    'phi178_at0.125_pt0.125_3d.dat',
+    'phi60.0_at0.5_pt0.5.dat',
+    'phi60.0_at0.25_pt0.25.dat',
+    'phi60.0_at0.25_pt0.125.dat',
 ]
 #---------------------------------------
 time_to_plot = [0, 1.0]
@@ -18,7 +18,7 @@ time_scale = 1.0
 #---------------------------------------
 cd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
-                  'strokeAmp_effect_fw_data/1_kinematic_cases')
+                  'strokeAmpEffect_data/1_kinematic_cases/kinematics_figure')
 image_out_path = cd
 #---------------------------------------
 karray_all = []
@@ -26,13 +26,13 @@ for kinematic_data_name in kinematic_data_list:
     kinematics_data = os.path.join(wd, kinematic_data_name)
     k_arrayi, dk_arrayi, ddk_arrayi = read_kinematics_data(kinematics_data)
     ti = np.array([dk_arrayi[:, 0]])
-    dphi = np.array([k_arrayi[:, 4]])
+    dphi = np.array([dk_arrayi[:, 4]])
     daoa = np.array([k_arrayi[:, 5]])
 
     #--scaling factors--
-    vel_scale = np.amax(np.abs(dphi)) / 2
+    vel_scale = np.amax(np.abs(dphi))
     avel_scale = np.amax(np.abs(daoa))
-    dphi += vel_scale
+    #--dphi += vel_scale
     #-------------------
     dphi = dphi / vel_scale
     daoa = daoa / avel_scale

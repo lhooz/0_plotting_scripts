@@ -164,7 +164,7 @@ def cf_plotter(x_data, data_array, markc, markEffects, legends, x_range,
                                         ha='center',
                                         va='center',
                                         annotation_clip=False)
-                        axs[i].set_yticklabels([])
+                        # axs[i].set_yticklabels([])
 
                     axs[i].set_ylabel(y_label[i])
                     if r == no_r - 1:

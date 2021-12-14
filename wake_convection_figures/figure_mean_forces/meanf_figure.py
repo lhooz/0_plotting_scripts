@@ -6,7 +6,7 @@ from mfplotting_functions import cf_plotter, read_cfd_data
 #-------------input plot control----------
 pa = [0, 45, 90]
 Re = [100, 1000]
-stroke = [1.5, 3.0, 6.0]
+stroke = [1.5, 3.0, 4.5, 6.0]
 at = [0.25]
 pt = [0.25]
 #-----------------------------------------
@@ -28,9 +28,9 @@ for pai in pa:
                     cfd_data_list.append(cfd_data_name)
 #-----------------------------------------
 #----effects for each case-------
-markEr1 = [['i', 's', 'i'], ['i', 's', 'i']]
-markEr2 = [['i', 'i', 'i'], ['i', 'i', 's']]
-markEr3 = [['s', 'i', 's'], ['s', 'i', 's']]
+markEr1 = [['i', 's', 's', 'i'], ['i', 's', 's', 'i']]
+markEr2 = [['i', 'i', 'i', 'i'], ['i', 'i', 'i', 's']]
+markEr3 = [['s', 'i', 'i', 's'], ['s', 'i', 'i', 's']]
 markEffects = [markEr1, markEr2, markEr3]
 #--------------------------------
 x_data = stroke
@@ -44,10 +44,10 @@ legends = [r'$Re = 10^2$', r'$Re = 10^3$']
 # y_range = 'all'
 x_range = [1, 6.5]
 # cl_range = [-4.5, 4.5]
-cl_range = [-3.75, 2.4]
-cd_range = cl_range
-rl_range = [-1.6, 1]
-rd_range = rl_range
+cl_range = [-1.3, 2.45]
+cd_range = [-3.65, 1.0]
+rl_range = [-0.75, 1.2]
+rd_range = [-1.55, 0.6]
 y_range = [cl_range, cd_range, rl_range, rd_range]
 y_label = [
     r'$\bar{C}_{lw}$', r'$\bar{C}_{dw}$', r'$\bar{C}_{lw}/\bar{C}_{ls}$',

@@ -112,7 +112,7 @@ def k_plotter(kine_array, time_scale, time_to_plot, show_range, image_out_path,
     # ax1.axvline(x=0.625, color='k', linestyle='-.', linewidth=0.5)
     # ax1.axvline(x=0.875, color='k', linestyle='-.', linewidth=0.5)
 
-    labels = [r'$\phi/A$', r'$\alpha/\Theta$']
+    labels = [r'2$\phi/\Phi$', r'2$\alpha/\Theta$']
     ax1.plot(kine_array[:, 0] / time_scale, kine_array[:, 1], label=labels[0])
     ax1.plot(kine_array[:, 0] / time_scale, kine_array[:, 2], label=labels[1])
     ax1.legend(frameon=False)
@@ -152,7 +152,7 @@ def k_plotter(kine_array, time_scale, time_to_plot, show_range, image_out_path,
     ax1.set_ylabel(r'Normalized angle')
     ax1.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-    out_image_file1 = os.path.join(image_out_path, 'kinematics.png')
+    out_image_file1 = os.path.join(image_out_path, 'kinematics.svg')
 
     fig1.savefig(out_image_file1)
     plt.show()

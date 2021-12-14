@@ -58,9 +58,9 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 15,
-        'figure.figsize': (14, 5),
-        'lines.linewidth': 2.0,
+        'font.size': 24,
+        'figure.figsize': (16, 6),
+        'lines.linewidth': 3.0,
         'lines.markersize': 4,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -86,13 +86,16 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
 
         mcf_arr = []
         for cfdata, lgd in zip(datai, legendi):
-            if lgd != 'Current':
+            if lgd != 'Current CFD':
                 cfdata = np.array([
                     cfdata[:, 0] - np.rint(cfdata[0, 0]) + time_to_plot[0],
                     cfdata[:, 1]
                 ])
                 cfdata = np.transpose(cfdata)
-
+            if lgd == 'Experiment, Dickinson et al.':
+                cfdata = np.array([cfdata[:, 0], cfdata[:, 1] / 1.1])
+                cfdata = np.transpose(cfdata)
+            
             #----------------------
 
             cf_t = cfdata[:, 0] / time_scale - time_to_plot[0]
@@ -130,7 +133,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
                 f.write("%s:\n" % lgd)
                 f.write("mcf = %s\n" % '{0:.8g}'.format(item))
 
-    out_image_file = os.path.join(image_out_path, 'validation plot.png')
+    out_image_file = os.path.join(image_out_path, 'validation plot.svg')
     fig.savefig(out_image_file)
     # plt.show()
 

@@ -86,7 +86,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
+        'font.size': 24,
         'figure.figsize': (12, 10),
         'lines.linewidth': 4.0,
         'lines.markersize': 4,
@@ -102,7 +102,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
 
     fig1, ax = plt.subplots(2, 1)
 
-    labels = [r'$2\phi/A$', r'$2\theta/\Theta$']
+    labels = [r'$\.\phi/\varphi_M$', r'$2\theta/\Theta$']
     legendax1 = [r'$\^t_a = 0.5$', r'$\^t_a = 0.25$', r'$\^t_a = 0.125$']
     legendax2 = [r'$\^t_p = 0.5$', r'$\^t_p = 0.25$', r'$\^t_p = 0.125$']
 
@@ -139,7 +139,7 @@ def k_plotter(karray_all, time_scale, time_to_plot, show_range, image_out_path,
 
         axi.label_outer()
 
-    out_image_file1 = os.path.join(image_out_path, 'kinematics.png')
+    out_image_file1 = os.path.join(image_out_path, 'kinematics.svg')
 
     fig1.savefig(out_image_file1)
     # plt.show()

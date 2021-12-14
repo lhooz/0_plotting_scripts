@@ -7,9 +7,9 @@ from tplotting_functions import cf_plotter, read_cfd_data
 #-------------input plot control----------
 kinematics_file = 'kinematics.dat'
 cfd_data_list = [
-    'ar3.0_ofs0.0_r1h0.4__Re100.0_pt0.25',
-    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25',
-    'ar3.0_ofs0.0_r1h0.6__Re100.0_pt0.25',
+    'ar6.0_ofs0.0_r1h0.4__Re100.0_pt0.25',
+    'ar6.0_ofs0.0_r1h0.5__Re100.0_pt0.25',
+    'ar6.0_ofs0.0_r1h0.6__Re100.0_pt0.25',
 ]
 #-----------------------------------------
 legends = [
@@ -21,8 +21,8 @@ legends = [
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.2, 3.0]
-show_range_cd = [-1.2, 3.0]
+show_range_cl = [-1.4, 3.0]
+show_range_cd = [-1.4, 3.0]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]

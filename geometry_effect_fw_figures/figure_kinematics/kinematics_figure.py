@@ -14,7 +14,7 @@ time_scale = 1.0
 #---------------------------------------
 cd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
-                  'geometry_effect_fw_data/1_kinematic_cases')
+                  'geometry_effect_fw_data/1_kinematic_cases/3dbm_kinematic_cases')
 image_out_path = cd
 #---------------------------------------
 kinematics_data = os.path.join(wd, kinematic_data_name + '.dat')

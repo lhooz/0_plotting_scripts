@@ -108,7 +108,7 @@ def g_plotter(data_array, legends, marks, x_range, y_range, image_out_path):
                          annotation_clip=False)
 
     title = 'geometry plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
 
     plt.savefig(out_image_file)
     # plt.show()
@@ -183,7 +183,7 @@ def g_plotter_ofs(data_array, legends, x_range, y_range, image_out_path):
     # annotation_clip=False)
 
     title = 'offset plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
 
     plt.savefig(out_image_file)
     # plt.show()

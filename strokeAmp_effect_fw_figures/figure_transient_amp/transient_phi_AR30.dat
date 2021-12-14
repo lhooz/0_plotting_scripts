@@ -1,0 +1,53 @@
+$\Phi$ = 60$^\circ$:
+mcl = 1.7802836
+$\Phi$ = 120$^\circ$:
+mcl = 1.4752788
+$\Phi$ = 160$^\circ$:
+mcl = 1.4579636
+$\Phi$ = 180$^\circ$:
+mcl = 1.4548483
+
+$\Phi$ = 60$^\circ$:
+mcd = 3.4568983
+$\Phi$ = 120$^\circ$:
+mcd = 2.2221888
+$\Phi$ = 160$^\circ$:
+mcd = 2.0479388
+$\Phi$ = 180$^\circ$:
+mcd = 2.0010424
+
+$\Phi$ = 60$^\circ$:
+mclt = 1.7318465
+$\Phi$ = 120$^\circ$:
+mclt = 1.8330524
+$\Phi$ = 160$^\circ$:
+mclt = 1.8998892
+$\Phi$ = 180$^\circ$:
+mclt = 1.9215445
+
+$\Phi$ = 60$^\circ$:
+mcdt = 2.5844076
+$\Phi$ = 120$^\circ$:
+mcdt = 2.3141484
+$\Phi$ = 160$^\circ$:
+mcdt = 2.3110312
+$\Phi$ = 180$^\circ$:
+mcdt = 2.3121031
+
+$\Phi$ = 60$^\circ$:
+mclr = 1.8296094
+$\Phi$ = 120$^\circ$:
+mclr = 1.1094624
+$\Phi$ = 160$^\circ$:
+mclr = 1.0100472
+$\Phi$ = 180$^\circ$:
+mclr = 0.98222192
+
+$\Phi$ = 60$^\circ$:
+mcdr = 4.331824
+$\Phi$ = 120$^\circ$:
+mcdr = 2.1242454
+$\Phi$ = 160$^\circ$:
+mcdr = 1.7792234
+$\Phi$ = 180$^\circ$:
+mcdr = 1.6880908

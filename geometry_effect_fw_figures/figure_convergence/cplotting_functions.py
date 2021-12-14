@@ -73,9 +73,9 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (12, 4),
-        'lines.linewidth': 2.0,
+        'font.size': 24,
+        'figure.figsize': (15, 5),
+        'lines.linewidth': 3.0,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 100,
@@ -148,7 +148,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       frameon=False)
 
     title = 'convergence plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
     # plt.show()
 

@@ -65,7 +65,7 @@ def read_cfd_data(kinematics_file, cfd_data_file):
 
 
 def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
-               cycle_time, plot_mode):
+               cycle_time, pt, plot_mode):
     """
     function to plot cfd force coefficients results
     """
@@ -73,9 +73,9 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
+        'font.size': 24,
         'figure.figsize': (12, 10),
-        'lines.linewidth': 3.0,
+        'lines.linewidth': 4.0,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -96,6 +96,10 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     fig, axs = plt.subplots(2, 1)
     mcl_arr = []
     mcd_arr = []
+    mclt_arr = []
+    mcdt_arr = []
+    mclr_arr = []
+    mcdr_arr = []
     if plot_mode == 'against_t':
         for i in range(len(legends)):
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
@@ -105,27 +109,52 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                         cf_array[i][:, 2],
                         label=legends[i])
 
-            cl_spl = UnivariateSpline(cf_array[i][:, 0],
+            cl_spl = UnivariateSpline(cf_array[i][:, 0] / cycle_time,
                                       cf_array[i][:, 1],
                                       s=0)
             mcl = cl_spl.integral(time_to_plot[0], time_to_plot[1])
+            mclt = cl_spl.integral(time_to_plot[0] + 0.5 * pt, time_to_plot[1] - 0.5 - 0.5 * pt) / (0.5 - pt)
+            mclr = cl_spl.integral(time_to_plot[0] + 0.5 - 0.5 * pt, time_to_plot[0] + 0.5 + 0.5 * pt) / pt
 
-            cd_spl = UnivariateSpline(cf_array[i][:, 0],
+            cd_spl = UnivariateSpline(cf_array[i][:, 0] / cycle_time,
                                       cf_array[i][:, 2],
                                       s=0)
             mcd = cd_spl.integral(time_to_plot[0], time_to_plot[1])
-
+            mcdt = cd_spl.integral(time_to_plot[0] + 0.5 * pt, time_to_plot[1] - 0.5 - 0.5 * pt) / (0.5 - pt)
+            mcdr = cd_spl.integral(time_to_plot[0] + 0.5 - 0.5 * pt, time_to_plot[0] + 0.5 + 0.5 * pt) / pt
+            
             mcl_arr.append(mcl)
             mcd_arr.append(mcd)
+            mclt_arr.append(mclt)
+            mcdt_arr.append(mcdt)
+            mclr_arr.append(mclr)
+            mcdr_arr.append(mcdr)
 
-            with open('meancf_convergence.dat', 'w') as f:
-                for item, cf_lgd in zip(mcl_arr, legends):
-                    f.write("%s:\n" % cf_lgd)
-                    f.write("mcl = %s\n" % '{0:.8g}'.format(item))
-                for item, ref_lgd in zip(mcd_arr, legends):
-                    f.write("%s:\n" % ref_lgd)
-                    f.write("mcd = %s\n" % '{0:.8g}'.format(item))
-
+        with open('meancf_AR.dat', 'w') as f:
+            for item, cf_lgd in zip(mcl_arr, legends):
+                f.write("%s:\n" % cf_lgd)
+                f.write("mcl = %s\n" % '{0:.8g}'.format(item))
+            f.write("\n")
+            for item, ref_lgd in zip(mcd_arr, legends):
+                f.write("%s:\n" % ref_lgd)
+                f.write("mcd = %s\n" % '{0:.8g}'.format(item))
+            f.write("\n")
+            for item, cf_lgd in zip(mclt_arr, legends):
+                f.write("%s:\n" % cf_lgd)
+                f.write("mclt = %s\n" % '{0:.8g}'.format(item))
+            f.write("\n")
+            for item, ref_lgd in zip(mcdt_arr, legends):
+                f.write("%s:\n" % ref_lgd)
+                f.write("mcdt = %s\n" % '{0:.8g}'.format(item))
+            f.write("\n")
+            for item, cf_lgd in zip(mclr_arr, legends):
+                f.write("%s:\n" % cf_lgd)
+                f.write("mclr = %s\n" % '{0:.8g}'.format(item))
+            f.write("\n")
+            for item, ref_lgd in zip(mcdr_arr, legends):
+                f.write("%s:\n" % ref_lgd)
+                f.write("mcdr = %s\n" % '{0:.8g}'.format(item))
+                
         if time_to_plot != 'all':
             axs[0].set_xlim(time_to_plot)
             axs[1].set_xlim(time_to_plot)
@@ -151,8 +180,8 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       frameon=False)
 
     title = 'transient force AR'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
     # plt.show()
 
-    return fig
+    return fig 

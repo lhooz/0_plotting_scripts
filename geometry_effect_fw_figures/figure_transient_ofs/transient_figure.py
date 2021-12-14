@@ -7,10 +7,10 @@ from tplotting_functions import cf_plotter, read_cfd_data
 #-------------input plot control----------
 kinematics_file = 'kinematics.dat'
 cfd_data_list = [
-    'ar3.0_ofs0.0_r1h0.5__Re100.0_pt0.25',
-    'ar3.0_ofs1.0_r1h0.5__Re100.0_pt0.25',
-    'ar3.0_ofs2.0_r1h0.5__Re100.0_pt0.25',
-    'ar3.0_ofs3.0_r1h0.5__Re100.0_pt0.25',
+    'ar7.5_ofs0.0_r1h0.5__Re100.0_pt0.25',
+    'ar7.5_ofs1.0_r1h0.5__Re100.0_pt0.25',
+    'ar7.5_ofs2.0_r1h0.5__Re100.0_pt0.25',
+    'ar7.5_ofs3.0_r1h0.5__Re100.0_pt0.25',
 ]
 #-----------------------------------------
 legends = [

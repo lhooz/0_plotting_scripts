@@ -1,8 +1,0 @@
-Current CFD, $\alpha = 45 ^\circ$:
-mcf_s = 1.5606286, mcf_w = -0.0074406704, mcf = 1.553188
-Current CFD, $\alpha = 60 ^\circ$:
-mcf_s = 1.182339, mcf_w = -0.12866752, mcf = 1.0536715
-Experiment, $\alpha = 45 ^\circ$:
-mcf_s = 1.6449142, mcf_w = 0.007675782, mref = 1.65259
-Experiment, $\alpha = 60 ^\circ$:
-mcf_s = 1.1869359, mcf_w = -0.029166989, mref = 1.1577689
