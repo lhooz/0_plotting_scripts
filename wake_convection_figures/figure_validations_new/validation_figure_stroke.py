@@ -7,7 +7,7 @@ from vplotting_functions import cf_plotter, read_cfd_data, read_ref_data, read_k
 #-------------input plot control----------
 kinematic_data_list = ['6DoF_2d']
 cfd_data_list = ['cfd_aoa45', 'cfd_aoa60']
-ref_data_lst = ['exp_aoa45', 'exp_aoa60']
+ref_data_lst = ['exp_aoa45_new', 'exp_aoa60_new']
 #---------------------------------------
 # time_to_plot = 'all'
 # show_range = 'all'

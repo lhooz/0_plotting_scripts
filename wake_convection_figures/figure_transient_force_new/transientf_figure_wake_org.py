@@ -4,7 +4,7 @@ import os
 from tfplotting_functions import cf_plotter, read_cfd_data
 
 #------------input plot control----------
-pa = 90
+pa = 0
 Re = [100, 1000]
 # stroke = [6]
 stroke = [1.5, 3.0, 4.5, 6.0]
@@ -39,11 +39,11 @@ coeffs_show_range = 'all'
 # time_to_plot = [1.0, 2.0]
 time_to_plot = [1.0, 1.6]
 if pa == 0:
-    coeffs_show_range = [-1., 1.3]  #--pa0 wake--
+    coeffs_show_range = [[-1.0, 1.5], [-1.0, 1.5]]  #--pa0 wake--
 elif pa == 45:
-    coeffs_show_range = [-8.0, 2.0]  #--pa45 wake--
+    coeffs_show_range = [[-2.5, 1.0], [-9.0, 2]]  #--pa45 wake--
 elif pa == 90:
-    coeffs_show_range = [-3.6, 3.2]  #--pa90 wake--
+    coeffs_show_range = [[-3.5, 3.5], [-3.5, 3.0]]  #--pa90 wake--
 cycle_time = 1.0
 # coeffs_show_range = [-10.0, 4.0]
 cycle_time = 1.0
@@ -52,7 +52,7 @@ cwd = os.getcwd()
 wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                   'wake_convection_data')
 oimage_file = os.path.join(
-    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + 'wakeV2.svg')
+    cwd, 'transient_force_pa' + '{0:.0f}'.format(pa) + 'wake.svg')
 #---------------------------------------
 cf_array = []
 for cfi in cfd_data_list:
@@ -64,4 +64,4 @@ data_array = cf_array
 #---------------------------------------
 
 cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
-                  oimage_file, cycle_time, 'wake')
+           oimage_file, cycle_time, 'wake')

@@ -5,26 +5,37 @@ from mcplotting_functions_new import read_cfd_data, cf_plotter, mesh_plotter
 #-------------input plot control----------
 cfd_data_list = [
     'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_normal',
-    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_corase',
-    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_fine',
-    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_SmallDt'
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_SmallDt',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_basic',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_tc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sc',
+    'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_sctc',
 ]
+# cfd_data_list = [
+    # 'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_140K',
+    # 'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_310K',
+    # 'Re1000.0_stroke6.0_acf0.25_pf0.25_pa90.0_690K',
+# ]
 #-----------------------------------------
 legends = [
-    r'140k cells, $\Delta t = 5$e-4', r'64k cells, $\Delta t = 5$e-4',
-    r'310k cells, $\Delta t = 5$e-4', r'140k cells, $\Delta t = 2$e-4'
+    r'1.4e5 cells, $\Delta t = 1$e-3',
+    r'1.4e5 cells, $\Delta t = 5$e-4',
+    r'3.2e5 cells, $\Delta t = 1$e-3',
+    r'3.2e5 cells, $\Delta t = 5$e-4',
+    r'6.5e5 cells, $\Delta t = 1$e-3',
+    r'6.5e5 cells, $\Delta t = 5$e-4',
 ]
 # legends = [
-# r'mesh1, $\Delta t$ = 1e-3',
-# r'mesh1, $\Delta t$ = 5e-4'
+# r'140k',
+# r'310k',
+# r'690k',
 # ]
 #-----------------------------------------
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [0, 2.0]
-show_range_cl = [-2.0, 9.0]
-show_range_cd = show_range_cl
-# show_range_cd = [-2.0, 6.5]
+show_range_cl = [-2.0, 5.0]
+show_range_cd = [-1.0, 9]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]

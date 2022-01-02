@@ -46,7 +46,7 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
         'font.family': 'STIXGeneral',
         'font.size': 19,
         'figure.figsize': (12, 8),
-        'lines.linewidth': 3.5,
+        'lines.linewidth': 4,
         # 'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -144,17 +144,17 @@ def cf_plotter(pa, data_array, legends, time_to_plot, coeffs_show_range,
         axrow[0].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
         axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
-        v_lines = [1.2, 1.4, 1.6]
+        v_lines = [1.1, 1.2, 1.4]
         for line in v_lines:
             axrow[0].axvline(x=line,
                              color='k',
                              linestyle='-.',
-                             linewidth=1,
+                             linewidth=0.5,
                              alpha=0.25)
             axrow[1].axvline(x=line,
                              color='k',
                              linestyle='-.',
-                             linewidth=1,
+                             linewidth=0.5,
                              alpha=0.25)
 
         rowno += 1
@@ -179,7 +179,7 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
         'font.family': 'STIXGeneral',
         'font.size': 19,
         'figure.figsize': (10, 7),
-        'lines.linewidth': 4.0,
+        'lines.linewidth': 5.0,
         'lines.markersize': 1.5,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -251,19 +251,19 @@ def cf_plotter_wake(pa, data_array, legends, time_to_plot, coeffs_show_range,
             axrow[1].axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
             if pa == 90:
-                v_lines = [1.2, 1.4, 1.6]
+                v_lines = [1.1, 1.2, 1.4]
             else:
-                v_lines = [1.2, 1.4, 1.6]
+                v_lines = [1.1, 1.2, 1.4]
             for line in v_lines:
                 axrow[0].axvline(x=line,
                                  color='k',
                                  linestyle='-.',
-                                 linewidth=1,
+                                 linewidth=0.5,
                                  alpha=0.25)
                 axrow[1].axvline(x=line,
                                  color='k',
                                  linestyle='-.',
-                                 linewidth=1,
+                                 linewidth=0.5,
                                  alpha=0.25)
 
             rowno += 1

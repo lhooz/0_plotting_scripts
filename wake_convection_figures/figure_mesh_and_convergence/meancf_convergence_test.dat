@@ -1,0 +1,16 @@
+140k cells, $\Delta t = 1$e-3:
+mcl_s = 1.5639813, mcl_w = 0.12612888, mcl = 1.6901101
+320k cells, $\Delta t = 1$e-3:
+mcl_s = 1.5661248, mcl_w = 0.15365013, mcl = 1.719775
+320k cells, $\Delta t = 5$e-4:
+mcl_s = 1.567871, mcl_w = 0.12436737, mcl = 1.6922383
+650k cells, $\Delta t = 1$e-3:
+mcl_s = 1.4995613, mcl_w = -0.29742253, mcl = 1.2021387
+140k cells, $\Delta t = 1$e-3:
+mcd_s = 2.2071734, mcd_w = -0.16871505, mcd = 2.0384584
+320k cells, $\Delta t = 1$e-3:
+mcd_s = 2.2072627, mcd_w = -0.18855814, mcd = 2.0187046
+320k cells, $\Delta t = 5$e-4:
+mcd_s = 2.2120396, mcd_w = -0.16393461, mcd = 2.048105
+650k cells, $\Delta t = 1$e-3:
+mcd_s = 2.4045745, mcd_w = 0.29486882, mcd = 2.6994433

@@ -1,0 +1,4 @@
+Current CFD:
+mcl = 0.36960787, mcd = 0.75674413
+Ref data:
+mcl_LEE = 0.37242908, mcl_Wang = 0.41653001, mcd_Lee = 0.7533814, , mcd_Wang = 0.70602136

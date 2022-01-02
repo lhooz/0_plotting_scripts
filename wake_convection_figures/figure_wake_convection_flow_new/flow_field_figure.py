@@ -15,34 +15,35 @@ pa = 90
 Re = 1000.0
 if pa == 0:
     #----pa = 0 window--
-    window_sc15 = [-0.1, 2.5, -1.8, 1.8]
+    window_sc15 = [-0.4, 2.5, -1.8, 1.8]
     window_sc30 = [0.5, 3.9, -1.8, 1.8]
     window_sc45 = [1.9, 5.4, -1.8, 1.8]
     window_sc60 = [3.2, 6.9, -1.8, 1.8]
 elif pa == 45:
     #---pa = 45 window--
-    window_sc15 = [0.4, 3.0, -2.0, 1.6]
-    window_sc30 = [1.0, 4.4, -2.0, 1.6]
-    window_sc45 = [2.4, 5.9, -2.0, 1.6]
+    window_sc15 = [-0.1, 2.8, -2.0, 1.6]
+    window_sc30 = [0.9, 4.3, -2.0, 1.6]
+    window_sc45 = [2.3, 5.8, -2.0, 1.6]
     window_sc60 = [3.7, 7.4, -2.0, 1.6]
 elif pa == 90:
-    window_sc15 = [0.4, 3.0, -2.0, 1.6]
+    window_sc15 = [0.1, 3.0, -2.0, 1.6]
     window_sc30 = [1.1, 4.5, -2.0, 1.6]
     window_sc45 = [2.5, 6.0, -2.0, 1.6]
     window_sc60 = [3.9, 7.6, -2.0, 1.6]
 #------------------------------------------
 resolution = [250, 220]  #--interpolate res for vorticity field--
 #--interpolate res for velocity field--
-res_vector_sc15 = [16, 22]
-res_vector_sc30 = [19, 22]
-res_vector_sc45 = [20, 22]
-res_vector_sc60 = [22, 22]
+res_vector_sc15 = [11, 14]
+res_vector_sc30 = [13, 14]
+res_vector_sc45 = [13, 14]
+res_vector_sc60 = [14, 14]
 resolution_vector = [
     res_vector_sc15, res_vector_sc30, res_vector_sc45, res_vector_sc60
 ]
-time_to_plot = [1.0, 1.1, 1.2]  #---time instances to plot--
+time_to_plot = [1.1, 1.2, 1.4]  #---time instances to plot--
 #--------------------------------------
-Uref = [1.786, 3.571, 5.357, 7.143]  #--ref velocity--
+# Uref = [1.786, 3.571, 5.357, 7.143]  #--ref velocity--
+Uref = [2.786, 3.571, 5.357, 6.143]  #--ref velocity--
 data_time_increment = 0.1
 #--------data parameters------------
 stroke = [1.5, 3.0, 4.5, 6.0]
@@ -56,7 +57,7 @@ cwd = os.getcwd()
 data_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cwd))),
                         'wake_convection_data/4_FIELD_RESULTS')
 oimage_file = os.path.join(
-    cwd, 'wake_flow_pa' + '{0:.0f}'.format(pa) + '_Re' + '{0:.0f}'.format(Re) +
+    cwd, 'wake_flow_pa' + '{0:.0f}'.format(pa) + '_Re' + '{0:.0f}'.format(Re) + '_timeHistory'
     '.svg')
 #-----------------------------------
 fdata_all = []

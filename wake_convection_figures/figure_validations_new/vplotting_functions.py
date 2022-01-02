@@ -123,7 +123,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     function to plot cfd force coefficients results
     """
     datax_shift = 0.02 * time_scale - 0.05
-    ref_shit_constant = 0.025
+    # ref_shit_constant = 0.025
+    ref_shit_constant = 0.0
     acc_t = 0.16 / time_scale
     ini_t_both = [0.02, 0.98 - acc_t]
     y1 = 1.04
@@ -137,8 +138,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         'font.family': 'STIXGeneral',
         'font.size': 19,
         'figure.figsize': (10, 8),
-        'lines.linewidth': 3.0,
-        'lines.markersize': 8,
+        'lines.linewidth': 5.0,
+        'lines.markersize': 15,
         # 'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
         'figure.subplot.left': 0.1,
@@ -157,14 +158,12 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     ref_array_shifted = []
     for ref_arrayi in ref_array:
         if time_to_plot == 'all':
-            ref_arrayi = np.array([
-                ref_arrayi[:, 0] - np.rint(ref_arrayi[0, 0]) +
-                ref_shit_constant, ref_arrayi[:, 1]
-            ])
+            ref_arrayi = np.array(
+                [ref_arrayi[:, 0] + ref_shit_constant, ref_arrayi[:, 1]])
         else:
             ref_arrayi = np.array([
-                ref_arrayi[:, 0] - np.rint(ref_arrayi[0, 0]) +
-                ref_shit_constant + time_to_plot[0], ref_arrayi[:, 1]
+                ref_arrayi[:, 0] + ref_shit_constant + time_to_plot[0],
+                ref_arrayi[:, 1]
             ])
         ref_arrayi = np.transpose(ref_arrayi)
 
@@ -237,14 +236,15 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         mcf_arr.append([mcf_s, mcf_w, mcf])
 
     for i in range(len(ref_legends)):
-        ref_t = (ref_array_shifted[i][:, 0] + datax_shift) / time_scale
+        # ref_t = (ref_array_shifted[i][:, 0] + datax_shift) / time_scale
+        ref_t = ref_array_shifted[i][:, 0]
         ax2[i].plot(
             ref_t,
             ref_array_shifted[i][:, 1],
             label=ref_legends[i],
             marker='o',
             linewidth=1,
-            linestyle='-')
+            linestyle='-.')
 
         ref_spl = UnivariateSpline(ref_t, ref_array_shifted[i][:, 1], s=0)
         mref_s = ref_spl.integral(0.0, 1.0)

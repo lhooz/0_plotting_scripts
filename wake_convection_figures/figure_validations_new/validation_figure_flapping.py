@@ -7,12 +7,14 @@ from vplotting_functions_flapping import cf_plotter, read_cfd_data, read_ref_dat
 #-------------input plot control----------
 kinematic_data_list = ['sinusoidal_2d']
 cfd_data_list = ['CFD']
-ref_data_lst = ['CL_LEE', 'CL_Wang', 'CD_LEE', 'CD_Wang']
+ref_data_lst = ['CL_LEE_new', 'CL_Wang_new', 'CD_LEE_new', 'CD_Wang_new']
 #---------------------------------------
 # time_to_plot = 'all'
 # show_range = 'all'
 time_to_plot = [3.0, 4.0]
-show_range = [-0.05, 1.25]
+show_range_cl = [-0.2, 1.4]
+show_range_cd = [-1.4, 1.6]
+show_range = [show_range_cl, show_range_cd]
 #---------------------------------------
 time_scale = 1.0
 #---------------------------------------

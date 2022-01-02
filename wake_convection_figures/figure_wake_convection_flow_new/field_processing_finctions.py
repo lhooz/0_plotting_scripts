@@ -158,6 +158,7 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
         axto_plot.imshow(
             sImgdata,
             # cmap='bwr',
+            # cmap='RdGy',
             cmap='RdBu',
             # cmap='RdYlBu',
             norm=imnorm,
@@ -180,7 +181,7 @@ def single_plot_field(images, axto_plot, window, grid_x, grid_y, sImgdata,
         vdata[1],
         units='height',
         scale=quiver_scale,
-        # width=0.025,
+        width=0.003,
         # headwidth=0.35,
     )
 
@@ -208,7 +209,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
         'font.size': 19,
-        'figure.figsize': (14, 13),
+        'figure.figsize': (15, 14),
         'lines.linewidth': 4,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
@@ -218,8 +219,11 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
     markt = marks[1]
     no_r = len(markt)
     no_c = len(marksc)
-    imnorm = colors.Normalize(vmin=-10, vmax=10) #--6 for Re100, 10 for Re 1000---
-    levels = [14.0] #--2,4,6,10,12,14 for small pitch and Re to large pitch and Re--
+    imnorm = colors.Normalize(vmin=-9,
+                              vmax=9)  #--6 for Re100, 9 for Re 1000---
+    levels = [
+        14.0
+    ]  #--2,4,6,10,12,14 for small pitch and Re to large pitch and Re--
     zoom_order = 6
 
     images = []
@@ -231,7 +235,7 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
                  bottom=0.1,
                  wspace=0.05,
                  hspace=0.05,
-                 width_ratios=[26, 34, 35, 37])
+                 width_ratios=[29, 34, 35, 37])
 
     fig, ax = plt.subplots(nrows=no_r, ncols=no_c, gridspec_kw=gs_kw)
     for ci in range(no_c):
@@ -267,11 +271,11 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
             #----------------
 
             if ci == 0:
-                quiver_scale = 19
+                quiver_scale = 15.5
             elif ci == 1:
-                quiver_scale = 19
+                quiver_scale = 15.5
             else:
-                quiver_scale = 19
+                quiver_scale = 15.5
 
             single_plot_field(images, axre, windows[ci], grid_x, grid_y,
                               sImgdatai, sCtrdatai, vdatai, wdatai, imnorm,
@@ -310,6 +314,8 @@ def field_plot(windows, field_data, wgeo_data, marks, oimage_file, mode):
                       fraction=0.1,
                       shrink=0.2,
                       pad=0.03)
+
+    cb.set_ticks([-9, 0, 9])
     cb.ax.set_xlabel(r'$\omega$*')
     cb.ax.xaxis.set_label_coords(-0.12, 1.5)
 

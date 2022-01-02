@@ -11,10 +11,28 @@ from spressure_processing_finctions import (spressure_plot, read_geop)
 #--------data parameters------------
 pa = 90
 Re = 1000.0
-time_to_plot = [1.0, 1.1, 1.2]  #---time instances to plot--
+time_to_plot = [1.1, 1.2, 1.4]  #---time instances to plot--
 stroke = [1.5, 3.0, 4.5, 6.0]
+if pa == 0:
+    if Re == 100.0:
+        mag = 3
+    else:
+        mag = 3
+if pa == 45:
+    if Re == 100.0:
+        mag = 6
+    else:
+        mag = 6
+if pa == 90:
+    if Re == 100.0:
+        mag = 12
+    else:
+        mag = 12
+
+show_pRange = [-1 * mag, mag]
 #-----------------------------------
-Uref = [1.786, 3.571, 5.357, 7.143]  #--ref velocity--
+# Uref = [1.786, 3.571, 5.357, 7.143]  #--ref velocity--
+Uref = [2.086, 3.571, 5.357, 6.143]  #--ref velocity--
 data_time_increment = 0.1
 #-----------------------------------------------------
 markt = [r'$\^t = ' + '{0:.1f}'.format(x) + '$' for x in time_to_plot]
@@ -68,6 +86,6 @@ for st, Urefi in zip(stroke, Uref):
 
     allSurfaceP.append(sorted_surfacep)
 # -------------plot all vortices-----------
-spressure_plot(allSurfaceP, markt, oimage_file, 'save')
+spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, 'save')
 plt.close()
 # ----------------------------------------------

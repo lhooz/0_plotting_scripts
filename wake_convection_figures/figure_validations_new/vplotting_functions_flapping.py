@@ -127,7 +127,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     function to plot cfd force coefficients results
     """
     datax_shift = 0.0
-    ref_shit_constant = 0.0
+    ref_shit_constant = 0.01
     acc_t = 0.16 / time_scale
     ini_t_both = [0.02, 0.98 - acc_t]
     y1 = 1.04
@@ -141,8 +141,8 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         'font.family': 'STIXGeneral',
         'font.size': 19,
         'figure.figsize': (10, 8),
-        'lines.linewidth': 3.0,
-        'lines.markersize': 8,
+        'lines.linewidth': 5.0,
+        'lines.markersize': 15,
         # 'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
         'figure.subplot.left': 0.1,
@@ -163,13 +163,13 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
         ref_arrayi = np.array(ref_arrayi)
         if time_to_plot == 'all':
             ref_arrayi = np.array([
-                ref_arrayi[:, 0] - np.rint(ref_arrayi[0, 0]) +
-                ref_shit_constant, ref_arrayi[:, 1]
+                ref_arrayi[:, 0] - ref_arrayi[0, 0] + ref_shit_constant,
+                ref_arrayi[:, 1]
             ])
         else:
             ref_arrayi = np.array([
-                ref_arrayi[:, 0] - np.rint(ref_arrayi[0, 0]) +
-                ref_shit_constant + time_to_plot[0], ref_arrayi[:, 1]
+                ref_arrayi[:, 0] - ref_arrayi[0, 0] + ref_shit_constant +
+                time_to_plot[0], ref_arrayi[:, 1]
             ])
         ref_arrayi = np.transpose(ref_arrayi)
 
@@ -179,8 +179,6 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     fig1, ax1 = plt.subplots(1, 1)
     if time_to_plot != 'all':
         ax1.set_xlim(time_to_plot)
-    if show_range != 'all':
-        ax1.set_ylim(show_range)
 
     for datai in kine_array:
         ax1.plot((datai[:, 0] + datax_shift) / time_scale,
@@ -227,14 +225,17 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     if time_to_plot != 'all':
         ax2[0].set_xlim(time_to_plot)
         ax2[1].set_xlim(time_to_plot)
+    if show_range != 'all':
+        ax2[0].set_ylim(show_range[0])
+        ax2[1].set_ylim(show_range[1])
 
     #---cfd results---
     cf_t = (cf_array[0][:, 0] + datax_shift) / time_scale
     ax2[0].plot(cf_t, cf_array[0][:, 3] / 1.55, label=cf_legends[0])
     ax2[1].plot(cf_t, cf_array[0][:, 1] / 1.55, label=cf_legends[1])
 
-    cl_spl = UnivariateSpline(cf_t, cf_array[0][:, 3] / 1.5, s=0)
-    cd_spl = UnivariateSpline(cf_t, cf_array[0][:, 1] / 1.5, s=0)
+    cl_spl = UnivariateSpline(cf_t, cf_array[0][:, 3] / 1.55, s=0)
+    cd_spl = UnivariateSpline(cf_t, cf_array[0][:, 1] / 1.55, s=0)
     mcl = cl_spl.integral(time_to_plot[0], time_to_plot[1])
     mcd = cd_spl.integral(time_to_plot[0], time_to_plot[1])
 
@@ -244,7 +245,7 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     mref_arr = []
     ref_t = []
     for i in range(len(ref_legends)):
-        ref_t.append((ref_array_shifted[i][:, 0] + datax_shift) / time_scale)
+        ref_t.append(ref_array_shifted[i][:, 0] + datax_shift)
     ax2[0].plot(ref_t[0],
                 ref_array_shifted[0][:, 1],
                 label=ref_legends[0],
@@ -280,12 +281,13 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
     ax2[1].set_ylabel(r'$C_d$')
     ax2[0].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
     ax2[1].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
+    ax2[0].axvline(x=3.5, color='k', linestyle='-', linewidth=0.5)
+    ax2[1].axvline(x=3.5, color='k', linestyle='-', linewidth=0.5)
     ax2[0].label_outer()
     # ax2[0].legend(frameon=False)
     ax2[1].legend(frameon=False)
 
     ax1.set_ylabel(r'$u/U_T$')
-    ax1.axvline(x=1, color='k', linestyle='-', linewidth=0.5)
 
     out_image_file1 = os.path.join(image_out_path, 'kinematics_flapping.svg')
     out_image_file2 = os.path.join(image_out_path, 'coefficients_flapping.svg')

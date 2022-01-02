@@ -1,16 +1,24 @@
-140k cells, $\Delta t = 5$e-4:
+1.4e5 cells, $\Delta t = 1$e-3:
 mcl_s = 1.5639813, mcl_w = 0.12612888, mcl = 1.6901101
-64k cells, $\Delta t = 5$e-4:
-mcl_s = 1.5620639, mcl_w = 0.1196866, mcl = 1.6817505
-310k cells, $\Delta t = 5$e-4:
-mcl_s = 1.5661248, mcl_w = 0.15365013, mcl = 1.719775
-140k cells, $\Delta t = 2$e-4:
+1.4e5 cells, $\Delta t = 5$e-4:
 mcl_s = 1.5660196, mcl_w = 0.12432829, mcl = 1.6903479
-140k cells, $\Delta t = 5$e-4:
+3.2e5 cells, $\Delta t = 1$e-3:
+mcl_s = 1.576148, mcl_w = 0.12564804, mcl = 1.7017961
+3.2e5 cells, $\Delta t = 5$e-4:
+mcl_s = 1.5774273, mcl_w = 0.12906225, mcl = 1.7064896
+6.5e5 cells, $\Delta t = 1$e-3:
+mcl_s = 1.5842125, mcl_w = 0.16565477, mcl = 1.7498673
+6.5e5 cells, $\Delta t = 5$e-4:
+mcl_s = 1.5866715, mcl_w = 0.1658796, mcl = 1.7525511
+1.4e5 cells, $\Delta t = 1$e-3:
 mcd_s = 2.2071734, mcd_w = -0.16871505, mcd = 2.0384584
-64k cells, $\Delta t = 5$e-4:
-mcd_s = 2.2061587, mcd_w = -0.16483701, mcd = 2.0413216
-310k cells, $\Delta t = 5$e-4:
-mcd_s = 2.2072627, mcd_w = -0.18855814, mcd = 2.0187046
-140k cells, $\Delta t = 2$e-4:
+1.4e5 cells, $\Delta t = 5$e-4:
 mcd_s = 2.2123369, mcd_w = -0.16680905, mcd = 2.0455278
+3.2e5 cells, $\Delta t = 1$e-3:
+mcd_s = 2.2313479, mcd_w = -0.1698045, mcd = 2.0615434
+3.2e5 cells, $\Delta t = 5$e-4:
+mcd_s = 2.2343019, mcd_w = -0.171395, mcd = 2.0629069
+6.5e5 cells, $\Delta t = 1$e-3:
+mcd_s = 2.2537247, mcd_w = -0.2042567, mcd = 2.049468
+6.5e5 cells, $\Delta t = 5$e-4:
+mcd_s = 2.259068, mcd_w = -0.20454816, mcd = 2.0545198

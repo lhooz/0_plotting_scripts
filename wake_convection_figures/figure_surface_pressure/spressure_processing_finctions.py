@@ -124,7 +124,7 @@ def read_geop(geop_data_file, Uref, pa, stroke):
     return spressure_data
 
 
-def spressure_plot(allSurfaceP, markt, oimage_file, mode):
+def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, mode):
     """plot field data"""
     plt.rcParams.update({
         # "text.usetex": True,
@@ -150,6 +150,7 @@ def spressure_plot(allSurfaceP, markt, oimage_file, mode):
             x1 = np.linspace(0, 1, len(sorted_surfacep[i][1]))
             ax[i][j].plot(x0, sorted_surfacep[i][0][:], label='Lower surface')
             ax[i][j].plot(x1, sorted_surfacep[i][1][:], label='Upper surface')
+            ax[i][j].set_ylim(show_pRange)
 
             ax[i][j].set_xlabel(r'x/c')
             ax[i][j].set_ylabel(r'Cp')

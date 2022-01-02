@@ -50,7 +50,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         'font.family': 'STIXGeneral',
         'font.size': 19,
         'figure.figsize': (10, 8),
-        'lines.linewidth': 3,
+        'lines.linewidth': 5,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
         'figure.dpi': 300,
@@ -64,7 +64,12 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
     cf_array = np.array(data_array)
     range_cl = show_range[0]
     range_cd = show_range[1]
-    linstyles = ['-', '--', '--', '--']
+    linstyles = ['-.', '--', '-.', '--', '-.', '--']
+    colors = [
+        'tab:purple', 'tab:gray', 'tab:blue', 'tab:orange', 'tab:green',
+        'tab:red'
+    ]
+    # linstyles = ['-', '-', '-', '-', '-']
 
     fig, axs = plt.subplots(2, 1)
     mcl_arr = []
@@ -75,11 +80,13 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             axs[0].plot(cf_array[i][:, 0] / cycle_time,
                         cf_array[i][:, 3],
                         label=legends[i],
-                        linestyle=linstyles[i])
+                        linestyle=linstyles[i],
+                        color=colors[i])
             axs[1].plot(cf_array[i][:, 0] / cycle_time,
                         cf_array[i][:, 1],
                         label=legends[i],
-                        linestyle=linstyles[i])
+                        linestyle=linstyles[i],
+                        color=colors[i])
 
             cl_spl = UnivariateSpline(cf_array[i][:, 0],
                                       cf_array[i][:, 3],
@@ -173,7 +180,7 @@ def mesh_plotter(image_out_path):
                                    linewidth=2,
                                    linestyle='-')
 
-    #-----------domain plot------------
+    # -----------domain plot------------
     gs_d = dict(left=0.125,
                 right=0.9,
                 top=0.9,
@@ -210,10 +217,10 @@ def mesh_plotter(image_out_path):
                  va='center',
                  annotation_clip=False)
     # axd.annotate(s='Domain boundary',
-                 # xy=(8.2, -8.0),
-                 # ha='center',
-                 # va='center',
-                 # annotation_clip=False)
+    # xy=(8.2, -8.0),
+    # ha='center',
+    # va='center',
+    # annotation_clip=False)
     axd.annotate(s='Overset domain',
                  xy=(-5.0, 4.5),
                  ha='center',
