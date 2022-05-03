@@ -1,6 +1,8 @@
 Current CFD:
-mcf = 0.39684736
+mcf = 0.40504594
 Experiment, Dickinson et al.:
 mcf = 0.4912866
-CFD, Belkis and Mehmet:
+CFD, Erzincanli and Sahin:
 mcf = 0.43760429
+CFD, Sun and Tang:
+mcf = 0.38665124

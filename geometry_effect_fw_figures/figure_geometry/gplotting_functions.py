@@ -42,12 +42,12 @@ def single_plotter(ax_to_plot, data, legends, marker):
     for datai, legendi in zip(data, legends):
         ax_to_plot.plot(datai[:, 0], datai[:, 1], label=legendi, linestyle='-')
 
-    marky_loc = ax_to_plot.get_ylim()[1] + 0.08 * (ax_to_plot.get_ylim()[1] -
+    marky_loc = ax_to_plot.get_ylim()[1] + 0.15 * (ax_to_plot.get_ylim()[1] -
                                                    ax_to_plot.get_ylim()[0])
     markx_loc = ax_to_plot.get_xlim()[0] + 0.5 * (ax_to_plot.get_xlim()[1] -
                                                   ax_to_plot.get_xlim()[0])
 
-    ax_to_plot.annotate(s=marker,
+    ax_to_plot.annotate(text=marker,
                         xy=(markx_loc, marky_loc),
                         ha='center',
                         va='center',
@@ -62,18 +62,18 @@ def g_plotter(data_array, legends, marks, x_range, y_range, image_out_path):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (10, 6),
-        'lines.linewidth': 2,
+        'font.size': 30,
+        'figure.figsize': (14, 8),
+        'lines.linewidth': 5,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
+        'figure.dpi': 300,
     })
     data_array = np.array(data_array)
 
     gs_kw = dict(left=0.125,
                  right=0.8,
-                 top=0.8,
+                 top=0.9,
                  bottom=0.1,
                  wspace=0.05,
                  hspace=0.0)
@@ -101,19 +101,19 @@ def g_plotter(data_array, legends, marks, x_range, y_range, image_out_path):
         if axi == ax_all[0]:
             axi.axvline(x=0, color='k', linestyle='-.', linewidth=0.5)
 
-            axi.annotate(s=r'$r_R$',
+            axi.annotate(text=r'$r_R$',
                          xy=(0.03, 0.03),
                          ha='center',
                          va='center',
                          annotation_clip=False)
 
-            axi.annotate(s=r'$o$',
+            axi.annotate(text=r'$o$',
                          xy=(-0.012, 0.0),
                          ha='center',
                          va='center',
                          annotation_clip=False)
 
-            axi.annotate(s='',
+            axi.annotate(text='',
                          xy=(0.0, 0.015),
                          xytext=(0.06, 0.015),
                          arrowprops=dict(arrowstyle='<-',
@@ -123,7 +123,7 @@ def g_plotter(data_array, legends, marks, x_range, y_range, image_out_path):
                          annotation_clip=False)
 
     title = 'geometry plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
 
     plt.savefig(out_image_file)
     # plt.show()
@@ -198,7 +198,7 @@ def g_plotter_ofs(data_array, legends, x_range, y_range, image_out_path):
     # annotation_clip=False)
 
     title = 'offset plot'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
 
     plt.savefig(out_image_file)
     # plt.show()

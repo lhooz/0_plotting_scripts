@@ -5,9 +5,12 @@ import numpy as np
 from vplotting_functions import cf_plotter, read_cfd_data, read_ref_data
 
 #-------------input plot control----------
-ad_data_list = ['ad_0', 'ad_exp', 'ad_cfd']
-sym_data_list = ['sym_0', 'sym_exp', 'sym_cfd1', 'sym_cfd2']
-dl_data_list = ['dl_0', 'dl_exp', 'dl_cfd']
+# ad_data_list = ['ad_0', 'ad_exp', 'ad_cfd']
+# sym_data_list = ['sym_0', 'sym_exp', 'sym_cfd1', 'sym_cfd2']
+# dl_data_list = ['dl_0', 'dl_exp', 'dl_cfd']
+ad_data_list = ['FF_advanced_0', 'ad_exp', 'ad_cfd', 'SunAndTang_advanced']
+sym_data_list = ['FF_symmetric_0', 'sym_exp', 'sym_cfd1', 'sym_cfd2']
+dl_data_list = ['FF_delayed_0', 'dl_exp', 'dl_cfd']
 #---------------------------------------
 time_to_plot = [4.0, 5.0]
 # show_range = [-0.8, 1.2]
@@ -21,14 +24,14 @@ wd = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(cd))),
 image_out_path = cd
 #---------------------------------------
 legendad = [
-    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Erzincanli and Sahin', 'CFD, Sun and Tang'
 ]
 legendsym = [
-    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet',
-    'CFD, Jihoon and Haecheon'
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Erzincanli and Sahin',
+    'CFD, Kweon and Choi'
 ]
 legenddl = [
-    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Belkis and Mehmet'
+    'Current CFD', 'Experiment, Dickinson et al.', 'CFD, Erzincanli and Sahin'
 ]
 legends = [legendad, legendsym, legenddl]
 #---------------------------------------

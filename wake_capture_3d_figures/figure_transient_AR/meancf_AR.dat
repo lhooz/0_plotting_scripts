@@ -1,0 +1,14 @@
+1_stroke:
+mcl = 1.0274484
+5_stroke:
+mcl = 0.87769828
+wake_effect:
+mcl = -0.14975008
+
+1_stroke:
+mcd = 1.0550261
+5_stroke:
+mcd = 0.97281298
+wake_effect:
+mcd = -0.082213112
+

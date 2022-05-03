@@ -25,8 +25,8 @@ legends = [
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.5, 5.0]
-show_range_cd = [-1.5, 5.0]
+show_range_cl = [-1.5, 4.5]
+show_range_cd = [-1.5, 4.5]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]

@@ -73,12 +73,12 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (12, 4),
-        'lines.linewidth': 2.0,
+        'font.size': 24,
+        'figure.figsize': (14, 6),
+        'lines.linewidth': 4.0,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
         'figure.subplot.left': 0.125,
         'figure.subplot.right': 0.9,
         'figure.subplot.top': 0.8,
@@ -148,7 +148,7 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       frameon=False)
 
     title = 'transient_AR'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
     # plt.show()
 

@@ -169,24 +169,24 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 18,
-        'figure.figsize': (6, 12),
+        'font.size': 16,
+        'figure.figsize': (14, 5),
         'lines.linewidth': 0.5,
-        'lines.markersize': 12,
+        'lines.markersize': 15,
         # 'lines.markerfacecolor': 'white',
-        'figure.dpi': 200,
-        'figure.subplot.left': 0.15,
-        'figure.subplot.right': 0.9,
-        'figure.subplot.top': 0.85,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.25,
+        'figure.subplot.right': 0.8,
+        'figure.subplot.top': 0.9,
         'figure.subplot.bottom': 0.2,
-        'figure.subplot.wspace': 0.125,
+        'figure.subplot.wspace': 0.3,
         'figure.subplot.hspace': 0.125,
     })
     markers = ['o', 'v', 's', '>', '^']
     y_label = [
         r'$\bar{C}_L$',
         r'$\bar{C}_D$',
-        r'$\frac{1}{P*}$',
+        r'$P_f$',
     ]
     x_array = np.array(x_data)
     cf_array = np.array(data_array)
@@ -194,7 +194,7 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
 
     no_legend = len(cf_legends)
     no_x = len(x_array)
-    fig, ax = plt.subplots(3, 1)
+    fig, ax = plt.subplots(1, 3)
     for lgd in range(no_legend):
         data_no = no_x * lgd
         # print(data_no)
@@ -204,8 +204,8 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         for xi in range(no_x):
             mcl.append(cf_array[data_no + xi][0])
             mcd.append(cf_array[data_no + xi][1])
-            mpf.append(cf_array[data_no + xi][0] /
-                       (cf_array[data_no + xi][2]**(2 / 3)))
+            mpf.append(cf_array[data_no + xi][0]**1.5 /
+                       cf_array[data_no + xi][2])
 
         datatoplot = [mcl, mcd, mpf]
         for i in range(len(datatoplot)):
@@ -223,8 +223,10 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
 
                 ax[i].set_ylabel(y_label[i])
                 ax[i].set_xlabel(x_label)
+                ax[i].set_xticks([1.5, 3.0, 4.5, 6.0, 7.5])
+                # ax[i].set_xticks([0.4, 0.5, 0.6])
                 # ax[i].set_xlabel('AR')
-                ax[i].label_outer()
+                # ax[i].label_outer()
 
                 ax[i].axhline(y=0, color='k', linestyle='-.', linewidth=0.5)
 
@@ -237,7 +239,7 @@ def cf_plotter(x_data, data_array, legends, x_range, y_range, y_label,
         frameon=False)
 
     title = 'mean coefficients_r1h' + title
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
 
     return fig

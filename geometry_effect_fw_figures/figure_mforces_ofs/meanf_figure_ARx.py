@@ -38,9 +38,9 @@ legends = [
 # x_range = 'all'
 # y_range = 'all'
 x_range = [1, 8]
-cl_range = [0.9, 1.7]
-cd_range = [1.0, 2.8]
-pf_range = [0.4, 1.0]
+cl_range = [0.95, 1.65]
+cd_range = [1.3, 2.6]
+pf_range = [0.35, 0.9]
 y_range = [cl_range, cd_range, pf_range]
 y_label = [r'$\bar{C_L}$', r'$\bar{C_D}$', r'$\frac{1}{P^\ast}$']
 #---------------------------------------

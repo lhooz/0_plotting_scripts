@@ -65,7 +65,7 @@ def read_cfd_data(kinematics_file, cfd_data_file):
 
 
 def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
-               cycle_time, plot_mode):
+               cycle_time, ar, plot_mode):
     """
     function to plot cfd force coefficients results
     """
@@ -73,12 +73,12 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 14,
-        'figure.figsize': (12, 4),
-        'lines.linewidth': 2.0,
+        'font.size': 24,
+        'figure.figsize': (14, 6),
+        'lines.linewidth': 4.0,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
         'figure.subplot.left': 0.125,
         'figure.subplot.right': 0.9,
         'figure.subplot.top': 0.8,
@@ -118,7 +118,8 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
             mcl_arr.append(mcl)
             mcd_arr.append(mcd)
 
-            with open('meancf_ofs_AR.dat', 'w') as f:
+            with open('meancf_ofs_' + 'ar' + '{0:.1f}'.format(ar) + '.dat',
+                      'w') as f:
                 for item, cf_lgd in zip(mcl_arr, legends):
                     f.write("%s:\n" % cf_lgd)
                     f.write("mcl = %s\n" % '{0:.8g}'.format(item))
@@ -147,8 +148,8 @@ def cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
                       fontsize='small',
                       frameon=False)
 
-    title = 'transient_ofs_AR'
-    out_image_file = os.path.join(image_out_path, title + '.png')
+    title = 'transient_ofs_' + 'ar' + '{0:.1f}'.format(ar)
+    out_image_file = os.path.join(image_out_path, title + '.svg')
     fig.savefig(out_image_file)
     # plt.show()
 

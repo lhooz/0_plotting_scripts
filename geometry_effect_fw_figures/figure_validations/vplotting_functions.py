@@ -95,6 +95,9 @@ def cf_plotter(data_array, time_scale, legends, time_to_plot, show_range,
             if lgd == 'Experiment, Dickinson et al.':
                 cfdata = np.array([cfdata[:, 0], cfdata[:, 1] / 1.1])
                 cfdata = np.transpose(cfdata)
+            if lgd == 'CFD, Sun and Tang':
+                cfdata = np.array([cfdata[:, 0], cfdata[:, 1] / 3.1])
+                cfdata = np.transpose(cfdata)
             
             #----------------------
 

@@ -5,12 +5,15 @@ import os
 from tplotting_functions import cf_plotter, read_cfd_data
 
 #-------------input plot control----------
+ar = 7.5
+#-----------------------------------------
 kinematics_file = 'kinematics.dat'
+#-----------------------------------------
 cfd_data_list = [
-    'ar7.5_ofs0.0_r1h0.5__Re100.0_pt0.25',
-    'ar7.5_ofs1.0_r1h0.5__Re100.0_pt0.25',
-    'ar7.5_ofs2.0_r1h0.5__Re100.0_pt0.25',
-    'ar7.5_ofs3.0_r1h0.5__Re100.0_pt0.25',
+    '_ofs0.0_r1h0.5__Re100.0_pt0.25',
+    '_ofs1.0_r1h0.5__Re100.0_pt0.25',
+    '_ofs2.0_r1h0.5__Re100.0_pt0.25',
+    '_ofs3.0_r1h0.5__Re100.0_pt0.25',
 ]
 #-----------------------------------------
 legends = [
@@ -23,8 +26,15 @@ legends = [
 time_to_plot = 'all'
 coeffs_show_range = 'all'
 time_to_plot = [4.0, 5.0]
-show_range_cl = [-1.5, 3.0]
-show_range_cd = [-1.5, 3.0]
+if ar == 1.5:
+    show_range_cl = [-1., 4.5]
+    show_range_cd = [-1., 4.5]
+elif ar == 3.0:
+    show_range_cl = [-0.6, 2.8]
+    show_range_cd = [-0.6, 2.8]
+elif ar == 7.5:
+    show_range_cl = [-0.6, 2.8]
+    show_range_cd = [-0.6, 2.8]
 cycle_time = 1.0
 #---------------------------------------
 show_range = [show_range_cl, show_range_cd]
@@ -41,8 +51,9 @@ kinematics_data = os.path.join(kinematics_dir, kinematics_file)
 CF_file_names = [f.name for f in os.scandir(data_dir) if f.is_file()]
 cf_array = []
 for cfi in cfd_data_list:
+    cfi_name = 'ar' + '{0:.1f}'.format(ar) + cfi
     for CF_name in CF_file_names:
-        if CF_name.startswith(cfi):
+        if CF_name.startswith(cfi_name):
             cfd_datai = os.path.join(data_dir, CF_name)
             cf_arrayi = read_cfd_data(kinematics_data, cfd_datai)
             cf_array.append(cf_arrayi)
@@ -51,4 +62,4 @@ data_array = cf_array
 #---------------------------------------
 
 cf_plotter(data_array, legends, time_to_plot, show_range, image_out_path,
-           cycle_time, 'against_t')
+           cycle_time, ar, 'against_t')

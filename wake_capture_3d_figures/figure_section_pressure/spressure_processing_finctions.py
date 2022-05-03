@@ -13,10 +13,12 @@ from matplotlib import colors
 from scipy.ndimage import zoom
 from scipy.ndimage.filters import gaussian_filter
 from scipy.interpolate import UnivariateSpline, interp1d
+from scipy.integrate import simpson
 
 
 def read_geop(geop_data_file):
     """read wing geometry data"""
+    chord = 0.06  # ---mean chord 0.06--
     geop_array = []
     with open(geop_data_file) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -28,7 +30,7 @@ def read_geop(geop_data_file):
             else:
                 pData = float(row[0])
 
-                xData = float(row[2])
+                xData = -1 * float(row[2])
                 yData = float(row[4])
                 rData = float(row[3])
 
@@ -69,6 +71,7 @@ def read_geop(geop_data_file):
         # print(r_previous)
 
     section_all_sorted = []
+    section_all_Cn = []
     for sec in section_all:
         sec = np.array(sec)
         xMax = np.amax(sec[:, 0])
@@ -103,8 +106,34 @@ def read_geop(geop_data_file):
         orderUp = upper[:, 0].ravel().argsort()
         orderedUp = upper[orderUp]
 
+        #---interpolate and integrate---
+        x = orderedUp[:, 0]
+        xMin = np.amin(x)
+        xMax = np.amax(x)
+        #---interpolate data on regular x---
+        p_spl = interp1d(x, orderedUp[:, 2])
+        x_org = np.linspace(xMin, xMax, 100)
+        p = []
+        for xi in x_org:
+            p.append(p_spl(xi))
+        upper_int = simpson(p, x_org)
+        #-----------------------------------
+
         orderLow = lower[:, 0].ravel().argsort()
         orderedLow = lower[orderLow]
+
+        #---interpolate and integrate---
+        x = orderedLow[:, 0]
+        xMin = np.amin(x)
+        xMax = np.amax(x)
+        #---interpolate data on regular x---
+        p_spl = interp1d(x, orderedLow[:, 2])
+        x_org = np.linspace(xMin, xMax, 100)
+        p = []
+        for xi in x_org:
+            p.append(p_spl(xi))
+        lower_int = simpson(p, x_org)
+        #-----------------------------------
 
         orderL = LE[:, 1].ravel().argsort()
         orderedL = LE[orderL]
@@ -113,10 +142,12 @@ def read_geop(geop_data_file):
         orderedR = TE[orderR]
         # ==========================================================
         spressure_data = [orderedLow, orderedUp, orderedL, orderedR]
+        sec_Cn = [(lower_int - upper_int) / chord, orderedLow[0, 3] / chord]
 
         section_all_sorted.append(spressure_data)
+        section_all_Cn.append(sec_Cn)
 
-    return section_all_sorted
+    return section_all_sorted, section_all_Cn
 
 
 def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
@@ -125,12 +156,18 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
         # "text.usetex": True,
         'mathtext.fontset': 'stix',
         'font.family': 'STIXGeneral',
-        'font.size': 10,
-        'figure.figsize': (4, 15),
-        'lines.linewidth': 4.0,
+        'font.size': 42,
+        'figure.figsize': (10, 16),
+        'lines.linewidth': 8.0,
         'lines.markersize': 0.1,
         'lines.markerfacecolor': 'white',
-        'figure.dpi': 100,
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.15,
+        'figure.subplot.right': 0.85,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.2,
+        'figure.subplot.hspace': 0.1,
     })
     chord = 0.06  # ---mean chord 0.06--
     R = AR * chord
@@ -203,10 +240,10 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
                 ax2[i].label_outer()
                 ax2[i].axhline(y=0, linewidth=0.5, linestyle='-.', color='k')
 
-        markx_loc = ax[i].get_xlim()[1] + 0.06 * (ax[i].get_xlim()[1] -
+        markx_loc = ax[i].get_xlim()[1] + 0.1 * (ax[i].get_xlim()[1] -
                                                  ax[i].get_xlim()[0])
         marky_loc = ax[i].get_ylim()[0] + 0.5 * (ax[i].get_ylim()[1] -
-                                                  ax[i].get_ylim()[0])
+                                                 ax[i].get_ylim()[0])
         ax[i].annotate(text=markt[i],
                        xy=(markx_loc, marky_loc),
                        ha='center',
@@ -218,8 +255,8 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
                         va='center',
                         annotation_clip=False)
 
-    ax[0].legend(loc='upper center', ncol=3, fontsize='small', frameon=False)
-    ax2[0].legend(loc='upper center', ncol=3, fontsize='small', frameon=False)
+    ax[0].legend(loc='upper center', ncol=2, fontsize='small', frameon=False)
+    ax2[0].legend(loc='upper center', ncol=2, fontsize='small', frameon=False)
     if mode == 'save':
         fig.savefig(oimage_file + '_inboard.svg')
         fig2.savefig(oimage_file + '_outboard.svg')
