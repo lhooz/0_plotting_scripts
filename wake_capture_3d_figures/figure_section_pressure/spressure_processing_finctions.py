@@ -63,15 +63,20 @@ def read_geop(geop_data_file):
         if np.abs(r[i] - r_previous) < tolerence:
             seci.append([x[i], y[i], p[i], r[i]])
         else:
-            section_all.append(seci)
+            if len(seci) > 40:
+                section_all.append(seci)
             seci = []
             # seci = [[x[i], y[i], p[i], r[i]]]
+        if i == NoPoints - 1:
+            if len(seci) > 40:
+                section_all.append(seci)
 
         r_previous = r[i]
         # print(r_previous)
 
     section_all_sorted = []
     section_all_Cn = []
+    sec_r_c = []
     for sec in section_all:
         sec = np.array(sec)
         xMax = np.amax(sec[:, 0])
@@ -106,34 +111,34 @@ def read_geop(geop_data_file):
         orderUp = upper[:, 0].ravel().argsort()
         orderedUp = upper[orderUp]
 
-        #---interpolate and integrate---
+        # ---interpolate and integrate---
         x = orderedUp[:, 0]
         xMin = np.amin(x)
         xMax = np.amax(x)
-        #---interpolate data on regular x---
+        # ---interpolate data on regular x---
         p_spl = interp1d(x, orderedUp[:, 2])
         x_org = np.linspace(xMin, xMax, 100)
         p = []
         for xi in x_org:
             p.append(p_spl(xi))
         upper_int = simpson(p, x_org)
-        #-----------------------------------
+        # -----------------------------------
 
         orderLow = lower[:, 0].ravel().argsort()
         orderedLow = lower[orderLow]
 
-        #---interpolate and integrate---
+        # ---interpolate and integrate---
         x = orderedLow[:, 0]
         xMin = np.amin(x)
         xMax = np.amax(x)
-        #---interpolate data on regular x---
+        # ---interpolate data on regular x---
         p_spl = interp1d(x, orderedLow[:, 2])
         x_org = np.linspace(xMin, xMax, 100)
         p = []
         for xi in x_org:
             p.append(p_spl(xi))
         lower_int = simpson(p, x_org)
-        #-----------------------------------
+        # -----------------------------------
 
         orderL = LE[:, 1].ravel().argsort()
         orderedL = LE[orderL]
@@ -142,12 +147,16 @@ def read_geop(geop_data_file):
         orderedR = TE[orderR]
         # ==========================================================
         spressure_data = [orderedLow, orderedUp, orderedL, orderedR]
-        sec_Cn = [(lower_int - upper_int) / chord, orderedLow[0, 3] / chord]
+        sec_Cn = (lower_int - upper_int) / chord
 
         section_all_sorted.append(spressure_data)
         section_all_Cn.append(sec_Cn)
+        sec_r_c.append(orderedLow[0, 3] / chord)
 
-    return section_all_sorted, section_all_Cn
+    section_all_Cn = np.array(section_all_Cn)
+    sec_r_c = np.array(sec_r_c)
+
+    return section_all_sorted, section_all_Cn, sec_r_c
 
 
 def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
@@ -194,7 +203,7 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
             r = sorted_surfacep5[j][0][0, 3]
 
             if 0.1 * R < r < 3.5 * chord:
-                #---interpolate data on regular x---
+                # ---interpolate data on regular x---
                 p1_spl = interp1d(x1, sorted_surfacep1[j][0][:, 2])
                 p5_spl = interp1d(x5, sorted_surfacep5[j][0][:, 2])
 
@@ -205,7 +214,7 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
 
                 # print(seci[1][:, 3])
                 x = (x_org - x_org[0]) / scale
-                #-----------------------------------------------
+                # -----------------------------------------------
 
                 ax[i].plot(x,
                            pDifference,
@@ -217,7 +226,7 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
                 ax[i].label_outer()
                 ax[i].axhline(y=0, linewidth=0.5, linestyle='-.', color='k')
             elif 3.5 * chord < r < 0.9 * R:
-                #---interpolate data on regular x---
+                # ---interpolate data on regular x---
                 p1_spl = interp1d(x1, sorted_surfacep1[j][0][:, 2])
                 p5_spl = interp1d(x5, sorted_surfacep5[j][0][:, 2])
 
@@ -228,7 +237,7 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
 
                 # print(seci[1][:, 3])
                 x = (x_org - x_org[0]) / scale
-                #-----------------------------------------------
+                # -----------------------------------------------
 
                 ax2[i].plot(x,
                             pDifference,
@@ -262,3 +271,78 @@ def spressure_plot(allSurfaceP, markt, oimage_file, show_pRange, AR, mode):
         fig2.savefig(oimage_file + '_outboard.svg')
     elif mode == 'show':
         plt.show()
+
+
+def Cn_image(time_to_plot, sec_r_c, allSectionCn, oimage_file):
+    """plot image for Cn"""
+    plt.rcParams.update({
+        # "text.usetex": True,
+        'mathtext.fontset': 'stix',
+        'font.family': 'STIXGeneral',
+        'font.size': 24,
+        'figure.figsize': (10, 16),
+        'lines.linewidth': 0.5,
+        'lines.markersize': 0.1,
+        'lines.markerfacecolor': 'white',
+        'figure.dpi': 300,
+        'figure.subplot.left': 0.15,
+        'figure.subplot.right': 0.85,
+        'figure.subplot.top': 0.9,
+        'figure.subplot.bottom': 0.1,
+        'figure.subplot.wspace': 0.2,
+        'figure.subplot.hspace': 0.1,
+    })
+
+    figAspect = 0.5
+    axAs = (sec_r_c[-1] - sec_r_c[0]) / (time_to_plot[-1] - time_to_plot[0])
+    asValue = axAs * figAspect
+
+    imnorm = colors.Normalize(vmin=-7,
+                              vmax=7)  # --6 for Re100, 9 for Re 1000---
+    v = np.linspace(-7, 7, 30)
+
+    grid_x, grid_y = np.meshgrid(sec_r_c, time_to_plot)
+
+    fig, axs = plt.subplots(3)
+    for Cn, ax in zip(allSectionCn, axs):
+        cs = ax.contourf(
+            grid_x,
+            grid_y,
+            Cn,
+            v,
+            cmap='RdBu',
+            # cmap='RdYlBu',
+            norm=imnorm,
+        )
+
+        ax.set_aspect(aspect=asValue)
+
+        cax = fig.add_axes([
+            ax.get_position().x1 + 0.01,
+            ax.get_position().y0, 0.02,
+            ax.get_position().height
+        ])
+        cbar = fig.colorbar(
+            cs,
+            cax=cax,
+            ticks=np.arange(-10, 10, 2),
+        )
+
+        cs = ax.contour(
+            grid_x,
+            grid_y,
+            Cn,
+            v,
+            colors='k',
+        )
+        ax.grid(True, linestyle='-.', linewidth=0.5)
+        ax.set_xticks(np.arange(0, 10, 1))
+        ax.set_yticks(np.arange(0, 1, 0.1))
+        ax.set_xlim([sec_r_c[0], sec_r_c[-1]])
+        ax.set_ylim([time_to_plot[0], time_to_plot[-1]])
+        # plt.tight_layout()
+
+    fig.savefig(oimage_file + '.svg')
+    # plt.show()
+
+    return fig
